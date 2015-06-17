@@ -4,6 +4,7 @@ ruby "2.1.5"
 gem "rails", "~> 4.2.0" # rails! :-)
 gem "pg"  # postgres interface
 gem "dce_lti", '~> 0.5.2'  # handles the canvas security handshake
+gem "httparty" # handles http requests
 
 gem "bourbon", "~> 3.2.1"  #library of pure Sass mixins that are designed to be simple and easy to use. 
 gem "neat", "~> 1.5.1"  # fluid grid framework to work with Bourbon
