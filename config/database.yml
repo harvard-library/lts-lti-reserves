@@ -1,25 +1,26 @@
-# SQLite version 3.x
-#   gem install sqlite3
+# Postgres!!
+#   gem install pg
 #
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
 #
-default: &default
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: lts_lti
+  host: innovationapps.cjdhbo4lyko0.us-east-1.rds.amazonaws.com
+  pool: 5
+  username: canvas_dev
+  password:  "<%= ENV['DEV_DB_PW'] %>"
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: lts_lti_test
+  host: innovationapps.cjdhbo4lyko0.us-east-1.rds.amazonaws.com
+  pool: 5
+  username: canvas_test
+  password: "<%= ENV['TEST_DB_PW'] %>"
 
-production:
-  <<: *default
-  database: db/production.sqlite3

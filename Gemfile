@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.5"
 gem "rails", "~> 4.2.0" # rails! :-)
+gem "dotenv-rails", :groups => [:development, :test]  # Autoload dotenv in Rails.
 gem "pg"  # postgres interface
 gem "dce_lti", '~> 0.5.2'  # handles the canvas security handshake
 gem "httparty" # handles http requests
@@ -53,7 +54,7 @@ group :development, :test do
   gem 'brakeman', require: false  # detects security vulnerabilities in Ruby on Rails applications via static analysis.
   gem "awesome_print" # pretty print Ruby objects
   gem "byebug" # Ruby 2 debugger.
-  gem "dotenv-rails"  # Autoload dotenv in Rails.
+#  gem "dotenv-rails"  # Autoload dotenv in Rails.
   gem "factory_girl_rails" # rails version of factory_girl for test suite creation
   gem "pry-rails" # opens pry from the rails console
   gem "rspec-rails", "~> 3.1.0" # run tests on rails
