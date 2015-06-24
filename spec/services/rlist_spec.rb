@@ -7,6 +7,7 @@ describe Rlist do
       rlist = Rlist.new
       response = rlist.list('78419')
       expect(response.code).to eq(200)
+#      puts response.body
       WebMock.disable_net_connect!
     end
   end
