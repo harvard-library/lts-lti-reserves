@@ -2,16 +2,16 @@
 Citation = Struct.new(:citation_id,
                             :citation_type, # either JOURNAL or NON_JOURNAL
                             :aleph_url,
-                            :author_first,
-                            :author_last,
-                            :chapter_author_first,#non-journal
-                            :chapter_author_last,#non-journal
+                            :author_first_name,
+                            :author_last_name,
+                            :chapter_author_first_name,#non-journal
+                            :chapter_author_last_name,#non-journal
                             :chapter_title,#non-journal
                             :day,# journal
                             :doi,# journal
                             :edition,#non-journal
-                            :editor_first,#non-journal
-                            :editor_last,#non-journal
+                            :editor_first_name,#non-journal
+                            :editor_last_name,#non-journal
                             :end_page,# journal
                             :isbn,#non-journal
                             :issn,# journal
@@ -31,7 +31,6 @@ Citation = Struct.new(:citation_id,
                             ) do
   # non-persistent view of a Citation.  Type = journal, non-journal
   def initialize(opts = {})
-#    endit = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.camelize => v )  }
     opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
 #    puts opts
     members =  self.members
@@ -48,7 +47,4 @@ Citation = Struct.new(:citation_id,
     "Citation ID: #{self.citation_id}, type: #{self.citation_type}, title: #{self.title}"
   end
 end
-#  cit = Citation.new({:citation_id => "2", :citation_type => "JOURNAL"})
-#  cit = Citation.new("2", "JOURNAL")
-#  puts cit.to_s
 
