@@ -33,15 +33,16 @@ Citation = Struct.new(:citation_id,
   def initialize(opts = {})
 #    endit = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.camelize => v )  }
     opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
-    puts opts
-
+#    puts opts
+    members =  self.members
     HashWithIndifferentAccess.new(opts)
     opts.each do |k,v|
-      self.send (k + '=').to_sym, v # grazie, DM
+      self.send (k + '=').to_sym, v  if members.find_index(k.to_sym)# grazie, DM
     end
     raise ArgumentError.new("Citation ID can't be nil") if self.citation_id.nil?
     raise ArgumentError.new("Citation type can't be nil") if self.citation_type.nil?
     raise ArgumentError.new("Citation type must be JOURNAL or NON JOURNAL") if self.citation_type != "JOURNAL" && self.citation_type != "NON_JOURNAL"
+    raise ArgumentError.new("Citation must have a title") if self.title.nil?
   end
   def to_s
     "Citation ID: #{self.citation_id}, type: #{self.citation_type}, title: #{self.title}"

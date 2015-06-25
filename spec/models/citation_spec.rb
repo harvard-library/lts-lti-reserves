@@ -2,14 +2,14 @@ require 'rails_helper'
 describe Citation do
   describe "create" do
     it "successfully creates a new JOURNAL Citation by symbol" do
-      cit = Citation.new({:citation_id => "2", :citation_type=> "JOURNAL"})
+      cit = Citation.new({:citation_id => "2", :citation_type=> "JOURNAL", :title=>"My Veryfine Journal"})
 #      puts cit.to_s
       expect(cit.citation_id).to eq("2")
       expect(cit.citation_type).to eq("JOURNAL")
       expect(cit.title).to eq("My Veryfine Journal")
     end
-    it "successfully creates a new NONJOURNAL Citation by camelCase" do
-      cit = Citation.new({"citationId" => "34", "citationType"=> "NON_JOURNAL"})
+    it "successfully creates a new NONJOURNAL Citation by camelCase ignoring bad field" do
+      cit = Citation.new({"citationId" => "34", "citationType"=> "NON_JOURNAL", "foo" => "bar", "title" => "A new documentary"})
 #      puts cit.to_s
       expect(cit.citation_id).to eq("34")
       expect(cit.citation_type).to eq("NON_JOURNAL")
