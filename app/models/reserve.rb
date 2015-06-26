@@ -62,23 +62,35 @@ Reserve = Struct.new(
     end
     # at the present time, there's only one instructor id type
     self.contact_instructor_id_type = 'HUID'
+    # only instances are Course instances
+    self.instance_id_type = 'COURSE'
     # a newly-created request *might* be sussed out by material type
-
-    if self.input_citation_type.nil? 
+    if self.input_citation_type.nil? && self.input_material_type
       if self.input_material_type.upcase == 'JOURNAL'
         self.input_citation_type = 'JOURNAL'
       else  self.input_material_type
-        self.input_citation_type = 'NON_JOURNAL' if self.input_material_type 
+        self.input_citation_type = 'NON_JOURNAL' 
       end
     end
+    #fill_in
     raise ArgumentError.new("Reserve type can't be nil") if self.input_citation_type.nil?
     raise ArgumentError.new("Reserve type must be JOURNAL or NON JOURNAL") if self.input_citation_type != "JOURNAL" && self.input_citation_type != "NON_JOURNAL"
-    raise ArgumentError.new("Reserve must have a title") if self.input_title.nil?
+    raise ArgumentError.new("Reserve must have a either a title or url ") if self.input_title.nil? && self.input_url.nil?
     raise ArgumentError.new("Reserve must have an instructor ID") if self.input_title.nil?
+    raise  ArgumentError.new("Reserve must have an associated course instance id") if self.instance_id.nil?
+    raise ArgumentError.new("Reserve must have a material type") if self.input_material_type.nil?
   end
   def fill_in
+    puts "fill_in #{self.citation}"
     if self.citation 
-      self.input_title = self.citation.title
+      members = self.members
+      self.citation.each_pair { |name, value|
+        if value && name.to_s != 'citation_type'
+          k = 'input_' + name.to_s
+          puts "#{(k + '=')} should have #{value} with class #{value.class} in members: #{ members.find_index(k.to_sym)}"
+          self.send (k + '=' ).to_sym value if members.find_index(k.to_sym)
+        end
+      }
     end
   end
 end
