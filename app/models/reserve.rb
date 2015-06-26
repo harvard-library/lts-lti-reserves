@@ -63,11 +63,12 @@ Reserve = Struct.new(
     # at the present time, there's only one instructor id type
     self.contact_instructor_id_type = 'HUID'
     # a newly-created request *might* be sussed out by material type
-    if self.input_citation_type.nil?
-      if self.input_material_type == 'JOURNAL'
+
+    if self.input_citation_type.nil? 
+      if self.input_material_type.upcase == 'JOURNAL'
         self.input_citation_type = 'JOURNAL'
-      else 
-        self.input_material_type = 'NON_JOURNAL' if !self.input_material_type.nil?
+      else  self.input_material_type
+        self.input_citation_type = 'NON_JOURNAL' if self.input_material_type 
       end
     end
     raise ArgumentError.new("Reserve type can't be nil") if self.input_citation_type.nil?
