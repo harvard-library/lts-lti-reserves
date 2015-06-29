@@ -75,10 +75,10 @@ Reserve = Struct.new(
     #fill_in
     raise ArgumentError.new("Reserve type can't be nil") if self.input_citation_type.nil?
     raise ArgumentError.new("Reserve type must be JOURNAL or NON JOURNAL") if self.input_citation_type != "JOURNAL" && self.input_citation_type != "NON_JOURNAL"
-    raise ArgumentError.new("Reserve must have a either a title or url ") if self.input_title.nil? && self.input_url.nil?
-    raise ArgumentError.new("Reserve must have an instructor ID") if self.input_title.nil?
+    raise ArgumentError.new("Reserve must have a either a title or url ") if self.citation.nil? && self.input_title.nil? && self.input_url.nil?
+    raise ArgumentError.new("Reserve must have an instructor ID") if self.contact_instructor_id.nil?
     raise  ArgumentError.new("Reserve must have an associated course instance id") if self.instance_id.nil?
-    raise ArgumentError.new("Reserve must have a material type") if self.input_material_type.nil?
+    raise ArgumentError.new("Reserve must have a material type") if  self.citation.nil? && self.input_material_type.nil? && self.input_citation_type.nil?
   end
   def fill_in
     puts "fill_in #{self.citation}"
@@ -91,6 +91,34 @@ Reserve = Struct.new(
           self.send (k + '=' ).to_sym value if members.find_index(k.to_sym)
         end
       }
+    end
+  end
+  def author
+    last = "";
+    if self.citation
+      lastn = self.citation.author_last_name
+      first = self.citation.author_first_name
+    else
+      lastn = self.input_author_last_name
+      first = self.input_author_first_name
+    end
+    if first
+      lastn = lastn + ", " + first
+    end
+    lastn
+  end
+  def title
+    if self.citation
+      self.citation.title
+    else
+      self.input_title
+    end
+  end
+  def dig_url
+    if self.citation
+      self.citation.url if self.citation.url
+    else
+      self.input_url
     end
   end
 end
