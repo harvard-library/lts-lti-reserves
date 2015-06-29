@@ -41,7 +41,10 @@ gem 'activerecord-session_store', '~> 0.1.1'  # "An Action Dispatch session stor
 gem 'browser', '~> 0.8.0'  # browser detection
 
 group :development do
+  gem 'binding_of_caller' # for better_errors
   gem 'quiet_assets'  # turns off Rails asset pipeline log
+  gem 'better_errors'
+
 end
 
 group :development, :test do
@@ -49,7 +52,6 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   gem 'bundler-audit', require: false  # provides patch-level verification for Bundled apps
   gem 'brakeman', require: false  # detects security vulnerabilities in Ruby on Rails applications via static analysis.
   gem "awesome_print" # pretty print Ruby objects

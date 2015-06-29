@@ -8,7 +8,7 @@ class Rlist
   def list(course_id)
     response = self.class.get("/course/" + course_id.to_s,
                             :headers => {"User-Agent" => "lts-lti-reserves"} )
-    raise RuntimeError.new("Unsuccessful with code #{response.code}") if response.code != 200
+    raise RuntimeError.new("Unsuccessful  call to " + self.base_uri.to_s + " for course (" + course_id.to_s + ") with code " + response.code.to_s) if response.code != 200
     response
   end
 end
