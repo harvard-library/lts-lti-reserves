@@ -6,7 +6,7 @@ class Rlist
   base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1/citationrequests/'
 
   def list(course_id)
-    response = self.class.get("/course/" + course_id,
+    response = self.class.get("/course/" + course_id.to_s,
                             :headers => {"User-Agent" => "lts-lti-reserves"} )
     raise RuntimeError.new("Unsuccessful with code #{response.code}") if response.code != 200
     response
