@@ -81,7 +81,7 @@ Reserve = Struct.new(
     raise ArgumentError.new("Reserve must have a material type") if  self.citation.nil? && self.input_material_type.nil? && self.input_citation_type.nil?
   end
   def fill_in
-    puts "fill_in #{self.citation}"
+#    puts "fill_in #{self.citation}"
     if self.citation 
       members = self.members
       self.citation.each_pair { |name, value|
