@@ -105,6 +105,9 @@ Reserve = Struct.new(
     if first
       lastn = lastn + ", " + first
     end
+    if lastn
+      lastn = lastn + "." if !lastn.ends_with?(".")
+    end
     lastn
   end
   def title
