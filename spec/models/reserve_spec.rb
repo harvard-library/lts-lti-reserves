@@ -11,6 +11,7 @@ describe Reserve do
         "visibility" => "true"}
       res = Reserve.new(opts)
       expect(res.input_citation_type).to eq("NON_JOURNAL")
+      expect(res.display_status).to eq("Unknown")
       end
     it "comes in with a citation author and url" do
       opts =  {
@@ -45,9 +46,10 @@ describe Reserve do
         "visibility" => "P"
       }
       res = Reserve.new(opts)
-      expect(res.author).to eq("Alcock")
+      expect(res.author).to eq("Alcock.")
       expect(res.dig_url).to eq("http://www.loc.gov/catdir/toc/ecip072/2006032271.html")
       expect(res.title).to eq("Classical archaeology")
+      expect(res.display_status).to eq("Complete")
     end
     it "comes in with a citation with full author" do
       opts = {
@@ -81,7 +83,7 @@ describe Reserve do
         "visibility" => "P"
       }
       res = Reserve.new(opts)
-      expect(res.author).to eq("Boatwright, Mary Taliaferro")
+      expect(res.author).to eq("Boatwright, Mary Taliaferro.")
       expect(res.title).to eq("Hadrian and the cities of the Roman empire")
     end
     it "comes without a citation but title and author" do
@@ -111,7 +113,7 @@ describe Reserve do
       }
       res = Reserve.new(opts)
       expect(res.title).to eq("Chaos and integrability in nonlinear dynamics: an introduction")
-      expect(res.author).to eq("Tabor, Michael")
+      expect(res.author).to eq("Tabor, Michael.")
     end
     it "comes in with a citation" do
       opts = {"contactInstructorId" => "70663473",
