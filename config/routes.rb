@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
   
+  get 'courses/show'
+
+  get 'reserves/show'
+
+  get 'reserves/edit'
+
+  get 'reserves/index'
+
+  get 'reserves/show'
+
   resources :courses do
     resources :reserves
   end

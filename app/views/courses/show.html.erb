@@ -2,7 +2,7 @@
 <h2>Number of reserves: <%= @reserves.count %></h2>
 <ul>
 <% @reserves.each do |reserve| %>
-<li><%= render 'simple_reserve', :reserve => reserve %></li>
+<li><%= render 'reserves/simple_reserve', :reserve => reserve %></li>
 <% end %>
 </ul>
 
