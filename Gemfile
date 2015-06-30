@@ -40,11 +40,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'activerecord-session_store', '~> 0.1.1'  # "An Action Dispatch session store backed by an Active Record class."
 gem 'browser', '~> 0.8.0'  # browser detection
 
+gem 'therubyracer'  # needed for less
+gem 'less-rails-bootstrap'
+gem 'font-awesome-less', '~> 4.2.0'  # fonts that TLT uses
+
 group :development do
   gem 'binding_of_caller' # for better_errors
   gem 'quiet_assets'  # turns off Rails asset pipeline log
   gem 'better_errors'
-
 end
 
 group :development, :test do
@@ -72,6 +75,9 @@ group :test do
   gem "simplecov", require: false  # code coverage
   gem 'rack_session_access'  # "middleware that provides access to rack.session environment"
 end
+
+
+
 
 group :staging, :production do
   gem 'rails_12factor'  # something to do with 12factor log stuff
