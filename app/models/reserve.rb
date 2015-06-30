@@ -130,6 +130,7 @@ Reserve = Struct.new(
     else 
       case self.status
         when "COMPLETE" then "Complete"
+        when "COMPLETE_PARTIAL" then "Complete"
         when "NEW" then "New"
         when "DRL_LIB_REQUEST" then "Librarian Requested Deletion"
         else "In Process"
