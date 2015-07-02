@@ -1,0 +1,82 @@
+@h1: 					2em;
+@h2: 					1.6em;
+
+@target-desktop: 		1280%;
+
+@context-main-desktop: 		1072%;
+@context-content-desktop: 	1040%; //actual content without margins
+
+@dashboard-totals-width: 	688%;
+
+
+@color-crimsom:				#9c0000;
+
+@font-family-body: 			"Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-color-body: 			#333333;
+@font-size-base:            (15em / 16em);
+@font-size-body: 			(15em / 16em);
+@line-height-body: 			(20em / 16em);
+@font-size-btn: 			0.875em; //toFluidSize(14em, 16em)
+@font-family-sans-serif:	"Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-title:			"HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-thin:			"HelveticaNeue-Thin", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-bold:			"HelveticaNeue-Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-medium:		"HelveticaNeue-Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-title-color:	#525252;
+@font-family-serif:			Georgia, Times, serif;
+@font-color-error:			#9c0000;
+
+@p-line-height:				1.5;
+
+@link-color:				#109fe2;
+@link-hover-color: 			@font-family-title-color;
+
+@panel-body-background:		#fcfefd;
+@panel-body-border-color:	#ececeb;
+@panel-left-right-padding:	3.076923076923%; //.toFluidSize(32%, 1040%, 100%);
+@panel-wrapper-margin-RL:	((16% / @context-main-desktop) * 100%) ; //.toFluidSize(16%, 1072%, 100%);
+@panel-wrapper-width:		(100% - (@panel-wrapper-margin-RL * 2));
+
+@list-horizontal-margin:	0% 1.5% 0% 0%;
+
+@btn-icon-only-padding:		(8em / 16em);
+
+@color-success:				#017119;
+@color-warning:				#9f7402;
+@color-error:				@color-crimsom;
+
+// Modals
+// -------------------------
+@modal-inner-padding:         20px;
+
+@modal-title-padding:         15px;
+@modal-title-line-height:     @line-height-base;
+
+@modal-content-bg:                             #fff;
+@modal-content-border-color:                   rgba(0,0,0,.2);
+@modal-content-fallback-border-color:          #999;
+
+@modal-backdrop-bg:           #000;
+@modal-backdrop-opacity:      0.5;
+@modal-header-border-color:   #e5e5e5;
+@modal-footer-border-color:   @modal-header-border-color;
+
+@modal-sm:                    300px;
+@modal-md:                    600px;
+@modal-lg:                    900px;
+
+@zindex-modal-background:     1040;
+@zindex-modal:                1050;
+
+@line-height-base:            1.428571429; // 20/14
+
+@border-radius-large:            6px;
+
+@screen-sm-min:              768px;
+@screen-md-min:              992px;
+
+// Close
+// ------------------------
+@close-font-weight:           bold;
+@close-color:                 #000;
+@close-text-shadow:           0 1px 0 #fff;
