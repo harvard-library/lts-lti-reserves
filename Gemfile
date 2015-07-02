@@ -40,6 +40,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'activerecord-session_store', '~> 0.1.1'  # "An Action Dispatch session store backed by an Active Record class."
 gem 'browser', '~> 0.8.0'  # browser detection
 
+gem 'waiable' # add accessibility to forms
 gem 'therubyracer'  # needed for less
 gem 'less-rails-bootstrap'
 gem 'font-awesome-less', '~> 4.2.0'  # fonts that TLT uses
