@@ -1,0 +1,52 @@
+body.lti-tool{ font-size: @font-size-body; }
+
+h1, h2, h3, h4{	
+	font-weight: normal;
+	margin: 0 0 0.5em 0;
+}
+
+h1{ 
+	font-size: @h1; 
+	& i {
+		font-size: 0.65em !important;
+	}
+}
+
+h2{ font-size: @h2; }
+
+p{ 
+	margin: 0 0 (@font-size-body/@p-line-height) 0; 
+	line-height: @p-line-height;
+}
+
+a{
+	color: @link-color;
+	&:hover{
+		color: @link-hover-color;
+		text-decoration: none;
+	}
+}
+
+	a.right-margin { margin-right: 5%; }
+
+.text-right{
+	text-align: right;
+}
+
+.text-success { color: @color-success; }
+.text-warning { color: @color-warning; }
+.text-error { color: @color-error; }
+
+
+.text-strong{ font-family: @font-family-bold; }
+
+.text-strong-success{
+	.text-strong;
+	.text-success;
+}
+
+.text-strong-error{
+	.text-strong;
+	.text-error;
+}
+
