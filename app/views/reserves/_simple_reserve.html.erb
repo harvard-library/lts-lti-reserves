@@ -1,12 +1,14 @@
 <%# simple presentation of a single reserve request with publish, edit delete %>
-<span class="delete" title="delete"><%= icon('times') %></span>
+<span class="delete" title="delete"><input type="checkbox" name="<%= reserve.citation_request_id%>"/></span>
 <span class="author"><%= reserve.author %></span> 
 <span class="title"><%= reserve.title %>.</span>
-<span class="status <%='complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
-<%= icon('check-square') if reserve.status=='COMPLETE'%> 
-</span>
 <% if reserve.dig_url %>
 <%= icon('external-link')%> <span class="urlLink"><a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link">digital link</a></span> 
 <% end %>
-<span class="visibilit"><%= reserve.visibility == "R" ? "Not Visibile" : "Visible" %></span>
-<span class="edit" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link"><%= icon('edit') %> </a></span> 
+
+
+<span class="visibility"><%= reserve.visibility == "R" ? "Not Visibile" : "Visible" %></span>
+<span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
+<%= icon('check-circle') if reserve.status=='COMPLETE'%> 
+</span>
+<span class="edit float-right" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 

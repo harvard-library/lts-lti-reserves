@@ -1,8 +1,14 @@
+<body class="lti-tool">
+<div id="content-wrapper" class="container-fluid" role="main">
 <h1>Reserves List</h1>
 <h2>Number of reserves: <%= @reserves.count %></h2>
-<ul>
+<form action="" class="reserves-list">
+<ul class="list-with-floats">
 <% @reserves.each do |reserve| %>
 <li><%= render 'reserves/simple_reserve', :reserve => reserve %></li>
 <% end %>
 </ul>
+</form>
+</div>
+</body>
 
