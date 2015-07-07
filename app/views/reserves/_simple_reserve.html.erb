@@ -9,6 +9,6 @@
 
 <span class="visibility"><%= reserve.visibility == "R" ? "Not Visibile" : "Visible" %></span>
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
-<%= icon('check-circle') if reserve.status=='COMPLETE'%> 
+<%= icon('check') if reserve.status=='COMPLETE'%> 
 </span>
 <span class="edit float-right" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
