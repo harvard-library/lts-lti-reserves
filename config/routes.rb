@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   get 'courses/show'
 
+  post 'courses/delete'
+
   get 'reserves/show'
 
   get 'reserves/edit'
