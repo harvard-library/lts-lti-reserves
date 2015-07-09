@@ -13,4 +13,4 @@
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
 <%= icon('check') if reserve.status=='COMPLETE'%> 
 </span>
-<span class="edit float-right btn-icon-only" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
+<span class="edit float-right btn-icon-only" title="Edit <%= reserve.title %>"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
