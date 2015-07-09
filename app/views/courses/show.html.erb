@@ -9,7 +9,7 @@
 <%= hidden_field_tag("id", params[:id]) %>
 <ul class="list-with-floats">
 <li><%= check_box_tag("select_all") %>
-<%= label_tag("select_all", "Select all reserves") %> <span class="delete float-right" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)") %></span>
+<%= label_tag("select_all", "Select all reserves") %> <span class="delete float-right" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", class:"btn btn-submit") %></span>
 </li>
 <% @reserves.each do |reserve| %>
 <li><%= render 'reserves/simple_reserve', :reserve => reserve %></li>

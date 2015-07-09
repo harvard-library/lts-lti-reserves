@@ -4,7 +4,8 @@
 <span class="author"><%= reserve.author %></span> 
 <span class="title"><%= reserve.title %>.</span>
 <% if reserve.dig_url %>
-<%= icon('external-link')%> <span class="urlLink"><a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link">digital link</a></span> 
+ <span class="urlLink btn-link">
+<a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link">digital link</a> <%= icon('external-link')%></span> 
 <% end %>
 
 
@@ -12,4 +13,4 @@
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
 <%= icon('check') if reserve.status=='COMPLETE'%> 
 </span>
-<span class="edit float-right" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
+<span class="edit float-right btn-icon-only" title="edit"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
