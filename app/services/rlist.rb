@@ -4,10 +4,10 @@ require 'httparty'
 #Dotenv.load
 class Rlist
   include HTTParty
-  base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1/citationrequests/'
+  base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
 
   def list(course_id)
-    response = self.class.get("/course/" + course_id.to_s,
+    response = self.class.get("/courses/" + course_id.to_s + "/citationrequests",
                             :headers => {"User-Agent" => "lts-lti-reserves"} )
     if response.code != 200
       msg = "Unsuccessful  call for course ( #{course_id}). "
