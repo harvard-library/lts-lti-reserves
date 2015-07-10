@@ -6,19 +6,26 @@ class Rlist
   include HTTParty
   base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
 
+  def handle_bad_response(response, msg)
+    if response
+      err = MultiXml.parse(response.body)
+      msg = "#{msg} #{err["error"]["status"]}"
+    else
+      msg = "#{response.code}: #{response.message}"
+    end
+    raise RuntimeError.new(msg);
+  end
+
+  def reserve(res_id)
+    response = self.class.get("/citationrequests/" + res_id.to_s ,
+                              :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful  call for reserve ( #{res_id}). ") if response.code != 200
+  end
   def list(course_id)
     response = self.class.get("/courses/" + course_id.to_s + "/citationrequests",
                             :headers => {"User-Agent" => "lts-lti-reserves"} )
-    if response.code != 200
-      msg = "Unsuccessful  call for course ( #{course_id}). "
-      if response
-        err = MultiXml.parse(response.body)
-        msg = "#{msg} #{err["error"]["status"]}"
-      else
-        msg = "#{response.code}: #{response.message}"
-      end
-      raise RuntimeError.new(msg);
-    end
+    handle_bad_response(response,"Unsuccessful  call for course ( #{course_id}). ") if response.code != 200
+
  #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
     response
   end
