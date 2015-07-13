@@ -49,7 +49,7 @@ describe Reserve do
       expect(res.author).to eq("Alcock.")
       expect(res.dig_url).to eq("http://www.loc.gov/catdir/toc/ecip072/2006032271.html")
       expect(res.title).to eq("Classical archaeology")
-      expect(res.display_status).to eq("Complete")
+      expect(res.display_status).to eq("Available")
     end
     it "comes in with a citation with full author" do
       opts = {
