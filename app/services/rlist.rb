@@ -17,10 +17,17 @@ class Rlist
     raise RuntimeError.new(msg);
   end
 
+  def library_list
+    response = self.class.get("/libraries/",
+                              :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful  call for reserve ( #{res_id}). ") if response.code != 200
+    response
+  end
   def reserve(res_id)
     response = self.class.get("/citationrequests/" + res_id.to_s ,
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
     handle_bad_response(response,"Unsuccessful  call for reserve ( #{res_id}). ") if response.code != 200
+    response
   end
   def delete(course_id, res_id)
     response = self.class.delete("/courses/#{course_id}/citationrequest/#{res_id}")
