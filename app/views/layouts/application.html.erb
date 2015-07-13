@@ -8,8 +8,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="lti-tool">
-
-<%= yield %>
-
+<div id="content-wrapper" class="container-fluid" role="main">
+  <%= render :partial => 'shared/messages' %>
+  <%= yield %>
+</div>
 </body>
 </html>
