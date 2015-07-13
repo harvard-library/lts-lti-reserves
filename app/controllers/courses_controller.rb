@@ -3,9 +3,17 @@ class CoursesController < ApplicationController
     @reserves = Course.new(params[:id]).list
   end
   def delete
-# deletion stuff to be added
+    count = 0
+    if params[:reserve_ids]
+      params[:reserve_ids].each do |res_id|
+# TBD: handling errors!
+        Rlist.new.delete(params[:id], res_id)
+        count = count + 1
+      end
+    end
+
     @reserves = Course.new(params[:id]).list
-    flash[:notice] = "#{params[:reserve_ids].count} reserves deleted"
+    flash[:notice] = "#{count} reserve#{'s' if count != 1} deleted"
     redirect_to :action => :show, id: params[:id]
   end
 end
