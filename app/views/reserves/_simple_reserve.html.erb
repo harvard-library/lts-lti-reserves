@@ -1,5 +1,5 @@
 <%# simple presentation of a single reserve request with publish, edit delete %>
-<%= check_box_tag("reserve_ids[]", reserve.citation_request_id, false, {:id => "reserve_ids__#{reserve.citation_request_id}", :class => "check_delete", :title => "Select #{reserve.title}"}) %>
+<%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.title}"}) %>
 
 <span class="author"><%= reserve.author %></span> 
 <span class="title"><%= reserve.title %>.</span>

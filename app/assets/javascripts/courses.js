@@ -1,40 +1,42 @@
 /*
- *  Javascripting used for supporting the Course Controller
+ *  Javascripting used for supporting the checkbox groups with select all
  * Bobbi Fox 13 July 2015
  *
  */
 
 
 function checkBoxSetup() {
-    $(".check_delete").on("click", checkBoxChecked);
+    $("ul.chk_grp li > input[type='checkbox']").not("#select_all").on("click", checkBoxChecked);
     $("#select_all").on("click", allSelected);
 }
 
 function allSelected() {
     if ($(this).prop('checked')) {
-	$(".check_delete").prop("checked", true);
-	$("#delete_btn").prop("disabled", false);
+	 $("ul.chk_grp li > input[type='checkbox']").not("#select_all").prop("checked", true);
+	$(".chks_submit").prop("disabled", false);
     }
 }
 function checkBoxChecked() {
     var $this = $(this);
     if ($this.prop('checked')) {
-	$("#delete_btn").prop("disabled", false);
+	$(".chks_submit").prop("disabled", false);
     }
     else {
 	$("#select_all").prop("checked", false);
 	if (!anyChecked()) {
-	     $("#delete_btn").prop("disabled", true);
+	     $(".chks_submit").prop("disabled", true);
 	}
     }
 }
 function anyChecked() {
     var retVal = false;
-    $(".check_delete").each(function() {
-	if ($(this).prop("checked")) {
-	    retVal = true;
-	    return false;
-	}
-    });
+    $("ul.chk_grp li > input[type='checkbox']")
+	.not("#select_all")
+	.each(function() {
+	    if ($(this).prop("checked")) {
+		retVal = true;
+		return false;
+	    }
+	});
     return retVal;
 }

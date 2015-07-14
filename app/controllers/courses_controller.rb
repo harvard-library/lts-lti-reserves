@@ -4,8 +4,8 @@ class CoursesController < ApplicationController
   end
   def delete
     count = 0
-    if params[:reserve_ids]
-      params[:reserve_ids].each do |res_id|
+    if params[:res_ids]
+      params[:res_ids].each do |res_id|
 # TBD: handling errors!
         Rlist.new.delete(params[:id], res_id)
         count = count + 1
