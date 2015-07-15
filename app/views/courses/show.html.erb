@@ -1,6 +1,6 @@
 
 <h1>Reserves List</h1>
-
+<% if @reserves %>
 <h2>Number of reserves: <%= @reserves.count %></h2>
 <%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list") do %>
 <%= hidden_field_tag("id", params[:id]) %>
@@ -14,3 +14,4 @@
 </ul>
 <% end %>
 <script>checkBoxSetup()</script>
+<% end %>
