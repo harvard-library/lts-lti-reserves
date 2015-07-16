@@ -1,8 +1,12 @@
 <%# simple presentation of a single reserve request with publish, edit delete %>
-<%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.title}"}) %>
-
+<%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
+<% if reserve.chapter? %>
+<% render 'reserves/chapter_auth_title', :reserve => reserve %>
+<% else %>
 <span class="author"><%= reserve.author %></span> 
 <span class="title"><%= reserve.title %>.</span>
+<% end %>
+
 <% if reserve.dig_url %>
  <span class="urlLink btn-link">
 <a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link" title="Read <%= reserve.title %> online">digital link</a> <%= icon('external-link')%></span> 
@@ -11,6 +15,6 @@
 
 <span class="visibility"><%= reserve.visibility == "R" ? "Not Visibile" : "Visible" %></span>
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
-<%= icon('check') if reserve.status=='COMPLETE'%> 
+<%= icon('check') if reserve.display_status=='Available'%> 
 </span>
-<span class="edit float-right btn-icon-only" title="Edit <%= reserve.title %>"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
+<span class="edit float-right btn-icon-only" title="Edit <%= reserve.tip_title %>"><a href="reserves/edit/<%= reserve.citation_request_id %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
