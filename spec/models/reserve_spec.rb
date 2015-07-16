@@ -129,11 +129,14 @@ describe Reserve do
           "publicationYear"=>"1982",
           "publisher"=>"Center for South Asian Studies",
           "title"=>"Tibetan Buddhism"},
+        "courseStatus" => "Deletion Requested",
         "input_title"=>"Tibetan Buddhism",
-        "input_material_type" => "Video"
+        "input_material_type" => "Video",
+        "status" => "DR_COMPLETE"
       }
       res = Reserve.new(opts)
       expect(res.input_title).to eq("Tibetan Buddhism")
+      expect(res.display_status).to eq("Deletion Requested")
     end
   end
 end

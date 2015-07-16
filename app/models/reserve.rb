@@ -7,6 +7,7 @@ Reserve = Struct.new(
                      :contact_instructor_id, 
                      :contact_instructor_id_type, 
                      :copyright_note, 
+                     :course_status,
                      :estimated_enrollment, 
                      :input_article_title, 
                      :input_author_first_name, 
@@ -125,17 +126,24 @@ Reserve = Struct.new(
     end
   end
   def display_status
-    if self.status.nil?
-      "Unknown"
-    else 
-      case self.status
+    if self.course_status.nil?
+      # no course_status
+      if self.status.nil?
+        "Unknown"
+      else 
+        case self.status
         when "COMPLETE" then "Available"
         when "COMPLETE_PARTIAL" then "Partially Available"
         when "NEW" then "New"
         when "DRL_LIB_REQUEST" then "Librarian Requested Deletion"
         else "In Process"
+        end
+      end
+    else
+    # we have course_status
+      if self.course_status.upcase.start_with?("COMPLETE") then "Available"
+      else self.course_status
       end
     end
   end
-
 end
