@@ -1,18 +1,68 @@
 require 'rails_helper'
 describe Reserve do
   describe "create" do
+    it "creates reserve with no citation: a chapter in a book with all chapter info in input only" do
+      opts = {"contactInstructorId" => "70663473",
+        "inputMaterialType" => "Book",
+        "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
+        "inputEditorLastName" => "Rothman",
+        "inputEditorFirstName" => "Nathaniel",
+        "inputChapterTitle" => "Combining molecular and genetic data from different sources",
+        "inputChapterAuthorLastName" => "Ntzani",
+        "inputChapterAuthorFirstName" => "Evangelia E",
+        "instance_id" => "312287"
+      }
+      res = Reserve.new(opts)
+      expect(res.author).to be_nil
+      expect(res.editor).to eq("Rothman, Nathaniel.")
+      expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
+      expect(res.chapter_author).to eq("Ntzani, Evangelia E.")
+      expect(res.tip_title).to eq("Combining molecular and genetic data from different sources")
+    end
+    it "creates reserve *with* a citation: a chapter in a book with all chapter info in input only" do
+      opts = {
+        "citation" => {
+          "alephUrl" => "013520485",
+          "citationId" => "490161",
+          "citationType" => "NON_JOURNAL",
+          "editorFirstName" => "Nathaniel",
+          "editorLastName" => "Rothman",
+          "isbn" => "978-92-832-2163-0",
+          "materialType" => "BOOK",
+          "publicationYear" => "2011",
+          "publisher" => "International Agency for Research on Cancer",
+          "title" => "Molecular Epidemiology: Principles and Practices"
+        },
+        "contactInstructorId" => "70663473",
+        "citationId" => "490161",
+        "citationRequestId" => "298659",
+        "inputMaterialType" => "Book",
+        "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
+        "inputEditorLastName" => "Rothman",
+        "inputChapterTitle" => "Combining molecular and genetic data from different sources",
+        "inputChapterAuthorLastName" => "Ntzani",
+        "inputChapterAuthorFirstName" => "Evangelia E",
+        "instance_id" => "312287"
+      }
+      res = Reserve.new(opts)
+      expect(res.author).to be_nil
+      expect(res.editor).to eq("Rothman, Nathaniel.")
+      expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
+      expect(res.chapter_author).to eq("Ntzani, Evangelia E.")
+      expect(res.citation).to be_a Citation
+    end
     it "creates a non-citationed reserve with material type, no type" do
       opts = {"contactInstructorId" => "70663473",
-     "inputMaterialType" => "Book",
-     "inputTitle" => "Everything you wanted to know about TLT",
-     "instanceId" =>   "355238",
-     "libraryCode" => "LAM",
-     "required" => "Y",
+        "inputMaterialType" => "Book",
+        "inputTitle" => "Everything you wanted to know about TLT",
+        "instanceId" =>   "355238",
+        "libraryCode" => "LAM",
+        "required" => "Y",
         "visibility" => "true"}
       res = Reserve.new(opts)
       expect(res.input_citation_type).to eq("NON_JOURNAL")
       expect(res.display_status).to eq("Unknown")
-      end
+    end
     it "comes in with a citation author and url" do
       opts =  {
         "citation" => {

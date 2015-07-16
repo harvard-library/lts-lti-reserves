@@ -89,27 +89,33 @@ Reserve = Struct.new(
         if value && name.to_s != 'citation_type'
           k = 'input_' + name.to_s
           puts "#{(k + '=')} should have #{value} with class #{value.class} in members: #{ members.find_index(k.to_sym)}"
-          self.send (k + '=' ).to_sym value if members.find_index(k.to_sym)
+          self.send (k + '=' ).to_sym value.strip if members.find_index(k.to_sym)
         end
       }
     end
   end
   def author
-    last = "";
+    lastn = ""
     if self.citation
-      lastn = self.citation.author_last_name
+      lastn = self.citation.author_last_name 
       first = self.citation.author_first_name
     else
       lastn = self.input_author_last_name
       first = self.input_author_first_name
     end
-    if first
-      lastn = lastn + ", " + first
+    normalize_name(lastn, first)
+  end
+  def editor
+    lastn = ""
+    if self.citation
+      lastn = self.citation.editor_last_name
+      first = self.citation.editor_first_name
+    else
+      lastn = self.input_editor_last_name
+      first = self.input_editor_first_name
     end
-    if lastn
-      lastn = lastn + "." if !lastn.ends_with?(".")
-    end
-    lastn
+    normalize_name(lastn, first)
+
   end
   def title
     if self.citation
@@ -124,6 +130,32 @@ Reserve = Struct.new(
     else
       self.input_url
     end
+  end
+  def chapter_title
+    if self.citation && self.citation.chapter_title
+      self.citation.chapter_title
+    else
+      self.input_chapter_title
+    end
+  end
+  def chapter_author
+    lastn = ""
+    if self.citation && self.citation.chapter_author_last_name
+      lastn = self.citation.chapter_author_last_name
+      first = self.citation.chapter_author_first_name || self.input_.chapter_author_first_name
+    else
+      lastn = self.input_chapter_author_last_name
+      first = self.input_chapter_author_first_name
+    end
+    normalize_name(lastn, first)
+  end
+  
+  def chapter?
+    self.chapter_title || self.chapter_author
+  end
+  def tip_title
+    # what's used in tool tips
+    self.chapter_title || self.title
   end
   def display_status
     if self.course_status.nil?
@@ -145,5 +177,14 @@ Reserve = Struct.new(
       else self.course_status
       end
     end
+  end
+  def normalize_name(lastn, first)
+    if first
+      lastn = lastn + ", " + first
+    end
+    if lastn
+      lastn = lastn + "." if !lastn.ends_with?(".")
+    end
+    lastn
   end
 end
