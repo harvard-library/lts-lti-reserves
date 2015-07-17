@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   post 'courses/delete'
 
-  get 'reserves/show'
+#  get 'reserves/show'
 
-  get 'reserves/edit'
+#  get 'reserves/edit'
 
-  get 'reserves/index'
+#  get 'reserves/index'
 
-  get 'reserves/show'
+#  get 'reserves/show'
 
   resources :courses do
     resources :reserves

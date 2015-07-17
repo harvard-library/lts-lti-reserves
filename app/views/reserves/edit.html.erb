@@ -1,2 +1,18 @@
-<h1>Reserves#edit</h1>
-<p>Find me in app/views/reserves/edit.html.erb</p>
+<%# edit a reserve request 
+FIELDS THAT CAN BE MODIFIED:
+    Estimated Number of Enrolled Students: 
+    Lecture/Class Date: 
+    Student View Display: 
+    Required Reading: 
+Note to Students:
+
+%>
+<div id="content-wrapper" class="container-fluid" role="main">
+<h1>Reserves List: Edit Reserve</h1>
+<% if flash[:notice] %>
+<div class="infoBlock-success"> <%= flash[:notice] %></div>
+<% end %>
+Current Reserve: <span class="libnote dfn">(some bibliographic information may have been edited by library staff)</span>
+<div class="display_lib_info">
+Title: <%= title %>
+</div>
