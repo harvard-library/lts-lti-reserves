@@ -1,10 +1,10 @@
-HI!
 <%# handles the messiness of the author, title, in a chapter,  etc. %>
 <span class="author"><%= reserve.chapter_author %></span>
 <span class="title"><%= reserve.chapter_title %></span>
 <% if reserve.title %>
-in <span class="book">reserve.title</span>
-<span class="book_creator">
+in <span class="book"><%= reserve.title %><% if reserve.author || reserve.editor %>, <% end %>
+</span>
+<span class="bk_creator">
 <% if reserve.author %>
 by <%= reserve.author %>
 <%  elsif reserve.editor %>

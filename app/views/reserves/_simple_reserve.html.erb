@@ -1,10 +1,13 @@
 <%# simple presentation of a single reserve request with publish, edit delete %>
 <%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
 <% if reserve.chapter? %>
-<% render 'reserves/chapter_auth_title', :reserve => reserve %>
+<%= render 'reserves/chapter_auth_title', :reserve => reserve %>
 <% else %>
 <span class="author"><%= reserve.author %></span> 
-<span class="title"><%= reserve.title %>.</span>
+<span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
+<% if reserve.journal_title %>
+in <span class="journal"><%= reserve.journal_title %></span>
+<% end %>
 <% end %>
 
 <% if reserve.dig_url %>

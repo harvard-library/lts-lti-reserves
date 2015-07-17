@@ -124,6 +124,13 @@ Reserve = Struct.new(
       self.input_title
     end
   end
+  def journal_title
+    if self.citation
+      self.citation.journal_title
+    else
+      self.input_journal_title
+    end
+  end
   def dig_url
     if self.citation
       self.citation.url if self.citation.url
