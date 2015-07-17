@@ -14,7 +14,7 @@ class Rlist
     else
       msg = "#{response.code}: #{response.message}"
     end
-    raise RuntimeError.new(msg);
+    raise RuntimeError.new(msg)
   end
 
   def library_list
