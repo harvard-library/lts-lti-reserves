@@ -29,6 +29,7 @@ Reserve = Struct.new(
                      :input_material_type, #non-journal
                      :input_month, # journal
                      :input_page_numbers,  #non-journal
+                     :input_publication_year, #non-journal
                      :input_publisher,  #non-journal
                      :input_season, # journal
                      :input_start_page, # journal
@@ -118,7 +119,7 @@ Reserve = Struct.new(
 
   end
   def title
-    if self.citation
+    if self.citation && self.citation.title
       self.citation.title
     else
       self.input_title
@@ -156,13 +157,75 @@ Reserve = Struct.new(
     end
     normalize_name(lastn, first)
   end
-  
+  def edition
+    if self.citation && self.citation.edition
+      self.citation.edition
+    else
+      self.input_edition
+    end
+  end
+  def isbn
+    if self.citation
+      self.citation.isbn
+    else
+      self.input_isbn
+    end
+  end
+  def volume
+    if self.citation
+      self.citation.volume
+    else
+      self.input_volume
+    end
+  end
+  def page_numbers
+    if self.citation
+      self.citation.page_numbers
+    else
+      self.input_page_numbers
+    end
+  end
+  def publisher
+    if self.citation
+      self.citation.publisher
+    else
+      self.input_publisher
+    end
+  end
+
+  def publication_year
+    if self.citation
+      self.citation.publication_year
+    else
+      self.input_publication_year
+    end
+  end
+
+
+  def hollis_system_number
+   if self.citation
+      self.citation.hollis_system_number
+    else
+      self.input_hollis_system_number
+    end
+  end
   def chapter?
     self.chapter_title || self.chapter_author
   end
   def tip_title
     # what's used in tool tips
     self.chapter_title || self.title
+  end
+  def journal_title
+    if self.citation && self.citation.journal_title
+      self.citation.journal_title
+    else
+      self.input_journal_title
+    end
+  end
+  def journal?
+    type = self.citation ? self.citation.citation_type : self.input_citation_type
+    !type.nil? && type == 'JOURNAL'
   end
   def display_status
     if self.course_status.nil?

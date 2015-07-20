@@ -50,6 +50,8 @@ describe Reserve do
       expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
       expect(res.chapter_author).to eq("Ntzani, Evangelia E.")
       expect(res.citation).to be_a Citation
+      expect(res.journal?).to eq(false)
+      expect(res.isbn).to eq("978-92-832-2163-0")
     end
     it "creates a non-citationed reserve with material type, no type" do
       opts = {"contactInstructorId" => "70663473",
@@ -88,6 +90,7 @@ describe Reserve do
         "inputCitationType" => "NON_JOURNAL",
         "instanceId" => "351019",
         "instanceIdType" => "COURSE",
+        "inputPublisher" => "Malden Pres",
         "libraryCode" => "DIV",
         "required" => "Y",
         "status" => "COMPLETE",
@@ -100,6 +103,7 @@ describe Reserve do
       expect(res.dig_url).to eq("http://www.loc.gov/catdir/toc/ecip072/2006032271.html")
       expect(res.title).to eq("Classical archaeology")
       expect(res.display_status).to eq("Available")
+      expect(res.publisher).to eq("Malden, MA: Blackwell Pub.")
     end
     it "comes in with a citation with full author" do
       opts = {
