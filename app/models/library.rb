@@ -1,6 +1,10 @@
 # a library object
 Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
   LIBRARY_LIST = nil
+  def self.fetch_library(code)
+    LIBRARY_LIST.detect {|lib| lib.library_code == code}
+  end
+
   def initialize(opts = {})
     opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
     members =  self.members
