@@ -1,6 +1,7 @@
-#  reflects the Rlist "citationRequest
-Reserve = Struct.new(
-                     :citation_request_id, 
+class Reserve
+  include ActiveModel::Model
+
+  attr_accessor     :citation_request_id, 
                      :input_citation_type, 
                      :citation, 
                      :citation_id, 
@@ -50,14 +51,14 @@ Reserve = Struct.new(
                      :submitted_date, 
                      :submitting_system, 
                      :visibility
-                      ) do
+                    
   def initialize(opts = {})
     opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
     if opts["citation"] && opts["citation"].class.to_s == "Hash" 
         opts["citation"] = Citation.new(opts["citation"])
     end
 
-    members =  self.members
+    members =  self.methods
     HashWithIndifferentAccess.new(opts)
     opts.each do |k,v|
       self.send (k + '=').to_sym, v  if members.find_index(k.to_sym)# grazie, DM
