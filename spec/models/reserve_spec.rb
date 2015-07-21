@@ -29,7 +29,7 @@ describe Reserve do
           "editorLastName" => "Rothman",
           "isbn" => "978-92-832-2163-0",
           "materialType" => "BOOK",
-          "publicationYear" => "2011",
+          "year" => "2011",
           "publisher" => "International Agency for Research on Cancer",
           "title" => "Molecular Epidemiology: Principles and Practices"
         },
@@ -77,7 +77,7 @@ describe Reserve do
           "isbn" => "9780631234180 (hardback => alk. paper)",
           "materialType" => "BOOK",
           "pageNumbers" => "xiii, 447 p.",
-          "publicationYear" => "2007",
+          "year" => "2007",
           "publisher" => "Malden, MA: Blackwell Pub.",
           "title" => "Classical archaeology",
           "url" => "http://www.loc.gov/catdir/toc/ecip072/2006032271.html"
@@ -104,6 +104,7 @@ describe Reserve do
       expect(res.title).to eq("Classical archaeology")
       expect(res.display_status).to eq("Available")
       expect(res.publisher).to eq("Malden, MA: Blackwell Pub.")
+      expect(res.year).to eq("2007")
     end
     it "comes in with a citation with full author" do
       opts = {
@@ -116,7 +117,7 @@ describe Reserve do
           "isbn" => "0691048894 (cloth => alk. paper)",
           "materialType" => "BOOK",
           "pageNumbers" => "xviii, 243 p. :",
-          "publicationYear" => "2000",
+          "year" => "2000",
           "publisher" => "Princeton University Press",
           "title" => "Hadrian and the cities of the Roman empire",
           "url" => "http://www.loc.gov/catdir/toc/prin032/99041096.html"
@@ -180,7 +181,7 @@ describe Reserve do
           "citationId"=>"349098",
           "citationType"=>"NON_JOURNAL",
           "pageNumbers"=>"3 videocassettes (120 min.) :",
-          "publicationYear"=>"1982",
+          "year"=>"1982",
           "publisher"=>"Center for South Asian Studies",
           "title"=>"Tibetan Buddhism"},
         "courseStatus" => "Deletion Requested",

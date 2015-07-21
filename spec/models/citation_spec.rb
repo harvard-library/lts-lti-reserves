@@ -19,7 +19,7 @@ describe Citation do
     "citationType" => "NON_JOURNAL",
     "isbn" => "0700710817",
     "pageNumbers" => "xxxvii, 329 p.;",
-    "publicationYear" => "1999",
+    "year" => "1999",
     "publisher" => "Curzon",
     "title" => "American Buddhism: methods and findings in recent scholarship"
                          });

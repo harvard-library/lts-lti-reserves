@@ -2,7 +2,7 @@ class Citation
   include ActiveModel::Model
 
 # opts conversion thanks to http://chrisholtz.com/blog/lets-make-a-ruby-hash-map-method-that-returns-a-hash-instead-of-an-array/
-  attr_accessor :citation_id, 
+  @@fields =  [:citation_id, 
                 :citation_type, # either JOURNAL or NON_JOURNAL
                             :aleph_url,
                             :author_first_name,
@@ -23,23 +23,28 @@ class Citation
                             :material_type,#non-journal
                             :month,# journal
                             :page_numbers,#non-journal
-                            :publication_year,#non-journal
                             :publisher,#non-journal
                             :season,# journal
                             :start_page,# journal
                             :title,
                             :url,
                             :volume,
-                            :year # journal
+                            :year] # journal (also non-journal's publication year)
+  attr_accessor *@@fields
 
   # non-persistent view of a Citation.  Type = journal, non-journal
-  def initialize(opts = {})
-    opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
-    members =  self.methods
-    HashWithIndifferentAccess.new(opts)
-    opts.each do |k,v|
-      self.send (k + '=').to_sym, v  if members.find_index(k.to_sym)# grazie, DM
+  def initialize(attributes = {})
+    puts attributes
+    attributes = attributes.reduce({}){ |hash, (k, v)|
+      key = k.to_s.underscore
+      hash = hash.merge( key => v )  if @@fields.find_index(key.to_sym)
+      hash
+    }
+    HashWithIndifferentAccess.new(attributes)
+    attributes.each do |k,v|
+      self.send (k + '=').to_sym, v  # grazie, DM
     end
+    super
     raise ArgumentError.new("Citation ID can't be nil") if self.citation_id.nil?
     raise ArgumentError.new("Citation type can't be nil. CitationID: #{self.citation_id}") if self.citation_type.nil?
     raise ArgumentError.new("Citation type must be JOURNAL or NON JOURNAL. CitationID: #{self.citation_id}") if self.citation_type != "JOURNAL" && self.citation_type != "NON_JOURNAL"

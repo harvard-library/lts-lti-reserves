@@ -1,7 +1,7 @@
 class Reserve
   include ActiveModel::Model
 
-  attr_accessor     :citation_request_id, 
+  @@fields  =        [ :citation_request_id, 
                      :input_citation_type, 
                      :citation, 
                      :citation_id, 
@@ -30,14 +30,13 @@ class Reserve
                      :input_material_type, #non-journal
                      :input_month, # journal
                      :input_page_numbers,  #non-journal
-                     :input_publication_year, #non-journal
                      :input_publisher,  #non-journal
                      :input_season, # journal
                      :input_start_page, # journal
                      :input_title, 
                      :input_url, 
                      :input_volume, 
-                     :input_year, # journal
+                     :input_year, # journal; this also serves as non-journal "publication_year"
                      :instance_id, 
                      :instance_id_type, 
                      :instructor_note, 
@@ -50,18 +49,21 @@ class Reserve
                      :student_annotation, 
                      :submitted_date, 
                      :submitting_system, 
-                     :visibility
+                     :visibility ]
+  attr_accessor *@@fields
                     
-  def initialize(opts = {})
-    opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
-    if opts["citation"] && opts["citation"].class.to_s == "Hash" 
-        opts["citation"] = Citation.new(opts["citation"])
+  def initialize(attributes = {})
+    attributes = attributes.reduce({}){ |hash, (k, v)| 
+     key = k.to_s.underscore
+      hash = hash.merge( key => v )  if @@fields.find_index(key.to_sym)
+      hash
+    }
+    if attributes["citation"] && attributes["citation"].class.to_s == "Hash" 
+        attributes["citation"] = Citation.new(attributes["citation"])
     end
-
-    members =  self.methods
-    HashWithIndifferentAccess.new(opts)
-    opts.each do |k,v|
-      self.send (k + '=').to_sym, v  if members.find_index(k.to_sym)# grazie, DM
+    HashWithIndifferentAccess.new(attributes)
+    attributes.each do |k,v|
+      self.send (k + '=').to_sym, v  # grazie, DM
     end
     # at the present time, there's only one instructor id type
     self.contact_instructor_id_type = 'HUID'
@@ -75,7 +77,7 @@ class Reserve
         self.input_citation_type = 'NON_JOURNAL' 
       end
     end
-    #fill_in
+    super
     raise ArgumentError.new("Reserve type can't be nil") if self.input_citation_type.nil?
     raise ArgumentError.new("Reserve type must be JOURNAL or NON JOURNAL") if self.input_citation_type != "JOURNAL" && self.input_citation_type != "NON_JOURNAL"
     raise ArgumentError.new("Reserve must have a either a title or url ") if self.citation.nil? && self.input_title.nil? && self.input_url.nil?
@@ -83,10 +85,11 @@ class Reserve
     raise  ArgumentError.new("Reserve must have an associated course instance id") if self.instance_id.nil?
     raise ArgumentError.new("Reserve must have a material type") if  self.citation.nil? && self.input_material_type.nil? && self.input_citation_type.nil?
   end
+
   def fill_in
 #    puts "fill_in #{self.citation}"
     if self.citation 
-      members = self.members
+      members = self.methods
       self.citation.each_pair { |name, value|
         if value && name.to_s != 'citation_type'
           k = 'input_' + name.to_s
@@ -193,16 +196,13 @@ class Reserve
       self.input_publisher
     end
   end
-
-  def publication_year
+  def year
     if self.citation
-      self.citation.publication_year
+      self.citation.year
     else
-      self.input_publication_year
+      self.input_year
     end
   end
-
-
   def hollis_system_number
    if self.citation
       self.citation.hollis_system_number
