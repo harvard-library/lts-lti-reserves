@@ -18,6 +18,8 @@ describe Reserve do
       expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
       expect(res.chapter_author).to eq("Ntzani, Evangelia E.")
       expect(res.tip_title).to eq("Combining molecular and genetic data from different sources")
+      expect(res.persisted?).to eq(false)
+
     end
     it "creates reserve *with* a citation: a chapter in a book with all chapter info in input only" do
       opts = {
@@ -52,6 +54,9 @@ describe Reserve do
       expect(res.citation).to be_a Citation
       expect(res.journal?).to eq(false)
       expect(res.isbn).to eq("978-92-832-2163-0")
+      expect(res.persisted?).to eq(true)
+      expect(res.id).to eq("298659")
+      expect(res.to_param).to eq("298659")
     end
     it "creates a non-citationed reserve with material type, no type" do
       opts = {"contactInstructorId" => "70663473",

@@ -1,5 +1,11 @@
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular "reserve", "reserves"
+end
 class Reserve
   include ActiveModel::Model
+  include ActiveModel::Serialization
+  extend ActiveModel::Callbacks
+  define_model_callbacks :create, :update
 
   @@fields  =        [ :citation_request_id, 
                      :input_citation_type, 
@@ -85,7 +91,23 @@ class Reserve
     raise  ArgumentError.new("Reserve must have an associated course instance id") if self.instance_id.nil?
     raise ArgumentError.new("Reserve must have a material type") if  self.citation.nil? && self.input_material_type.nil? && self.input_citation_type.nil?
   end
+  def create
+    run_callbacks :create do
+      puts "CREATE ACTION METHODS "
+    end
+  end
 
+  def update
+    run_callbacks :update do
+      puts "UPDATE ACTION METHODS"
+    end
+  end
+  def persisted?
+    self.citation_request_id.present?
+  end
+  def id  # need this for modelling?
+    self.citation_request_id
+  end
   def fill_in
 #    puts "fill_in #{self.citation}"
     if self.citation 
