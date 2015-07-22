@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  
-  get 'courses/show'
+ 
+ 
+#  get 'courses/show'
 
   post 'courses/delete'
 
@@ -12,9 +13,9 @@ Rails.application.routes.draw do
 
 #  get 'reserves/show'
 
-  resources :courses do
-    resources :reserves
-  end
+  resources :courses , except: [:create, :new, :destroy, :index]
+  resources :reserves
+
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

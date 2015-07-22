@@ -20,4 +20,4 @@ in <span class="journal"><%= reserve.journal_title %></span>
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
 <%= icon('check') if reserve.display_status=='Available'%> 
 </span>
-<span class="edit float-right btn-icon-only" title="Edit <%= reserve.tip_title %>"><a href="<%= reserve.instance_id %>/reserves/<%= reserve.citation_request_id %>/edit" class="edit_link float-right"><%= icon('pencil') %> </a></span> 
+<span class="edit float-right btn-icon-only" title="Edit <%= reserve.tip_title %>"><a href="<%= edit_reserve_path reserve %>" class="edit_link float-right"><%= icon('pencil') %> </a></span> 

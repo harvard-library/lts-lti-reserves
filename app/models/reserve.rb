@@ -1,6 +1,3 @@
-ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular "reserve", "reserves"
-end
 class Reserve
   include ActiveModel::Model
   include ActiveModel::Serialization
@@ -101,6 +98,9 @@ class Reserve
     run_callbacks :update do
       puts "UPDATE ACTION METHODS"
     end
+  end
+  def to_param
+    self.citation_request_id.to_s
   end
   def persisted?
     self.citation_request_id.present?
