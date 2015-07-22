@@ -1,0 +1,28 @@
+# this is used to "mock-up" the Library::LIBRARY_LIST constant for testing
+[ {
+  "contactEmail" : "reserves@hds.harvard.edu",
+  "libraryCode" : "DIV",
+  "name" : "Andover-Harv. Theol",
+  "supportUrl" : "http://www.hds.harvard.edu/library/services/faculty/harvard_faculty_reserves.html"
+}, {
+  "contactEmail" : "bioill@fas.harvard.edu",
+  "libraryCode" : "BIO",
+  "name" : "Biological Labs",
+  "supportUrl" : "http://hcl.harvard.edu/info/reserves/#contact"
+}, {
+  "contactEmail" : "botref@oeb.harvard.edu",
+  "libraryCode" : "BOT",
+  "name" : "Botany",
+  "supportUrl" : "http://hcl.harvard.edu/info/reserves/#contact"
+}, {
+  "contactEmail" : "lberger@fas.harvard.edu",
+  "libraryCode" : "CAB",
+  "name" : "Cabot Science",
+  "supportUrl" : "http://hcl.harvard.edu/info/reserves/#contact"
+}, {
+  "contactEmail" : "chapin@chemistry.harvard.edu",
+  "libraryCode" : "CHE",
+  "name" : "Chemistry",
+  "supportUrl" : "http://hcl.harvard.edu/info/reserves/#contact"
+}
+]

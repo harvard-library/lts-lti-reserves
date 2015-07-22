@@ -1,8 +1,23 @@
 # a library object
 Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
-  LIBRARY_LIST = nil
+  $library_list = []
   def self.fetch_library(code)
-    LIBRARY_LIST.detect {|lib| lib.library_code == code}
+    list = self.library_list
+    list.detect {|lib| lib.library_code == code}
+  end
+  def self.library_list
+    if $library_list.count == 0 
+      begin
+        resp = Rlist.new.library_list
+        list = JSON.parse(resp.body)
+        $library_list = list.collect {|lib| Library.new(lib)}
+        puts "Fetched #{$library_list.count} Libraries"
+      end
+    end
+    $library_list
+  rescue Exception => bang
+    warn  "Unable to retrieve information on Libraries : #{bang}"
+    $library_list
   end
 
   def initialize(opts = {})
