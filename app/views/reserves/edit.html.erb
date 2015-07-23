@@ -7,12 +7,10 @@ FIELDS THAT CAN BE MODIFIED:
 Note to Students:
 
 %>
-<div id="content-wrapper" class="container-fluid" role="main">
-<h1>Reserves List: Edit Reserve</h1>
-<% if flash[:notice] %>
-<div class="infoBlock-success"> <%= flash[:notice] %></div>
-<% end %>
+<h2>Reserves List: Edit Reserve</h2>
+
+
+
 Current Reserve: <span class="libnote dfn">(some bibliographic information may have been edited by library staff)</span>
-<div class="display_lib_info">
-Title: <%= title %>
-</div>
+
+<%= render partial: 'edit_reserve', layout: 'edit_label', locals: { reserve: @reserve} %>
