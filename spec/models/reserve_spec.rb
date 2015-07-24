@@ -199,4 +199,42 @@ describe Reserve do
       expect(res.display_status).to eq("Deletion Requested")
     end
   end
+  describe "library" do
+    before(:all) do
+      body = ""
+      File.open("spec/libraries_mock.txt", "r") do |file|
+        while line = file.gets
+          body = body + line if !line.start_with?("#")
+        end
+      end
+      WebMock.stub_request(:get, "http://rlisttest.lib.harvard.edu:9008/rest/v1/libraries/").
+        with(:headers => {'User-Agent'=>'lts-lti-reserves'}).
+        to_return(:status => 200, :body => body, :headers => {})
+    end
+    it "tests for handling library info" do
+            opts = {"contactInstructorId" => "70663473",
+        "inputAlephUrl" => "005117959",
+        "inputCitationId"=>"349098",
+        "instanceId" => "78419",
+        "inputCitationType" => "NON_JOURNAL",
+        "citationId" => "349098",
+        "citation" => {"alephUrl"=>"005117959",
+          "citationId"=>"349098",
+          "citationType"=>"NON_JOURNAL",
+          "pageNumbers"=>"3 videocassettes (120 min.) :",
+          "year"=>"1982",
+          "publisher"=>"Center for South Asian Studies",
+          "title"=>"Tibetan Buddhism"},
+        "courseStatus" => "Deletion Requested",
+        "input_title"=>"Tibetan Buddhism",
+        "input_material_type" => "Video",
+        "status" => "DR_COMPLETE",
+        "libraryCode" => "BIO"
+      }
+      reserve = Reserve.new(opts)
+      expect(reserve.library.name).to eq("Biological Labs")
+      expect(reserve.library.support_url).to eq("http://hcl.harvard.edu/info/reserves/#contact")
+
+    end
+  end
 end

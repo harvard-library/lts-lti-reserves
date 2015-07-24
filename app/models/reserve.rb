@@ -93,7 +93,10 @@ class Reserve
       puts "CREATE ACTION METHODS "
     end
   end
-
+  # returns nil or the Library object
+  def library
+      library = Library::fetch_library(self.library_code)
+  end
   def update
     run_callbacks :update do
       puts "UPDATE ACTION METHODS"
