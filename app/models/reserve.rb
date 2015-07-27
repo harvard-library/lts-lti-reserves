@@ -3,6 +3,47 @@ class Reserve
   include ActiveModel::Serialization
   extend ActiveModel::Callbacks
   define_model_callbacks :create, :update
+  EDIT_FIELDS = [  {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
+                   {"lecture_date" => "Lecture/Class Date", "type" => "date"},
+                   {"visibility" => "Display to Students", "type" => "boolean"},
+                   {"required" => "Required Reading", "type" => "boolean"},
+                   {"student_annotation" => "Note to Student", "type" => "text"}
+                ]
+  NEW_FIELDS = [   {"library_code" => "Library", "type" => "lib"},
+                   {"input_material_type" => "Material type", "type" => "list"},
+                   {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
+                   {"lecture_date" => "Lecture/Class Date", "type" => "date"},
+                   {"visibility" => "Display to Students", "type" => "boolean"},
+                   {"required" => "Required Reading", "type" => "boolean"},
+                   {"input_hollis_system_number" => "HOLLIS number", "journal" => false},
+                   {"input_title" => "Title or Description", "journal" => false},
+                   {"input_author_last_name" => "Author Last"},
+                   {"input_author_first_name" => "Author First"},
+                   {"input_article_title" => "Article Title", "journal" => true, "required" => true},
+                   {"input_doi" => "DOI (Digital Object Identifier)/PUBMED ID",  "journal" => true },
+                   {"input_journal_title" => "Journal Title",  "journal" => true, "required" => true},
+                   {"input_editor_last_name" => "Editor's Last Name"},
+                   {"input_editor_first_name" => "Editor's First Name"},
+                   {"input_publisher" => "publisher", "journal" => false},
+                   {"input_year" => "Year of Publication", "journal" => false},
+                   {"input_chapter_author_last_name" => "Last Name of Chapter/Excerpt Author", "journal" => false},
+                   {"input_chapter_author_first_name" => "First Name of Chapter/Excerpt Author", "journal" => false},
+                   {"input_chapter_title" => "Chapter Title", "journal" => false},
+                   {"input_page_numbers" => "Page Numbers", "journal" => false},
+                   {"input_edition" => "Edition", "journal" => false},
+                   {"input_year" => "Year", "journal" => true},
+                   {"input_season" => "Season",  "journal" => true},
+                   {"input_month" => "Month",  "journal" => true},
+                   {"input_day"=> "Day",  "journal" => true},
+                   {"input_volume" => "Volume",  "journal" => true},
+                   {"input_issue" => "Issue/Number",  "journal" => true},
+                   {"input_start_page" => "Start Page",  "journal" => true},
+                   {"input_end_page" => "End Page",  "journal" => true},
+                   {"input_issn" => "ISSN",  "journal" => true},
+                   {"input_url" => "URL"},
+                   {"instructor_note" => "Note to Reserves Staff", "type" => "text" },
+                   {"student_annotation" => "Note to Students", "type" => "text" }
+                  ]
 
   @@fields  =        [ :citation_request_id, 
                      :input_citation_type, 
