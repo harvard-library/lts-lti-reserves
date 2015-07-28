@@ -25,6 +25,8 @@ gem 'redcarpet'  # Markdown to (x)html renderer
 gem "recipient_interceptor"  # prevents senind emails to real people from staging environment
 # gem "sass-rails", "~> 4.0.3"  # sass adaptor
 gem "simple_form"  # form generation
+gem "bootstrap-datepicker-rails" # a datepicker within the Bootstrap models
+
 gem "title"  # "Translations for <title>s!" (?)
 gem "i18n-tasks"  # find and manage missing and unused translations.
 gem "jquery-rails" # jQuery stuff

@@ -1,6 +1,16 @@
 class ReservesController < ApplicationController
   def show
   end
+  
+  def update
+    begin
+#    logger.error  "****** #{params}"
+#    logger.error "**reserve*** #{params[:reserve] => estimated_enrollment}"
+      @reserve = params[:reserve][:estimated_enrollment]
+    end
+rescue Exception => bang
+    flash[:error] = "problem: #{bang}"
+  end
 
   def edit
     # error handling coming soon: check for id, course_id match, etc.
@@ -13,9 +23,6 @@ class ReservesController < ApplicationController
     redirect_to  '/courses/' + params[:course_id] 
   end
 
-  def update
-
-  end
   def index
   end
 end

@@ -1,0 +1,23 @@
+  <div class="panel panel-info">
+    <div class="panel-heading"><div class="display_lib_info">Library: <% if @reserve.library %>
+<%= @reserve.library.name %> 
+<% if @reserve.library.contact_email %>
+( contact: <a href="mailto:<%= @reserve.library.contact_email %>" title="email for questions or problems"><%= @reserve.library.contact_email %></a> )
+<% end %>
+<% else %>
+<span class="text-error">NO LIBRARY ASSIGNED!! </span>
+<% end %>
+<div><span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
+<%= icon('check') if reserve.display_status=='Available'%>
+</span>
+
+</div>
+      <% if !@reserve.journal? %>
+      <%= render partial: 'display_non_journal', locals: {reserve: @reserve} %>
+      <% end %>
+</div>
+    <div class="panel-body">
+      <%= yield %>
+    </div>
+  </div>
+

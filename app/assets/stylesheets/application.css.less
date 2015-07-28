@@ -3,7 +3,7 @@
  *
  *
  * 
- *= require_self
+ * require_self
  *
   */
 /*
@@ -13,12 +13,10 @@
  * require custom_bootstrap/custom_bootstrap
 */
 /*
- *= require lti-less/lti-less
+ * require lti-less/lti-less
+
 */
 
-
-@import "font-awesome-sprockets";
-@import "font-awesome";
 
 
 //@crimson: #A51C30;
@@ -35,6 +33,29 @@
 @color-creme: #F4EDCA;
 @color-gold: #C4961A;
 @color-lemon: #FFDB6D;
+
+
+/* @import "custom_bootstrap/custom_bootstrap"; */
+@import "lti-less/lti-less";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-datepicker3.css";
+
+/*  form control corrections */
+.form-control {
+  display: block;
+  height: 1.6em;
+  padding: 1% 0.55em;
+  font-size: .9em;
+  line-height: 1.1em;
+  color: #000;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: solid 1px #d2d2d2;
+  border-radius: 5px;
+  box-shadow: none;
+}
 
 .author { color: @color-indigo; font-weight: bold; }
 .title {color: @color-ivy; font-weight: bold;}

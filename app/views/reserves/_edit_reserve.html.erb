@@ -1,0 +1,34 @@
+
+<%= simple_form_for @reserve, url: reserve_path, as: 'reserve', html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+<%= f.error_notification %>
+<%= f.input :citation_request_id, as: :hidden %>
+<%= f.input :instance_id, as: :hidden%>
+<%= f.input :estimated_enrollment, placeholder: 'Estimated enrollment', required: false %>
+<%= f.input :student_annotation, as: :text, placeholder: 'Note to students', label: 'Note to students', required: false  %>
+<%= f.input :lecture_date, label: 'Lecture date', required: false, placeholder: 'DD/MM/YYYY',
+input_html: { class: 'datepicker' }   %>
+<%= f.input :required, label: 'Required Reading', as: :boolean, checked_value: true, unchecked_value: false %>
+<%= f.input :visibility, label: 'Visible to Student', as: :boolean, checked_value: true, unchecked_value: false %>
+<%= f.button :submit, class: "btn btn-submit" %>
+
+
+<% end %>
+<script  type="text/javascript">
+  $(document).ready(function(){
+    $('#reserve_lecture_date').datepicker({
+                       startDate: "now",
+                       endDate: "+365d",
+                       clearBtn: true,
+                       todayHighlight: true,
+                       toggleActive: true,
+                       orientation: "top auto"
+    });
+  });
+</script>
