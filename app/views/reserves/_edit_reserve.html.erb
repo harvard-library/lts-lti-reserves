@@ -10,7 +10,13 @@
 <%= f.error_notification %>
 <%= f.input :citation_request_id, as: :hidden %>
 <%= f.input :instance_id, as: :hidden%>
+<input type="hidden" name="o_estimated_enrollment" value="<%=reserve.estimated_enrollment%>" />
+<input type="hidden" name="o_student_annotation" value="<%=reserve.student_annotation %>"/>
+<input type="hidden" name="o_lecture_date" value="<%=reserve.lecture_date %>" />
+<input type="hidden" name="o_required" value="<%=reserve.required %>" />
+<input type="hidden" name="o_visibility" value="<%=reserve.visibility %>" />
 <%= f.input :estimated_enrollment, placeholder: 'Estimated enrollment', required: false %>
+
 <%= f.input :student_annotation, as: :text, placeholder: 'Note to students', label: 'Note to students', required: false  %>
 <%= f.input :lecture_date, label: 'Lecture date', required: false, placeholder: 'DD/MM/YYYY',
 input_html: { class: 'datepicker' }   %>

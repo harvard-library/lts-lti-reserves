@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body class="lti-tool">
+<body class="lti-tool <%= "c_#{controller.controller_name} a_#{controller.action_name}" %> ">
   <div class="container">
     <div class="row lti-header">
       <h1>Reserves List</h1>
