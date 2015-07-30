@@ -1,0 +1,13 @@
+<%# display information we have about a reserve, modulo the editable stuff %>
+<div class="res_display">
+<% if @reserve.chapter? %>
+&quot;<%= @reserve.chapter_title %> &quot;
+<% if @reserve.chapter_author %>
+by <%= @reserve.chapter_author %>
+
+<% end %>
+<% else %>
+<span class="author"><%= @reserve.author %></span>
+<span class="title"><%= @reserve.title %><% if !@reserve.title.end_with?('.') %>.<% end %></span>
+<% end %>
+</div>

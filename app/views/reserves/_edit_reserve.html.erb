@@ -10,11 +10,12 @@
 <%= f.error_notification %>
 <%= f.input :citation_request_id, as: :hidden %>
 <%= f.input :instance_id, as: :hidden%>
-<input type="hidden" name="o_estimated_enrollment" value="<%=reserve.estimated_enrollment%>" />
-<input type="hidden" name="o_student_annotation" value="<%=reserve.student_annotation %>"/>
-<input type="hidden" name="o_lecture_date" value="<%=reserve.lecture_date %>" />
-<input type="hidden" name="o_required" value="<%=reserve.required %>" />
-<input type="hidden" name="o_visibility" value="<%=reserve.visibility %>" />
+<input type="hidden" id="o_estimated_enrollment" name="o_estimated_enrollment" value="<%=reserve.estimated_enrollment%>" />
+<input type="hidden" id="o_student_annotation" name="o_student_annotation" value="<%=reserve.student_annotation %>"/>
+<input type="hidden" id="o_lecture_date" name="o_lecture_date" value="<%=reserve.lecture_date %>" />
+<input type="hidden" id="o_required" name="o_required" value="<%=reserve.required %>" />
+<input type="hidden" id="o_visibility" name="o_visibility" value="<%=reserve.visibility %>" />
+<input type="hidden" id="iso_date" name="iso_date" value=""/>
 <%= f.input :estimated_enrollment, placeholder: 'Estimated enrollment', required: false %>
 
 <%= f.input :student_annotation, as: :text, placeholder: 'Note to students', label: 'Note to students', required: false  %>
@@ -26,15 +27,3 @@ input_html: { class: 'datepicker' }   %>
 
 
 <% end %>
-<script  type="text/javascript">
-  $(document).ready(function(){
-    $('#reserve_lecture_date').datepicker({
-                       startDate: "now",
-                       endDate: "+365d",
-                       clearBtn: true,
-                       todayHighlight: true,
-                       toggleActive: true,
-                       orientation: "top auto"
-    });
-  });
-</script>
