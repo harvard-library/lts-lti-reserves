@@ -18,7 +18,7 @@
 <input type="hidden" id="iso_date" name="iso_date" value=""/>
 <%= f.input :estimated_enrollment, placeholder: 'Estimated enrollment', required: false %>
 
-<%= f.input :student_annotation, as: :text, placeholder: 'Note to students', label: 'Note to students', required: false  %>
+<%= f.input :student_annotation, as: :text, placeholder: 'This is displayed to students when they look at the Reading List', label: 'Note to students', required: false  %>
 <%= f.input :lecture_date, label: 'Lecture date', required: false, placeholder: 'DD/MM/YYYY',
 input_html: { class: 'datepicker' }   %>
 <%= f.input :required, label: 'Required Reading', as: :boolean, checked_value: 'Y', unchecked_value: 'N' %>
