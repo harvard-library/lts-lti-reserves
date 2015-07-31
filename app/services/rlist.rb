@@ -41,6 +41,12 @@ class Rlist
  #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
     response
   end
+  def update(res_id,  options)
+    loc = ("/citationrequests/" + res_id.to_s)
+    response self.class.post(loc, options,
+                             :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful update of Reserve ( #{res_id}). ") if response.code !204 || response.headers['Location'] != loc
+  end
 end
 
 #rlist = Rlist.new

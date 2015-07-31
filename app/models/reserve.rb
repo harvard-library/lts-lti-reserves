@@ -97,7 +97,7 @@ class Reserve
                      :visibility ]
   attr_accessor *@@fields
 
-  validates_numericality_of :estimated_enrollment, allow_nil: true
+  validates_numericality_of :estimated_enrollment, allow_nil: true, only_integer: true
   validates_inclusion_of :input_citation_type, :in => %w(JOURNAL NON_JOURNAL), :message => "Reserve type must be JOURNAL or NON JOURNAL"
   validates_presence_of :contact_instructor_id, :message => "Reserve must have an instructor ID"
   validates_presence_of :instance_id, :message => "Reserve must have an associated course instance id"

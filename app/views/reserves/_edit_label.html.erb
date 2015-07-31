@@ -14,6 +14,8 @@
 </div>
       <% if !@reserve.journal? %>
       <%= render partial: 'display_non_journal', locals: {reserve: @reserve} %>
+      <%= else %>
+     <%= render partial: 'display_journal', locals: {reserve: @reserve} %>
       <% end %>
 </div>
     <div class="panel-body">
