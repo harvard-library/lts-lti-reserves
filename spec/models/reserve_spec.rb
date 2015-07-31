@@ -1,18 +1,39 @@
 require 'rails_helper'
+
 describe Reserve do
   describe "create" do
-    it "creates reserve with no citation: a chapter in a book with all chapter info in input only" do
+    it "creates reserve with no citation: a chapter in a book with all chapter info in input only BUT set as JOURNAL" do
       opts = {"contactInstructorId" => "70663473",
         "inputMaterialType" => "Book",
+        "inputCitationType" => "JOURNAL",
         "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
         "inputEditorLastName" => "Rothman",
         "inputEditorFirstName" => "Nathaniel",
         "inputChapterTitle" => "Combining molecular and genetic data from different sources",
         "inputChapterAuthorLastName" => "Ntzani",
         "inputChapterAuthorFirstName" => "Evangelia E",
-        "instance_id" => "312287"
+        "instance_id" => "312287",
+        "estimated_enrollment" => "0"
       }
       res = Reserve.new(opts)
+      res.valid?
+      expect(res.errors.messages[:base][0]).to eq("Journal Reserve minimum: Article Title AND Journal Title OR URL")
+    end
+    it "creates reserve with no citation: a chapter in a book with all chapter info in input only AND set as NON_JOURNAL" do
+      opts = {"contactInstructorId" => "70663473",
+        "inputMaterialType" => "Book",
+        "inputCitationType" => "NON_JOURNAL",
+        "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
+        "inputEditorLastName" => "Rothman",
+        "inputEditorFirstName" => "Nathaniel",
+        "inputChapterTitle" => "Combining molecular and genetic data from different sources",
+        "inputChapterAuthorLastName" => "Ntzani",
+        "inputChapterAuthorFirstName" => "Evangelia E",
+        "instance_id" => "312287",
+        "estimated_enrollment" => "0"
+      }
+      res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.author).to be_nil
       expect(res.editor).to eq("Rothman, Nathaniel.")
       expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
@@ -47,6 +68,7 @@ describe Reserve do
         "instance_id" => "312287"
       }
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.author).to be_nil
       expect(res.editor).to eq("Rothman, Nathaniel.")
       expect(res.chapter_title).to eq("Combining molecular and genetic data from different sources")
@@ -67,6 +89,7 @@ describe Reserve do
         "required" => "Y",
         "visibility" => "true"}
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.input_citation_type).to eq("NON_JOURNAL")
       expect(res.display_status).to eq("Unknown")
     end
@@ -104,6 +127,7 @@ describe Reserve do
         "visibility" => "P"
       }
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.author).to eq("Alcock.")
       expect(res.dig_url).to eq("http://www.loc.gov/catdir/toc/ecip072/2006032271.html")
       expect(res.title).to eq("Classical archaeology")
@@ -143,6 +167,7 @@ describe Reserve do
         "visibility" => "P"
       }
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.author).to eq("Boatwright, Mary Taliaferro.")
       expect(res.title).to eq("Hadrian and the cities of the Roman empire")
     end
@@ -172,6 +197,7 @@ describe Reserve do
         "visibility" => "P"
       }
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.title).to eq("Chaos and integrability in nonlinear dynamics: an introduction")
       expect(res.author).to eq("Tabor, Michael.")
     end
@@ -195,6 +221,7 @@ describe Reserve do
         "status" => "DR_COMPLETE"
       }
       res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
       expect(res.input_title).to eq("Tibetan Buddhism")
       expect(res.display_status).to eq("Deletion Requested")
     end
@@ -232,6 +259,7 @@ describe Reserve do
         "libraryCode" => "BIO"
       }
       reserve = Reserve.new(opts)
+      expect(reserve.valid?).to eq(true)
       expect(reserve.library.name).to eq("Biological Labs")
       expect(reserve.library.support_url).to eq("http://hcl.harvard.edu/info/reserves/#contact")
 

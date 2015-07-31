@@ -1,6 +1,7 @@
 class Reserve
   include ActiveModel::Model
   include ActiveModel::Serialization
+  include ActiveModel::Validations
   extend ActiveModel::Callbacks
   define_model_callbacks :create, :update
   EDIT_FIELDS = [  {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
@@ -95,6 +96,22 @@ class Reserve
                      :submitting_system, 
                      :visibility ]
   attr_accessor *@@fields
+
+  validates_numericality_of :estimated_enrollment, allow_nil: true
+  validates_inclusion_of :input_citation_type, :in => %w(JOURNAL NON_JOURNAL), :message => "Reserve type must be JOURNAL or NON JOURNAL"
+  validates_presence_of :contact_instructor_id, :message => "Reserve must have an instructor ID"
+  validates_presence_of :instance_id, :message => "Reserve must have an associated course instance id"
+  validate :has_minimal_input
+
+  def has_minimal_input
+    if !self.citation_id
+      if self.input_citation_type == "JOURNAL"
+        errors.add(:base,"Journal Reserve minimum: Article Title AND Journal Title OR URL") if self.input_url.nil? && (self.input_title.nil?  || self.input_journal_title.nil?)
+      elsif self.input_citation_type == "NON-JOURNAL"
+        errors.add(:base,"Non-journal Reserve minimum: HOLLIS number OR Title OR URL") if (self.input_hollis_system_number.nil? && self.input_title.nil? && self.input_url.nil?)
+      end
+    end
+  end
                     
   def initialize(attributes = {})
     attributes = attributes.reduce({}){ |hash, (k, v)| 
@@ -122,12 +139,6 @@ class Reserve
       end
     end
     super
-    raise ArgumentError.new("Reserve type can't be nil") if self.input_citation_type.nil?
-    raise ArgumentError.new("Reserve type must be JOURNAL or NON JOURNAL") if self.input_citation_type != "JOURNAL" && self.input_citation_type != "NON_JOURNAL"
-    raise ArgumentError.new("Reserve must have a either a title or url ") if self.citation.nil? && self.input_title.nil? && self.input_url.nil?
-    raise ArgumentError.new("Reserve must have an instructor ID") if self.contact_instructor_id.nil?
-    raise  ArgumentError.new("Reserve must have an associated course instance id") if self.instance_id.nil?
-    raise ArgumentError.new("Reserve must have a material type") if  self.citation.nil? && self.input_material_type.nil? && self.input_citation_type.nil?
   end
   def create
     run_callbacks :create do
