@@ -7,9 +7,6 @@
                  if ($("body").hasClass("c_reserves")) {
 		    if ($("body").hasClass("a_edit")) {
 		       setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
-			$("#edit_reserve").submit(function() { 
-			    submitUpdate(e);
-			});
 		    }
 		 }
 });
