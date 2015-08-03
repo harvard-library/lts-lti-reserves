@@ -7,10 +7,10 @@ class Rlist
   base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
 
   def handle_bad_response(response, msg)
-    if response && response.body
+    if response && msg && response.body
       err = MultiXml.parse(response.body)
-      msg = "#{msg} #{err["error"]["status"]}"
-#      msg = "#{msg} #{response.body}"
+#      msg = "#{msg} #{err["error"]["status"]}"
+      msg = "#{msg} #{response.body}"
     else
       msg = "#{response.code}: #{response.message}"
     end
@@ -41,10 +41,10 @@ class Rlist
  #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
     response
   end
-  def update(res_id,  options)
-    loc = ("/citationrequests/" + res_id.to_s)
-    response self.class.post(loc, options,
-                             :headers => {"User-Agent" => "lts-lti-reserves"} )
+  def update(course_id, res_id,  options)
+    loc = ("/courses/#{course_id}/citationrequest/#{res_id}")
+    response = self.class.post(loc, { body: options,
+                                 :headers => {"User-Agent" => "lts-lti-reserves"}} )
     handle_bad_response(response,"Unsuccessful update of Reserve ( #{res_id}). ") if response.code !204 || response.headers['Location'] != loc
   end
 end

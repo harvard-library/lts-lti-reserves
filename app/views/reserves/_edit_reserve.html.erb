@@ -10,6 +10,7 @@
 <%= f.error_notification %>
 <%= f.input :citation_request_id, as: :hidden %>
 <%= f.input :instance_id, as: :hidden%>
+<input type="hidden" id="title" name="title" value="<%=reserve.title%>" />
 <input type="hidden" id="o_estimated_enrollment" name="o_estimated_enrollment" value="<%=reserve.estimated_enrollment%>" />
 <input type="hidden" id="o_student_annotation" name="o_student_annotation" value="<%=reserve.student_annotation %>"/>
 <input type="hidden" id="o_lecture_date" name="o_lecture_date" value="<%=reserve.lecture_date %>" />
