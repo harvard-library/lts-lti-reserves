@@ -38,7 +38,6 @@ class ReservesController < ApplicationController
       end
     rescue Exception => bang
       flash[:error] = "Unable to update Reserve #{params["title"]} : #{bang}"
-      binding.pry
       redirect_to '/reserves/' + params[:id] +'?course_id=' + params[:reserve]["instance_id"]
     end
   end
