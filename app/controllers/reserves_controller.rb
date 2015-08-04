@@ -3,6 +3,13 @@ class ReservesController < ApplicationController
   end
   
   def new
+    @course_id = params[:course_id]
+# get library list (libs), default library (lib_def) here
+    @libs = Library::library_options
+    @material_types = Reserve.material_types
+    @reserve = Reserve.new({:instance_id => @course_id})
+  end
+  def create
   end
   def update
     begin

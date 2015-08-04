@@ -9,18 +9,12 @@ HOLLIS System Number:
 Autocomplete
 Title or Description:
     Author Last Name: Author First Name:
-    
     Editor Last Name: Editor First Name:
-    
     Publisher: Year of Publication:
-    
     Author (of chapter or excerpt) Last Name: Author (of chapter or excerpt) First Name:
-    
 Chapter Title:
     Page Numbers: Volume:
-    
     Edition: ISBN:
-    
 Note to Reserves Staff:
 Note to Students:
 %>
@@ -34,18 +28,29 @@ HOLLIS System Number:
 Autocomplete
 Title or Description:
     Author Last Name: Author First Name:
-    
     Editor Last Name: Editor First Name:
-    
     Publisher: Year of Publication:
-    
     Author (of chapter or excerpt) Last Name: Author (of chapter or excerpt) First Name:
-    
 Chapter Title:
     Page Numbers: Volume:
-    
     Edition: ISBN:
-    
 Note to Reserves Staff:
 Note to Students:
 %>
+<h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Courses">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
+<div class="row row-lti lti-section">
+<%= simple_form_for @reserve, url: new_reserve_path, as: 'reserve',  html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+<%= f.error_notification %>
+<%= f.input :instance_id, as: :hidden%>
+<%= f.input :library_code, :collection => @libs, :label => Library %>
+
+<% end %>
+</div>
+
