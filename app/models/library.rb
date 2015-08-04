@@ -5,6 +5,7 @@ Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
     list = self.library_list
     list.detect {|lib| lib.library_code == code}
   end
+ 
   def self.library_list
     if $library_list.count == 0 
       begin
@@ -19,7 +20,13 @@ Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
     warn  "Unable to retrieve information on Libraries : #{bang}"
     $library_list
   end
-
+  def self.library_options
+    options = []
+    self.library_list.each do |l|
+      options.push([l.name, l.library_code])
+    end
+    options
+  end
   def initialize(opts = {})
     opts = opts.reduce({}){ |hash, (k, v)| hash.merge( k.to_s.underscore => v )  }
     members =  self.members

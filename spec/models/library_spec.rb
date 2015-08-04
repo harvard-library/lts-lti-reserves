@@ -29,6 +29,12 @@ describe Library do
       list = Library::library_list
       expect(list.count).to eq(5)
     end
+    it "gets options list" do
+      list = Library::library_options
+      expect(list.count).to eq(5)
+      expect(list[2][0]).to eq("Botany")
+      expect(list[2][1]).to eq("BOT")
+    end
     it "gets a library off the list" do
       lib = Library::fetch_library("BIO")
       expect(lib).not_to eq(nil)
