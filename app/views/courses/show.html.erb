@@ -6,7 +6,7 @@
 <ul class="list-with-floats">
 <li class="head"><%= check_box_tag("select_all") %>
 <%= label_tag("select_all", "Select all reserves") %> <span class="delete " title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", {:class => "btn btn-submit chks_submit", :id => "delete_btn", :disabled => "disabled"}) %></span> 
-<span class="float-right"><a href="<%= new_reserve_path  %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
+<span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
 </li>
 </ul>
 <ul class="list-with-floats chk_grp">
