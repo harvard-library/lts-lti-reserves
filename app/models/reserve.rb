@@ -4,6 +4,7 @@ class Reserve
   include ActiveModel::Validations
   extend ActiveModel::Callbacks
   define_model_callbacks :create, :update
+  MATERIAL_TYPES = ["Book","Journal Article", "Video", "Audio", "Image", "Map", "Score", "Other"]
   EDIT_FIELDS = [  {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
                    {"lecture_date" => "Lecture/Class Date", "type" => "date"},
                    {"visibility" => "Display to Students", "type" => "boolean"},
@@ -102,7 +103,8 @@ class Reserve
   validates_presence_of :contact_instructor_id, :message => "Reserve must have an instructor ID"
   validates_presence_of :instance_id, :message => "Reserve must have an associated course instance id"
   validate :has_minimal_input
-
+  
+# validation method
   def has_minimal_input
     if !self.citation_id
       if self.input_citation_type == "JOURNAL"
@@ -112,7 +114,10 @@ class Reserve
       end
     end
   end
-                    
+
+  def self.material_types
+    return MATERIAL_TYPES
+  end
   def initialize(attributes = {})
     attributes = attributes.reduce({}){ |hash, (k, v)| 
      key = k.to_s.underscore
@@ -132,7 +137,7 @@ class Reserve
     self.instance_id_type = 'COURSE'
     # a newly-created request *might* be sussed out by material type
     if self.input_citation_type.nil? && self.input_material_type
-      if self.input_material_type.upcase == 'JOURNAL'
+      if self.input_material_type.upcase.start_with? == 'JOURNAL'
         self.input_citation_type = 'JOURNAL'
       else  self.input_material_type
         self.input_citation_type = 'NON_JOURNAL' 
