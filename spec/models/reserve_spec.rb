@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Reserve do
   describe "create" do
-    it "creates reserve with no citation: a chapter in a book with all chapter info in input only BUT set as JOURNAL" do
+    it "creates reserve with no citation: a chapter in a book with all chapter info in input only BUT set as JOURNAL and no Library" do
       opts = {"contactInstructorId" => "70663473",
         "inputMaterialType" => "Book",
         "inputCitationType" => "JOURNAL",
@@ -17,20 +17,22 @@ describe Reserve do
       }
       res = Reserve.new(opts)
       res.valid?
-      expect(res.errors.messages[:base][0]).to eq("Journal Reserve minimum: Article Title AND Journal Title OR URL")
+      expect(res.errors.messages[:base].find_index("Journal Reserve minimum: Article Title AND Journal Title OR URL")).not_to be_nil
+      expect(res.errors.messages[:library_code]).not_to be_nil
     end
     it "creates reserve with no citation: a chapter in a book with all chapter info in input only AND set as NON_JOURNAL" do
       opts = {"contactInstructorId" => "70663473",
-        "inputMaterialType" => "Book",
-        "inputCitationType" => "NON_JOURNAL",
-        "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
-        "inputEditorLastName" => "Rothman",
-        "inputEditorFirstName" => "Nathaniel",
-        "inputChapterTitle" => "Combining molecular and genetic data from different sources",
-        "inputChapterAuthorLastName" => "Ntzani",
-        "inputChapterAuthorFirstName" => "Evangelia E",
-        "instance_id" => "312287",
-        "estimated_enrollment" => "0"
+               "library_code" => "BOT",
+               "inputMaterialType" => "Book",
+               "inputCitationType" => "NON_JOURNAL",
+               "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
+               "inputEditorLastName" => "Rothman",
+               "inputEditorFirstName" => "Nathaniel",
+               "inputChapterTitle" => "Combining molecular and genetic data from different sources",
+               "inputChapterAuthorLastName" => "Ntzani",
+               "inputChapterAuthorFirstName" => "Evangelia E",
+               "instance_id" => "312287",
+               "estimated_enrollment" => "0"
       }
       res = Reserve.new(opts)
       expect(TestHelper::valid(res)).to eq(true)
@@ -59,6 +61,7 @@ describe Reserve do
         "contactInstructorId" => "70663473",
         "citationId" => "490161",
         "citationRequestId" => "298659",
+        "library_code" => "BOT",
         "inputMaterialType" => "Book",
         "inputTitle" => "Molecular Epidemiology: Principles and Practices ",
         "inputEditorLastName" => "Rothman",
@@ -218,6 +221,7 @@ describe Reserve do
         "courseStatus" => "Deletion Requested",
         "input_title"=>"Tibetan Buddhism",
         "input_material_type" => "Video",
+        "library_code" => "LAM",
         "status" => "DR_COMPLETE"
       }
       res = Reserve.new(opts)
