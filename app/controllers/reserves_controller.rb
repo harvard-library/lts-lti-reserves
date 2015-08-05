@@ -3,13 +3,20 @@ class ReservesController < ApplicationController
   end
   
   def new
-    @course_id = params[:course_id]
+    @course_id = params[:course_id] ||  params[:reserve]["instance_id"]
 # get library list (libs), default library (lib_def) here
     @libs = Library::library_options
     @material_types = Reserve.material_types
     @reserve = Reserve.new({:instance_id => @course_id})
   end
   def create
+    @reserve = Reserve.new(params[:reserve])
+    if !@reserve.valid?
+      flash.now[:error] = @reserve.errors[:base] if @reserve.errors[:base]
+      @libs = Library::library_options
+    @material_types = Reserve.material_types
+      render "new"
+    end
   end
   def update
     begin

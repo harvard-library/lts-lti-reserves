@@ -39,7 +39,7 @@ Note to Students:
 %>
 <h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Courses">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
 <div class="row row-lti lti-section">
-<%= simple_form_for @reserve, url: new_reserve_path, as: 'reserve',  html: { class: 'form-horizontal' },
+<%= simple_form_for @reserve, url: reserves_path, as: 'reserve',  html: { class: 'form-horizontal' },
   wrapper: :horizontal_form,
   wrapper_mappings: {
     check_boxes: :horizontal_radio_and_checkboxes,
@@ -49,8 +49,19 @@ Note to Students:
   } do |f| %>
 <%= f.error_notification %>
 <%= f.input :instance_id, as: :hidden%>
+<div class="form-group string required reserve_library_code<% if !@reserve.errors[:library_code].empty? %> has-error<% end %>">
+<label class="string required col-sm-3 control-label" for="reserve_library_code"><abbr title="required">*</abbr> Library</label><div class="col-sm-9"><select class="select required form-control" name="reserve[library_code]" id="reserve_library_code">
+    <option value=""></option>
+    <% @libs.each do |k,v|  %>
+<option value="<%= v %>" <% if v == @reserve.library_code %>selected="selected"<% end  %> ><%= k %></option>
+	<% end %>
+</select>
+<% if !@reserve.errors[:library_code].empty? %><span class="help-block"><%=  @reserve.errors[:library_code][0].to_s %></span><% end %>
+</div>
+</div>
 <%= f.input :library_code, :collection => @libs, :label => Library %>
 
+<%= f.button :submit, class: "btn btn-submit" %>
 <% end %>
 </div>
 
