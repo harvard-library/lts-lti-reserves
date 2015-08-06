@@ -1,5 +1,5 @@
 <% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
+  <% if !msg.blank? %>
     <div class="alert alert-<%= case
 		when name == "notice"
 		     "success"
@@ -9,8 +9,20 @@
 		     name
 		end
 %>">
+
       <a class="close" data-dismiss="alert">&#215;</a>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <div id="<%= "flash_#{name}" %>">
+     <% if msg.is_a?(Array) %>
+	<ul>
+	<% msg.each do |m| %>
+	<li><%= m %></li>
+	<% end%>
+	</ul>
+
+     <% else %>
+      <%= msg %>
+    <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
