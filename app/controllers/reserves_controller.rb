@@ -29,7 +29,6 @@ class ReservesController < ApplicationController
         changed = true if params["o_" + v] != params[:reserve][v.to_sym] 
       end
       flash[:info] = "No values were changed" if !changed
-      flash[:error] = "Estimated Enrollment must be a number" if  params[:reserve]["estimated_enrollment"] &&  params[:reserve]["estimated_enrollment"] !~ /\A[+-]?\d+\z/
       redir = '/reserves/' + params[:reserve]["citation_request_id"] + '/edit?course_id=' + params[:reserve]["instance_id"] if flash[:info] || flash[:error]
 
 # OK, here's where we try to POST.  Note: camelCase for Java!
