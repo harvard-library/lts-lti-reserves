@@ -70,7 +70,7 @@ Note to Students:
 
 <%= f.input :instructor_note, as: :text, placeholder: 'This is seen by the Reserve Librarian Staff', label: 'Note to Reserve Staff', required: false %>
 
-<div class="switch_it">
+<div id="switchable">
 <% Reserve::NEW_FIELDS.each do |field|
    wClass = 'both'
    if field["journal"]
