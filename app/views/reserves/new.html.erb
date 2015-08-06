@@ -37,6 +37,7 @@ Chapter Title:
 Note to Reserves Staff:
 Note to Students:
 %>
+
 <h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Courses">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
 <div class="row row-lti lti-section">
 <%= simple_form_for @reserve, url: reserves_path, as: 'reserve',  html: { class: 'form-horizontal' },
@@ -44,11 +45,12 @@ Note to Students:
   wrapper_mappings: {
     check_boxes: :horizontal_radio_and_checkboxes,
     radio_buttons: :horizontal_radio_and_checkboxes,
-    file: :horizontal_file_input,
     boolean: :horizontal_boolean
   } do |f| %>
 <%= f.error_notification %>
 <%= f.input :instance_id, as: :hidden%>
+<%= f.input :contact_instructor_id, as: :hidden %>
+<%# Library Code needs to be individually coded because Simple_form doesn't handle errors in a select field properly :-( %>
 <div class="form-group string required reserve_library_code<% if !@reserve.errors[:library_code].empty? %> has-error<% end %>">
 <label class="string required col-sm-3 control-label" for="reserve_library_code"><abbr title="required">*</abbr> Library</label><div class="col-sm-9"><select class="select required form-control" name="reserve[library_code]" id="reserve_library_code">
     <option value=""></option>
@@ -59,8 +61,29 @@ Note to Students:
 <% if !@reserve.errors[:library_code].empty? %><span class="help-block"><%=  @reserve.errors[:library_code][0].to_s %></span><% end %>
 </div>
 </div>
-<%= f.input :library_code, :collection => @libs, :label => Library %>
+<%# end of Library Code %>
 
+<%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Material Type" %>
+
+<%= render partial: 'common_inputs',  locals: { reserve: @reserve, f: f} %>
+
+
+<%= f.input :instructor_note, as: :text, placeholder: 'This is seen by the Reserve Librarian Staff', label: 'Note to Reserve Staff', required: false %>
+
+<div class="switch_it">
+<% Reserve::NEW_FIELDS.each do |field|
+   wClass = 'both'
+   if field["journal"]
+     wClass = 'journal'
+   elsif !field["journal"].nil?
+     wClass = 'nonjournal'
+   end
+ %>
+
+<%= f.input field["name"].to_sym, label: field["label"], wrapper_html: {class: wClass}, required: field["required"] %>
+<% end %>
+
+</div>
 <%= f.button :submit, class: "btn btn-submit" %>
 <% end %>
 </div>

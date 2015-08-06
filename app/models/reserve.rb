@@ -11,41 +11,34 @@ class Reserve
                    {"required" => "Required Reading", "type" => "boolean"},
                    {"student_annotation" => "Note to Student", "type" => "text"}
                 ]
-  NEW_FIELDS = [   {"library_code" => "Library", "type" => "lib"},
-                   {"input_material_type" => "Material type", "type" => "list"},
-                   {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
-                   {"lecture_date" => "Lecture/Class Date", "type" => "date"},
-                   {"visibility" => "Display to Students", "type" => "boolean"},
-                   {"required" => "Required Reading", "type" => "boolean"},
-                   {"input_hollis_system_number" => "HOLLIS number", "journal" => false},
-                   {"input_title" => "Title or Description", "journal" => false},
-                   {"input_author_last_name" => "Author Last"},
-                   {"input_author_first_name" => "Author First"},
-                   {"input_article_title" => "Article Title", "journal" => true, "required" => true},
-                   {"input_doi" => "DOI (Digital Object Identifier)/PUBMED ID",  "journal" => true },
-                   {"input_journal_title" => "Journal Title",  "journal" => true, "required" => true},
-                   {"input_editor_last_name" => "Editor's Last Name"},
-                   {"input_editor_first_name" => "Editor's First Name"},
-                   {"input_publisher" => "publisher", "journal" => false},
-                   {"input_year" => "Year of Publication", "journal" => false},
-                   {"input_chapter_author_last_name" => "Last Name of Chapter/Excerpt Author", "journal" => false},
-                   {"input_chapter_author_first_name" => "First Name of Chapter/Excerpt Author", "journal" => false},
-                   {"input_chapter_title" => "Chapter Title", "journal" => false},
-                   {"input_page_numbers" => "Page Numbers", "journal" => false},
-                   {"input_edition" => "Edition", "journal" => false},
-                   {"input_year" => "Year", "journal" => true},
-                   {"input_season" => "Season",  "journal" => true},
-                   {"input_month" => "Month",  "journal" => true},
-                   {"input_day"=> "Day",  "journal" => true},
-                   {"input_volume" => "Volume",  "journal" => true},
-                   {"input_issue" => "Issue/Number",  "journal" => true},
-                   {"input_start_page" => "Start Page",  "journal" => true},
-                   {"input_end_page" => "End Page",  "journal" => true},
-                   {"input_issn" => "ISSN",  "journal" => true},
-                   {"input_url" => "URL"},
-                   {"instructor_note" => "Note to Reserves Staff", "type" => "text" },
-                   {"student_annotation" => "Note to Students", "type" => "text" }
-                  ]
+  NEW_FIELDS = [   # also EDIT_FIELDS, ABOVE AND     {"instructor_note" => {"label" => "Note to Reserves Staff", "type" => "text" }},
+                { "name" => "input_hollis_system_number", "label" =>"HOLLIS number", "journal" => false},
+                { "name" => "input_title", "label" => "Title or Description", "journal" => false},
+                { "name" => "input_author_last_name", "label" => "Author Last"},
+                { "name" => "input_author_first_name", "label" =>  "Author First"},
+                { "name" => "input_article_title", "label" => "Article Title", "journal" => true, "required" => true},
+                { "name" => "input_journal_title", "label" => "Journal Title",  "journal" => true, "required" => true},
+                { "name" => "input_doi", "label" => "DOI (Digital Object Identifier)/PUBMED ID",  "journal" => true },
+                { "name" => "input_url", "label" => "URL"},
+                { "name" => "input_editor_last_name", "label" => "Editor's Last Name"},
+                { "name" => "input_editor_first_name", "label" => "Editor's First Name"},
+                { "name" => "input_publisher", "label" => "publisher", "journal" => false},
+                { "name" => "input_year", "label" => "Year of Publication", "journal" => false},
+                { "name" => "input_chapter_author_last_name", "label" =>  "Last Name of Chapter/Excerpt Author", "journal" => false},
+                { "name" => "input_chapter_author_first_name", "label" => "First Name of Chapter/Excerpt Author", "journal" => false},
+                { "name" => "input_chapter_title", "label" => "Chapter Title", "journal" => false},
+                { "name" => "input_page_numbers", "label" => "Page Numbers", "journal" => false},
+                { "name" => "input_edition", "label" => "Edition", "journal" => false},
+                { "name" => "input_year", "label" => "Year",  "journal" => true},
+                { "name" => "input_season", "label" => "Season",  "journal" => true},
+                { "name" => "input_month", "label" => "Month",  "journal" => true},
+                { "name" => "input_day", "label" => "Day",  "journal" => true},
+                { "name" => "input_volume", "label" => "Volume",  "journal" => true},
+                { "name" => "input_issue", "label" => "Issue/Number",  "journal" => true},
+                { "name" => "input_start_page", "label" => "Start Page",  "journal" => true},
+                { "name" => "input_end_page", "label" => "End Page",  "journal" => true},
+                { "name" => "input_issn", "label" => "ISSN",  "journal" => true}
+              ]
 
   @@fields  =        [ :citation_request_id, 
                      :input_citation_type, 
@@ -99,23 +92,30 @@ class Reserve
   attr_accessor *@@fields
 
 #  validates_numericality_of :estimated_enrollment, allow_nil: true, only_integer: true
-  validates_inclusion_of :input_citation_type, :in => %w(JOURNAL NON_JOURNAL), :message => "Reserve type must be JOURNAL or NON JOURNAL"
+  validate :has_citation_type
   validates_presence_of :contact_instructor_id, :message => "Reserve must have an instructor ID"
   validates_presence_of :instance_id, :message => "Reserve must have an associated course instance id"
   validates_presence_of :library_code, :message => "Please identify a library"
+  
   validate :has_minimal_input
   
-# validation method
+# validation methods
+  def has_citation_type
+    if self.input_citation_type.nil? || %w(JOURNAL NON_JOURNAL).find_index(self.input_citation_type).nil?
+      message = "Please specify a material type"
+      errors.add(:base, message)
+    end
+  end
   def has_minimal_input
-    if !self.citation_id
-      if self.input_citation_type == "JOURNAL" && (self.input_url.nil? && (self.input_title.nil?  || self.input_journal_title.nil?))
+    if self.citation_id.blank?
+      if self.input_citation_type == "JOURNAL" && self.input_url.blank? && (self.input_title.blank?  || self.input_journal_title.blank? )
         msg = "Journal Reserve minimum: Article Title AND Journal Title OR URL"
         errors.add(:base,msg)
-        [:input_url, :input_title, :input_journal_title].each { |f| errors.add(f,msg) if self.send(f).nil? }
-      elsif self.input_citation_type == "NON-JOURNAL" && self.input_hollis_system_number.nil? && self.input_title.nil? && self.input_url.nil?
+        [:input_url, :input_title, :input_journal_title].each { |f| errors.add(f,msg) if self.send(f).blank? }
+      elsif self.input_citation_type == "NON_JOURNAL" && self.input_hollis_system_number.blank? && self.input_title.blank? && self.input_url.blank?
         msg = "Non-journal Reserve minimum: HOLLIS number OR Title OR URL"
         errors.add(:base, msg)
-        [:input_hollis_system_number, :input_title, :input_url].each  { |f| errors.add(f,msg) if self.send(f).nil? }
+        [:input_hollis_system_number, :input_title, :input_url].each  { |f| errors.add(f,msg) if self.send(f).blank? }
         end
     end
   end
@@ -141,8 +141,8 @@ class Reserve
     # only instances are Course instances
     self.instance_id_type = 'COURSE'
     # a newly-created request *might* be sussed out by material type
-    if self.input_citation_type.nil? && self.input_material_type
-      if self.input_material_type.upcase.start_with? == 'JOURNAL'
+    if self.input_citation_type.blank? && !self.input_material_type.blank? 
+      if self.input_material_type.upcase.start_with?('JOURNAL')
         self.input_citation_type = 'JOURNAL'
       else  self.input_material_type
         self.input_citation_type = 'NON_JOURNAL' 

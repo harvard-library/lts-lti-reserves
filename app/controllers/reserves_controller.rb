@@ -7,14 +7,17 @@ class ReservesController < ApplicationController
 # get library list (libs), default library (lib_def) here
     @libs = Library::library_options
     @material_types = Reserve.material_types
-    @reserve = Reserve.new({:instance_id => @course_id})
+    instructor = params[:contact_instructor_id] || ENV['HUID'] # we'll get this when we hook up with LTI
+    @reserve = Reserve.new({:instance_id => @course_id, :contact_instructor_id => instructor})
   end
+
   def create
     @reserve = Reserve.new(params[:reserve])
     if !@reserve.valid?
       flash.now[:error] = @reserve.errors[:base] if @reserve.errors[:base]
       @libs = Library::library_options
     @material_types = Reserve.material_types
+      params[:course_id] = params[:reserve]["instance_id"]
       render "new"
     end
   end
