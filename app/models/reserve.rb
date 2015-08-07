@@ -40,7 +40,7 @@ class Reserve
                 { "name" => "input_issn", "label" => "ISSN",  "journal" => true}
               ]
 
-  @@fields  =        [ :citation_request_id, 
+  FIELDS  =        [ :citation_request_id, 
                      :input_citation_type, 
                      :citation, 
                      :citation_id, 
@@ -89,7 +89,7 @@ class Reserve
                      :submitted_date, 
                      :submitting_system, 
                      :visibility ]
-  attr_accessor *@@fields
+  attr_accessor *FIELDS
 
 #  validates_numericality_of :estimated_enrollment, allow_nil: true, only_integer: true
   validate :has_citation_type
@@ -126,7 +126,7 @@ class Reserve
   def initialize(attributes = {})
     attributes = attributes.reduce({}){ |hash, (k, v)| 
      key = k.to_s.underscore
-      hash = hash.merge( key => v )  if @@fields.find_index(key.to_sym)
+      hash = hash.merge( key => v )  if FIELDS.find_index(key.to_sym)
       hash
     }
     if attributes["citation"] && attributes["citation"].class.to_s == "Hash" 
@@ -140,6 +140,9 @@ class Reserve
     self.contact_instructor_id_type = 'HUID'
     # only instances are Course instances
     self.instance_id_type = 'COURSE'
+    # enrollment issues
+    self.estimated_enrollment = "0" if self.estimated_enrollment.blank?
+binding.pry
     # a newly-created request *might* be sussed out by material type
     if self.input_citation_type.blank? && !self.input_material_type.blank? 
       if self.input_material_type.upcase.start_with?('JOURNAL')

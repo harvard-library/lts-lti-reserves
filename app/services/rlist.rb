@@ -9,10 +9,10 @@ class Rlist
   def handle_bad_response(response, msg)
     if response && msg && response.body
       err = MultiXml.parse(response.body)
-      msg = "#{msg} #{err["error"]["status"]}"
+      msg = "#{msg} #{err["error"]["status"]} #{err["error"]["message"]}"
 #      msg = "#{msg} #{response.body}"
     else
-      msg = "#{response.code}: #{response.message}"
+      msg = "#{msg} #{response.code}: #{response.message}"
     end
    raise RuntimeError.new(msg)
   end
@@ -47,6 +47,14 @@ class Rlist
                                  :headers => {"User-Agent" => "lts-lti-reserves"}} )
     handle_bad_response(response,"Unsuccessful update of Reserve ( #{res_id}). ") if response.code != 204 # || response.headers['Location'] != loc
     response
+  end
+  def create(course_id, options)
+    loc = ("/courses/#{course_id}/citationrequest/")
+    response =  self.class.post(loc, { body: options,
+                                :headers => {"User-Agent" => "lts-lti-reserves"}} )
+    handle_bad_response(response,"Problem creating new Reserve. ") if response.code != 201 # || response.headers['Location'] != loc
+    response
+
   end
 end
 

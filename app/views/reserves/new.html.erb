@@ -38,7 +38,7 @@ Note to Reserves Staff:
 Note to Students:
 %>
 
-<h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Courses">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
+<h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
 <div class="row row-lti lti-section">
 <%= simple_form_for @reserve, url: reserves_path, as: 'reserve',  html: { class: 'form-horizontal' },
   wrapper: :horizontal_form,
@@ -48,7 +48,7 @@ Note to Students:
     boolean: :horizontal_boolean
   } do |f| %>
 <%= f.error_notification %>
-<%= f.input :instance_id, as: :hidden%>
+<input type="hidden" value="<%= @course_id %>" name="course_id" id="course_id"/>
 <%= f.input :contact_instructor_id, as: :hidden %>
 <%# Library Code needs to be individually coded because Simple_form doesn't handle errors in a select field properly :-( %>
 <div class="form-group string required reserve_library_code<% if !@reserve.errors[:library_code].empty? %> has-error<% end %>">

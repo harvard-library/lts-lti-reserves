@@ -8,7 +8,8 @@
 		    if ($("body").hasClass("a_edit") ) {
 		       setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
 		    }
-		    else if ( $("body").hasClass("a_new")) {
+		    else if ( $("body").hasClass("a_new") ||
+			       $("body").hasClass("a_create") ) {
                        setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
 			material_type_change($("#reserve_input_material_type")); /* when we come back with an error */
 			$("#reserve_input_material_type").on("change", function(e) {
@@ -44,7 +45,8 @@ function material_type_change($this) {
 	switch_type("");
     } 
     else {
-	switch_type(($(this).val() === "Journal Article")? "JOURNAL" : "NON_JOURNAL");
+	var type = ($this.val() === "Journal Article")? "JOURNAL" : "NON_JOURNAL";
+	switch_type(type);
     }
     return;
 }
@@ -52,7 +54,6 @@ function material_type_change($this) {
 /* shows and hides elements according to type */ 
  function switch_type(type) {
      $("#switchable").hide();
-     
      if (type === "JOURNAL") {
 	 $(".nonjournal").hide();
 	 $(".journal").show();
