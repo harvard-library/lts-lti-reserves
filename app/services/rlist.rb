@@ -1,21 +1,10 @@
 require 'httparty'
-
 #require 'dotenv'
 #Dotenv.load
 class Rlist
+  include RestHandler
   include HTTParty
   base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
-
-  def handle_bad_response(response, msg)
-    if response && msg && response.body
-      err = MultiXml.parse(response.body)
-      msg = "#{msg} #{err["error"]["status"]} #{err["error"]["message"]}"
-#      msg = "#{msg} #{response.body}"
-    else
-      msg = "#{msg} #{response.code}: #{response.message}"
-    end
-   raise RuntimeError.new(msg)
-  end
 
   def library_list
     response = self.class.get("/libraries/",
