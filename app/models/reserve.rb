@@ -22,7 +22,7 @@ class Reserve
                 { "name" => "input_url", "label" => "URL"},
                 { "name" => "input_editor_last_name", "label" => "Editor's Last Name"},
                 { "name" => "input_editor_first_name", "label" => "Editor's First Name"},
-                { "name" => "input_publisher", "label" => "publisher", "journal" => false},
+                { "name" => "input_publisher", "label" => "Publisher", "journal" => false},
                 { "name" => "input_year", "label" => "Year of Publication", "journal" => false},
                 { "name" => "input_chapter_author_last_name", "label" =>  "Last Name of Chapter/Excerpt Author", "journal" => false},
                 { "name" => "input_chapter_author_first_name", "label" => "First Name of Chapter/Excerpt Author", "journal" => false},
