@@ -142,7 +142,6 @@ class Reserve
     self.instance_id_type = 'COURSE'
     # enrollment issues
     self.estimated_enrollment = "0" if self.estimated_enrollment.blank?
-binding.pry
     # a newly-created request *might* be sussed out by material type
     if self.input_citation_type.blank? && !self.input_material_type.blank? 
       if self.input_material_type.upcase.start_with?('JOURNAL')
