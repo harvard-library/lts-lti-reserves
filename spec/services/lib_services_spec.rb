@@ -1,7 +1,7 @@
 require 'rails_helper'
 describe LibServices do
-  describe "get" do
-    it "successfully gets a citation" do
+  describe "hollis" do
+    it "successfully gets a hollis citation" do
       WebMock.allow_net_connect!
       libs = LibServices.new
       response = libs.hollis_cite('003617028')
@@ -19,4 +19,27 @@ puts response.body
       WebMock.disable_net_connect!
     end
   end
+  describe "journal" do
+    it "successfully gets a doi" do
+      WebMock.allow_net_connect!
+      libs = LibServices.new
+      response = libs.journal_cite("10.1016/j.pedn.2008.07.009")
+      cite = JSON.parse(response.body)['rlistFormat']['journalArticle']
+      expect(response.code).to eq(200)
+      expect(cite['doi']).to eq("10.1016/j.pedn.2008.07.009")
+      expect(cite['journalTitle']).to eq("Journal of Pediatric Nursing")
+      expect(cite['pubmed']).to be_nil
+      WebMock.disable_net_connect!
+    end
+    it "successfully gets a PUBMED article" do
+      WebMock.allow_net_connect!
+      response = LibServices.new.journal_cite("11079970")
+      cite = JSON.parse(response.body)['rlistFormat']['journalArticle']
+      expect(response.code).to eq(200)
+      expect(cite['pubmed'].to_s).to eq("11079970")
+      expect(cite['doi']).to be_nil
+      WebMock.disable_net_connect!
+    end
+  end
+ 
 end

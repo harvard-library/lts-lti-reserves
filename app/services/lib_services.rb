@@ -3,13 +3,23 @@ require 'httparty'
 class LibServices
   include RestHandler
   include HTTParty
-  base_uri   ENV['LIB_SERVICES_URL'] || 'http://webservices.lib.harvard.edu/rest'
+  base_uri   ENV['LIB_SERVICES_URL'] || 'http://webservices.lib.harvard.edu/rest/cite'
 
-  def hollis_cite(hollis_id)
-    response = self.class.get("/cite/hollis/#{hollis_id}",
-                              :headers => {"User-Agent" => "lts-lti-reserves", 
-                              "Accept" => "application/json"} )
-    handle_bad_response(response,"Problem getting HOLLIS cite for #{hollis_id}") if response.code != 200 && response.code != 404
+  def journal_cite(id)
+    jid = CGI.escape(id)
+    fetch_cite("/journal/#{jid}")
+  end
+
+  def hollis_cite(id)
+    fetch_cite("/hollis/#{id}")
+  end
+
+  # calls to both hollis and journal end up the same way, so why not say so? :-)
+  def fetch_cite(fragment)
+    response = self.class.get(fragment,
+                              :headers => {"User-Agent" => "lts-lti-reserves",
+                                "Accept" => "application/json"} )
+    handle_bad_response(response,"Problem getting HOLLIS cite for #{id}") if response.code != 200 && response.code != 404
     response
   end
 
