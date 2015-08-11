@@ -80,7 +80,7 @@ Note to Students:
    end
  %>
 
-<%= f.input field["name"].to_sym, label: field["label"], wrapper_html: {class: wClass}, required: field["required"] %>
+<%= f.input "input_#{field['name']}".to_sym, label: field["label"], wrapper_html: {class: wClass}, required: field["required"] %>
 <% end %>
 
 </div>
