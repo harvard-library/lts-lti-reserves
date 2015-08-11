@@ -6,8 +6,8 @@ class LibServices
   base_uri   ENV['LIB_SERVICES_URL'] || 'http://webservices.lib.harvard.edu/rest/cite'
 
   def journal_cite(id)
-    jid = CGI.escape(id)
-    response = fetch_cite("/journal/#{jid}")
+    id = CGI.escape(id)
+    response = fetch_cite("/journal/#{id}")
     json = ""
     json = JSON.parse(response.body)['rlistFormat']['journalArticle'] if response.code == 200
     cite_from_json(response.code,json)
@@ -26,7 +26,7 @@ class LibServices
     response = self.class.get(fragment,
                               :headers => {"User-Agent" => "lts-lti-reserves",
                                 "Accept" => "application/json"} )
-    handle_bad_response(response,"Problem getting HOLLIS cite for #{id}") if response.code != 200 && response.code != 404
+    handle_bad_response(response,"Problem getting cite for #{id}") if response.code != 200 && response.code != 404
     response
   end
  

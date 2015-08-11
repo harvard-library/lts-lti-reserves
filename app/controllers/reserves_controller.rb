@@ -101,4 +101,23 @@ class ReservesController < ApplicationController
 
   def index
   end
+ # AJAX
+  def fetch_cite
+    cite = {}
+    type = params["type"]
+    id = params[:id]
+    begin
+      if (type == "journal")
+        cite = LibServices.new.journal_cite(id)
+      elsif (type == "hollis")
+        cite = LibServices.new.hollis_cite(id)
+      end
+      cite['status'] = "Item not found" if !cite['status'] || cite['status'] == 404
+      render :json => cite.as_json(:except => "mods_date")
+    end
+  rescue RuntimeError => bang
+    cite["status"] = bang
+    render :json => cite.as_json(:except => "mods_date")
+  end
+
 end

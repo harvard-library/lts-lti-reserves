@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :courses , except: [:create, :new, :destroy, :index]
   resources :reserves
 
+  get 'presto/:type/' => 'reserves#fetch_cite', :defaults => {:format => :json}
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
