@@ -37,13 +37,17 @@ class LibServices
     if code == 200
       json.each do |k, v|
         if k == "authors" 
-          if v["authorName"][0]
-            cite["author_first_name"] =  v["authorName"][0]["authorFirst"] || ""
-            cite["author_last_name"] =  v["authorName"][0]["authorLast"] || ""
+          author =  v["authorName"]
+          if !author.nil?
+            author =  author[0] if author.kind_of?(Array)
+            cite["author_first_name"] =  author["authorFirst"] || ""
+            cite["author_last_name"] =  author["authorLast"] || ""
           end
-          if v["editorName"]
-            cite["editor_first_name"] = v["editorName"]["editorFirst"] || ""
-            cite["editor_last_name"] =  v["editorName"]["editorLast"] || ""
+          editor= v["editorName"]
+          if !editor.nil?
+            editor = editor[0] if editor.kind_of?(Array)
+            cite["editor_first_name"] = editor["editorFirst"] || ""
+            cite["editor_last_name"] =  editor["editorLast"] || ""
           end
         elsif k == "isbn"
           cite["isbn"] = ""

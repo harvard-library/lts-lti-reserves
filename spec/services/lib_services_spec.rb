@@ -9,6 +9,7 @@ describe LibServices do
       expect(cite['hollis_system_number'].start_with?('003617028')).to eq(true)
       expect(cite['year']).to eq("1994")
       expect(cite['title']).to eq("The Internet guide for new users")
+      expect(cite['author_last_name']).to eq("Dern")
       WebMock.disable_net_connect!
     end
     it "tries to get something that isn't there" do
