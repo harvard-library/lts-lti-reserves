@@ -8,7 +8,9 @@ class ReservesController < ApplicationController
     @libs = Library::library_options
     @material_types = Reserve.material_types
     instructor = params[:contact_instructor_id] || ENV['HUID'] # we'll get this when we hook up with LTI
-    @reserve = Reserve.new({:instance_id => @course_id, :contact_instructor_id => instructor})
+    course_lib = Rlist.new.course_library(@course_id)
+    lib = course_lib.empty? ? "" : course_lib['libraryCode']
+    @reserve = Reserve.new({:instance_id => @course_id, :contact_instructor_id => instructor, :library_code => lib})
   end
 
   def create
@@ -104,16 +106,24 @@ class ReservesController < ApplicationController
  # AJAX
   def fetch_cite
     cite = {}
+    results = {}
     type = params["type"]
     id = params[:id]
     begin
       if (type == "journal")
         cite = LibServices.new.journal_cite(id)
+        Reserve::NEW_FIELDS.each do |field|
+          results["reserve_input_#{field['name']}"] = cite[field['name']] if cite[field['name']] && (field["journal"].nil? || field["journal"])
+        end
       elsif (type == "hollis")
         cite = LibServices.new.hollis_cite(id)
+        Reserve::NEW_FIELDS.each do |field|
+          results["reserve_input_#{field['name']}"] = cite[field['name']] if cite[field['name']] && !field["journal"]
+        end
       end
       cite['status'] = "Item not found" if !cite['status'] || cite['status'] == 404
-      render :json => cite.as_json(:except => "mods_date")
+      results['status'] = cite['status']
+      render :json => results.as_json
     end
   rescue RuntimeError => bang
     cite["status"] = bang
