@@ -58,7 +58,7 @@ class LibServices
             cite["isbn"] = v
           end
         elsif k == "articleTitle"
-          cite["title"] = v
+          cite["article_title"] = v
         elsif k == "pubInfo"
           cite["publisher"] = v
         elsif k == "hollisId"

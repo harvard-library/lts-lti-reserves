@@ -21,7 +21,7 @@ describe LibServices do
     it "tried to get something with an editor and author" do
       WebMock.allow_net_connect!
       cite = LibServices.new.hollis_cite('001254979')
-puts cite
+# puts cite
       expect(cite["status"]).to eq(200)
       expect(cite['author_last_name']).to eq("Maimonides")
       expect(cite['author_first_name']).to eq("Moses")
@@ -39,6 +39,7 @@ puts cite
       expect(cite["status"]).to eq(200)
       expect(cite['doi']).to eq("10.1016/j.pedn.2008.07.009")
       expect(cite['journal_title']).to eq("Journal of Pediatric Nursing")
+      expect(cite['article_title']).to eq("The Adolescent Research Participant: Strategies for Productive and Ethical Interviewing")
       expect(cite['pubmed']).to be_nil
       WebMock.disable_net_connect!
     end
@@ -51,7 +52,7 @@ puts cite
       expect(cite['doi']).to be_nil
       expect(cite['end_page']).to eq("684")
       expect(cite['author_last_name']).to eq("Reilly")
-      expect(cite['title']).to eq("A knowledge-based patient assessment system: conceptual and technical design.")
+      expect(cite['article_title']).to eq("A knowledge-based patient assessment system: conceptual and technical design.")
       expect(cite['url']).to eq("http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2243964")
       WebMock.disable_net_connect!
     end
