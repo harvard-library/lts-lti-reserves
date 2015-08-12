@@ -19,7 +19,7 @@
 
 
 
-//@crimson: #A51C30;
+@color-crimson: #A51C30;
 @color-ink: #1E1E1E;
 @color-mortar: #8C8179;
 @color-parchment: #F3F3F1;
@@ -76,3 +76,16 @@
 .status-complete { color: @color-gold; }
 .visibility { font-style: italic; }
 ul.list-with-floats li.head { background: #FFF none repeat scroll 0% 0%;}
+.btn-ajax {
+	 #gradient > .vertical(#ae3648,@color-crimson);
+	 border: solid 1px @color-crimson;
+	 color: @color-parchment;
+	 padding: 2px 3px;
+
+	 &:hover{
+		background-color: @color-creme;
+		color: @color-crimson;
+		#gradient > .vertical(@color-parchment, @color-creme);
+	}		
+
+}

@@ -1,3 +1,10 @@
+$.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Object.keys(obj);
+				var a = [];
+				$.each(obj, function(k){ a.push(k) });
+				return a;
+			      }
+});
+
 /* set up a jquery object with the datepicker. if isotarget defined, 
    add the change date event handler for ISO string conversion
 */
@@ -10,11 +17,20 @@
 		    }
 		    else if ( $("body").hasClass("a_new") ||
 			       $("body").hasClass("a_create") ) {
-                       setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
+			setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
 			material_type_change($("#reserve_input_material_type")); /* when we come back with an error */
 			$("#reserve_input_material_type").on("change", function(e) {
 			    material_type_change($(this));
 			});
+			$("div.reserve_input_hollis_system_number .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax nonjournal' value='Autofill' name='hollis_fill' id='hollis_fill'/>");
+			$("#hollis_fill").on("click", function(e){
+			    fill_hollis(e, $("#reserve_input_hollis_system_number").val());
+			    });
+			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>");
+		        $("#article_fill").on("click", function(e){
+                            fill_article(e, $("#reserve_input_doi").val());
+                            });
+
 		    }
 		 }
 });
@@ -37,7 +53,53 @@
 	}
   }
 
-/* CREATION FUNCTION(S) */
+/*
+ **  CREATION FUNCTION(S) 
+*/
+
+function fill_hollis(e, id) {
+    e.preventDefault();
+    if (typeof id === "undefined") {
+        console.log("No hollis number!");
+    }
+    else {
+	auto_fill("hollis", id)
+    }
+}
+function fill_article(e, id) {
+    e.preventDefault();
+    if (typeof id === "undefined") {
+        console.log("No DOI or PUBMED number!");
+    }
+    else {
+        auto_fill("journal", id)
+    }
+}
+
+function auto_fill(type,id) {
+    $.getJSON('/presto/' + type + '?id=' + encodeURIComponent(id))
+	.done(function(data, status, jqXHR) {
+            if (data) {
+		if (data.status === 200) {
+		   var list = $('#switchable :input')
+			.not(':button, :submit, :reset, :hidden, :radio, :checkbox');
+		    $('#switchable :input')
+			.not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+			.val('');  /* clear the inputs */
+		    $.each($.keys(data), function(i, v) {
+			if (v !== "status") {
+			    $("#"+v).val(data[v]);
+			}
+		    });
+		}
+	    }
+	    else {
+	    }
+	} )
+	.fail(function(data, status,jqXHR) {
+	    console.log("YOU LOSE!");
+	});
+}
 
 function material_type_change($this) {
     var val = $this.val();
@@ -67,6 +129,10 @@ function material_type_change($this) {
      $("#switchable").show();
  }
 
+
+/*
+ **  EDIT FUNCTIONS
+*/
   function submitUpdate(e) {
       e.preventDefault();
       var change = false;
