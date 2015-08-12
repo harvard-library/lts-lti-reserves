@@ -19,5 +19,18 @@ describe Rlist do
       expect(response.code).to eq(200)
       WebMock.disable_net_connect!
     end
+    it "handles an empty library for course" do
+      WebMock.allow_net_connect!
+      rlist = Rlist.new
+      json = rlist.course_library(34704)
+      expect(json.empty?).to be(true)
+    end 
+    it "handles a successful library for course" do
+      WebMock.allow_net_connect!
+      rlist = Rlist.new
+      json = rlist.course_library(347043)
+      expect(json['contactEmail']).to eq("circinfo@hms.harvard.edu")
+      expect(json['libraryCode']).to eq("MED")
+    end
   end
 end

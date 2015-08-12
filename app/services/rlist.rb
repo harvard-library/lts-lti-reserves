@@ -6,12 +6,23 @@ class Rlist
   include HTTParty
   base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
 
+#  LIBRARY STUFF
+
   def library_list
     response = self.class.get("/libraries/",
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
     handle_bad_response(response,"Unsuccessful  call for reserve ( #{res_id}). ") if response.code != 200
     response
   end
+  def course_library(cid)
+    response = self.class.get("/libraries/course/#{cid}",
+                              :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful library-for-course call (#{cid}. ") if response.code != 200 && response.code != 204
+    json = response.code == 200 ? JSON.parse(response.body) : {}
+  end
+
+# RESERVE STUFF
+
   def reserve(res_id)
     response = self.class.get("/citationrequests/" + res_id.to_s ,
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
@@ -21,14 +32,6 @@ class Rlist
   def delete(course_id, res_id)
     response = self.class.delete("/courses/#{course_id}/citationrequest/#{res_id}")
     handle_bad_response(response, "Problem deleting reserve( #{res_id})./courses/#{course_id}/citationrequests/#{res_id} ") if response.code != 204
-  end
-  def list(course_id)
-    response = self.class.get("/courses/" + course_id.to_s + "/citationrequests",
-                            :headers => {"User-Agent" => "lts-lti-reserves"} )
-    handle_bad_response(response,"Unsuccessful  call for course ( #{course_id}). ") if response.code != 200
-
- #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
-    response
   end
   def update(course_id, res_id,  options)
     loc = ("/courses/#{course_id}/citationrequest/#{res_id}")
@@ -45,6 +48,17 @@ class Rlist
     response
 
   end
+# COURSE STUFF
+  def list(course_id)
+    response = self.class.get("/courses/" + course_id.to_s + "/citationrequests",
+                            :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful  call for course ( #{course_id}). ") if response.code != 200
+
+ #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
+    response
+  end
+
+
 end
 
 #rlist = Rlist.new
