@@ -11,6 +11,9 @@ Course = Struct.new( :reserves, :id) do
     end
   end
   def list
+    if self.reserves.any?{ |res| !res.instructor_sort_order.nil? }
+      self.reserves.sort_by! {|res| res.instructor_sort_order.to_i || 0 }
+    end
     self.reserves
   end
 end
