@@ -34,4 +34,7 @@ class CoursesController < ApplicationController
     flash[:error] = err_str if !err_str.empty?
     redirect_to :action => :show, id: params[:id]
   end
+  def reorder
+    redirect_to :action => :show, id: params[:id]
+  end
 end

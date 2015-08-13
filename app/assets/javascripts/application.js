@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require jquery-dragsort
 //= require_tree .

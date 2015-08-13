@@ -40,3 +40,23 @@ function anyChecked() {
 	});
     return retVal;
 }
+
+/* javascripting supporting re-ordering of reserves */
+function saveOrder() {
+    var data = $(".chk_grp li").map(function() { 
+	return $(this).attr('id'); })
+	.get();
+    $("#sort_order").val(data.join("|"));
+}
+
+
+ $(document).on("ready page:load", function(e) {
+     if ($("body").hasClass("c_courses") && 
+	 $("body").hasClass("a_show")) {
+	 $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
+				   dragEnd: saveOrder,
+				   placeHolderTemplate: "<li class='placeHolder'></li>"
+				  });
+		     }
+ });
+

@@ -39,6 +39,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'jquery-dragsort-rails' # to allow drag & sort of reserves
+
 gem 'activerecord-session_store', '~> 0.1.1'  # "An Action Dispatch session store backed by an Active Record class."
 gem 'browser', '~> 0.8.0'  # browser detection
 
@@ -46,6 +48,7 @@ gem 'browser', '~> 0.8.0'  # browser detection
 gem 'therubyracer'  # needed for less
 gem 'less-rails-bootstrap'
 gem 'font-awesome-less', '~> 4.2.0'  # fonts that TLT uses
+
 
 group :development do
   gem 'binding_of_caller' # for better_errors

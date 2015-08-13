@@ -1,6 +1,11 @@
 
 <% if @reserves %>
 <h3>Number of reserves: <%= @reserves.count %></h3>
+<%= form_tag({controller: "courses", action: "reorder"}, method: "post", class: "reserves-list") do %>
+<%= hidden_field_tag("id", params[:id]) %>
+<input type="hidden" name="sort_order" id="sort_order" />
+<% end %>
+
 <%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list") do %>
 <%= hidden_field_tag("id", params[:id]) %>
 <ul class="list-with-floats">
@@ -11,7 +16,7 @@
 </ul>
 <ul class="list-with-floats chk_grp">
 <% @reserves.each do |reserve| %>
-<li><%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %></li>
+<li id="<%= reserve.citation_request_id %>"><%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %></li>
 <% end %>
 </ul>
 <% end %>
