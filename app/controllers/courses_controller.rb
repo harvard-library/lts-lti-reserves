@@ -16,11 +16,11 @@ class CoursesController < ApplicationController
     "#Reserve ID #{res_id} failed: #{bang}; "
   end
   def delete
+puts "DELETE"
     count = 0
     err_str = ""
     if params[:res_ids]
       params[:res_ids].each do |res_id|
-# TBD: handling errors!
         ret_str = delete_one(params[:id], res_id)
         if ret_str.empty?
           count = count + 1 
@@ -35,6 +35,12 @@ class CoursesController < ApplicationController
     redirect_to :action => :show, id: params[:id]
   end
   def reorder
+    begin
+      resp = Rlist.new.reorder( params[:id], params[:sort_order])
+      flash[:notice] = "Reserves reordered"
+    rescue Exception => bang
+      flash[:error] = bang
+    end
     redirect_to :action => :show, id: params[:id]
   end
 end

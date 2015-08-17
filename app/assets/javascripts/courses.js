@@ -1,6 +1,8 @@
 /*
  *  Javascripting used for supporting the checkbox groups with select all
  * Bobbi Fox 13 July 2015
+ *  support re-ordering
+ *
  *
  */
 
@@ -49,10 +51,15 @@ function saveOrder() {
     $("#sort_order").val(data.join("|"));
 }
 
+function submit_reorder() { 
+/*    console.log($("#form_reorder")); */
+   $("#form_reorder").submit();
+}
 
  $(document).on("ready page:load", function(e) {
      if ($("body").hasClass("c_courses") && 
 	 $("body").hasClass("a_show")) {
+	 $("#reorder_btn").on("click", submit_reorder);
 	 $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
 				   dragEnd: saveOrder,
 				   placeHolderTemplate: "<li class='placeHolder'></li>"

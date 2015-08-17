@@ -40,6 +40,14 @@ class Rlist
     handle_bad_response(response,"Unsuccessful update of Reserve ( #{res_id}). ") if response.code != 204 # || response.headers['Location'] != loc
     response
   end
+  def reorder(course_id, sort_order)
+    options = {"sort_order" => sort_order, "submittingSystem" => "CANVAS"}
+    loc = ("/courses/#{course_id}/citationrequests/reorder")
+    response = self.class.post(loc, { body: options,
+                                 :headers => {"User-Agent" => "lts-lti-reserves"}} )
+    handle_bad_response(response,"Unsuccessful attempt to reorder reserves.") if response.code !=204
+    response
+  end
   def create(course_id, options)
     loc = ("/courses/#{course_id}/citationrequest/")
     response =  self.class.post(loc, { body: options,
