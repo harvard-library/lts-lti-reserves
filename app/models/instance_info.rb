@@ -1,13 +1,27 @@
 # container for all the auxiliary information about the course instance
 require 'icommons'
-InstanceInfo = Struct.new(:id, :course_id, :title, :catalog, :term, :primary, :xreg_ids, :other_ids) do
-  def initialize(id)
-    self.id = id
-    json = Icommons.new.course_instance(id)
-    self.course_id = json["course"]["course_id"]
-    compose_desc(json) # get title, catalog, term
-    self.primary =  json["primary_xlist_instances"].empty? ? nil :  json["primary_xlist_instances"][0].slice(/\d\d+/).to_i
-    get_xreg_ids(json["secondary_xlist_instances"])
+InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term, :primary, :xreg_ids, :others) do
+  def initialize(id_or_url)
+    json = Icommons.new.course_instance(id_or_url)
+    if !json.empty? 
+      self.id = json["course_instance_id"]
+      self.course_id = json["course"]["course_id"]
+      self.non_enroll = json["exclude_from_isites"] != "0"
+      compose_desc(json) # get title, catalog, term
+      self.primary =  json["primary_xlist_instances"].empty? ? nil :  json["primary_xlist_instances"][0]
+      self.xreg_ids = json["secondary_xlist_instances"]
+    end
+  end
+  def fill_others
+    others = []
+    instances  = Icommons.new.instances_from_course(self.course_id)
+    instances.each do |instance| 
+      if instance.slice(/\d\d+/).to_i < self.id.to_i  # I'm going to assume that > numbers means: afterwards!
+        ii = InstanceInfo.new(instance)
+        others.push(ii) if !ii.non_enroll
+      end
+    end
+    self.others = others
   end
   def compose_desc(json)
     school = json["term"]["school_id"].upcase!
@@ -20,13 +34,6 @@ InstanceInfo = Struct.new(:id, :course_id, :title, :catalog, :term, :primary, :x
     self.title = "#{self.title}: #{sub}" if !sub.blank? && title != sub
     short = json["short_title"]
     self.title = "[#{short}] #{self.title}" if short != title
-  end
-  def get_xreg_ids(seconds)
-    ids = []
-      seconds.each do |uri|
-      ids.push(uri.slice(/\d\d+/))
-    end
-    self.xreg_ids = ids
   end
 
 end

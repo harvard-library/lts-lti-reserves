@@ -10,13 +10,15 @@ class Icommons
     "Accept" => "application/json"}
 
   def course_instance(cid)
-    response = self.class.get("/course_instances/#{cid}/",
+    loc = !cid.to_s.match(/^\d+$/)  ? cid : "/course_instances/#{cid}/" 
+    response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
     json = response.code == 200 ? JSON.parse(response.body) : {}
   end
   def instances_from_course(id)
-    response = self.class.get("/courses/#{id}",
+    loc = !id.to_s.match(/^\d+$/) ? id : "/courses/#{id}" 
+    response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
     json = response.code == 200 ? JSON.parse(response.body) : {}
