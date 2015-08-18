@@ -29,11 +29,12 @@ describe InstanceInfo do
       id = 360017
       WebMock.allow_net_connect!
       ii = InstanceInfo.new(id)
+      ii.fill_primary
       WebMock.disable_net_connect!
+      expect(ii.primary.catalog).to eq("HLS-2470") #"https://icommons.harvard.edu/api/course/v2/course_instances/356987/")
       expect(ii.course_id).to eq(76451)
       expect(ii.catalog).to eq("FAS-113481")
       expect(ii.title).to eq("PHIL 277: Law and Philosophy Colloquium")
-      expect(ii.primary).to eq("https://icommons.harvard.edu/api/course/v2/course_instances/356987/")
     end
   end
 end

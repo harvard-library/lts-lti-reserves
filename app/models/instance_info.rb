@@ -12,6 +12,13 @@ InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term,
       self.xreg_ids = json["secondary_xlist_instances"]
     end
   end
+
+  def fill_primary
+    if self.primary && self.primary.starts_with?("https:")
+      ii = InstanceInfo.new(self.primary)
+      self.primary = ii if !ii.non_enroll
+    end
+  end
   def fill_others
     others = []
     instances  = Icommons.new.instances_from_course(self.course_id)
