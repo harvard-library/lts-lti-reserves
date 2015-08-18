@@ -15,4 +15,11 @@ class Icommons
     # need to log the bad response, but not now!
     json = response.code == 200 ? JSON.parse(response.body) : {}
   end
+  def instances_from_course(id)
+    response = self.class.get("/courses/#{id}",
+                              :headers => @@headers)
+    # need to log the bad response, but not now!
+    json = response.code == 200 ? JSON.parse(response.body) : {}
+    json["course_instances"] ? json["course_instances"].sort : []
+  end
 end
