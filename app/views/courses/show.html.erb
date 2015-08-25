@@ -20,7 +20,8 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 </ul>
 <ul class="list-with-floats chk_grp">
 <% @reserves.each do |reserve| %>
-<li id="<%= reserve.citation_request_id %>"><%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %></li>
+<li id="<%= reserve.citation_request_id %>"><%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %>
+<%= render partial: 'reserves/reserve_status', locals: {reserve: reserve} %></li>
 <% end %>
 </ul>
 <% end %>
