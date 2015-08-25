@@ -6,7 +6,27 @@ class CoursesController < ApplicationController
   rescue Exception => bang
     flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
   end
+  def previous
+    begin
+      # do all the good grabbing of reserves
+    end
+  rescue Exception => bang
+    flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
 
+  end
+  def previous_select
+    begin
+      others = fetch_others(params[:id])
+      respond_to do |format|
+        format.html do
+          render :partial => 'courses/select_previous',
+          :locals => { :others => others}
+        end
+      end
+    end
+#  rescue Exception => bang
+#    flash[:error] = "Unable to retrieve information from iCommons on Course Instance #{params[:id]}: #{bang}"
+  end
   def delete_one(id, res_id)
     begin
       Rlist.new.delete(params[:id], res_id)
@@ -16,7 +36,6 @@ class CoursesController < ApplicationController
     "#Reserve ID #{res_id} failed: #{bang}; "
   end
   def delete
-puts "DELETE"
     count = 0
     err_str = ""
     if params[:res_ids]
@@ -42,5 +61,11 @@ puts "DELETE"
       flash[:error] = bang
     end
     redirect_to :action => :show, id: params[:id]
+  end
+# sometime I'll make this private, or a concern, or something!
+  def fetch_others(id)
+    ii =  InstanceInfo.new(id)
+    ii.fill_others
+    ii.others
   end
 end

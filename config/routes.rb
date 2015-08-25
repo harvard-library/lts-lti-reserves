@@ -2,6 +2,8 @@ Rails.application.routes.draw do
  
  
 #  get 'courses/show'
+  get 'courses/previous_select' => 'courses#previous_select' # just creates the select/options
+  get 'courses/previous' => 'courses#previous'  # displays the reserves for that previous instance
 
   post 'courses/delete'
 

@@ -1,0 +1,14 @@
+
+<div id="previous_list">
+  <% if others.blank? %>
+  <em>No previous instances of this course</em>
+  <% else %>
+  <form name="prev_select_form" id="prev_select_form">
+    <select id="prev_select">
+      <% others.each do |ci| %>
+    <option value="<%=ci.id %>"><%= ci.term %></option>
+    <% end %>
+    </select>
+  </form>
+  <% end %>
+</div>

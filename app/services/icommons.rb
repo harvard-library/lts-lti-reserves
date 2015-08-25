@@ -22,6 +22,7 @@ class Icommons
                               :headers => @@headers)
     # need to log the bad response, but not now!
     json = response.code == 200 ? JSON.parse(response.body) : {}
-    json["course_instances"] ? json["course_instances"].sort : []
+    json["course_instances"] ?  json["course_instances"].sort { |a,b| a.slice(/\d\d+/).to_i <=> b.slice(/\d\d+/).to_i }.reverse
+                             : []
   end
 end
