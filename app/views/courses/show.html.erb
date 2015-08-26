@@ -6,7 +6,7 @@
 <div id="previous_list" class="float-right">
   <form name="prev_select_form" id="prev_select_form">
     <label for="prev_select">Re-use reserves from: </label>
-    <select id="prev_select">
+    <select id="prev_select"><option value="">Select a previous term</option>
       <% @others.each do |ci| %>
     <option value="<%=ci.id %>"><%= ci.term %></option>
     <% end %>
@@ -14,6 +14,7 @@
   </form>
 </div>
 
+<script>reuseSetup()</script>
 
 <% end %>
 <%= form_tag({controller: "courses", action: "reorder"}, method: "post", class: "reserves-list reorder", id: "form_reorder") do %>
@@ -45,3 +46,4 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 <% end %>
 <script>checkBoxSetup("del")</script>
 <% end %>
+<div id="reuse_list" class="previous"></div>

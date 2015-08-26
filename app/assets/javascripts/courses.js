@@ -2,7 +2,7 @@
  *  Javascripting used for supporting the checkbox groups with select all
  * Bobbi Fox 13 July 2015
  *  support re-ordering
- *
+ *  support previous
  *
  */
 
@@ -69,4 +69,20 @@ function submit_reorder() {
 				  });
 		     }
  });
+
+/* handle reuse */
+function reuseSetup() {
+    $("#prev_select").on("change", displayPrev);
+}
+function displayPrev() {
+    $("#reuse_list").empty();
+    var val = this.value;
+    if (val !== "") {
+	$.get("/courses/previous",
+	      { id: val})
+	.done(function(data,status,jqXHR) {
+	    $("#reuse_list").append(data);
+	});
+	}
+};
 
