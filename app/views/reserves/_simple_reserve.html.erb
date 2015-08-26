@@ -1,5 +1,4 @@
-<%# simple presentation of a single reserve request with checkbox %>
-<%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "#{chk_class}", :title => "Select #{reserve.tip_title}"}) %>
+<%# simple presentation of a single reserve request  %>
 <% if reserve.chapter? %>
 <%= render 'reserves/chapter_auth_title', :reserve => reserve %>
 <% else %>
