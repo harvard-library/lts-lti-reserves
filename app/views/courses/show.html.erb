@@ -1,6 +1,21 @@
 
 <% if @reserves %>
 <h3>Number of reserves: <%= @reserves.count %></h3>
+<% if !@others.blank? %>
+<%# = render partial: 'courses/select_previous', locals: {@others => @others} %>
+<div id="previous_list" class="float-right">
+  <form name="prev_select_form" id="prev_select_form">
+    <label for="prev_select">Re-use reserves from: </label>
+    <select id="prev_select">
+      <% @others.each do |ci| %>
+    <option value="<%=ci.id %>"><%= ci.term %></option>
+    <% end %>
+    </select>
+  </form>
+</div>
+
+
+<% end %>
 <%= form_tag({controller: "courses", action: "reorder"}, method: "post", class: "reserves-list reorder", id: "form_reorder") do %>
 <%= hidden_field_tag("id", params[:id]) %>
 <input type="hidden" name="sort_order" id="sort_order" />
@@ -11,19 +26,19 @@
 <%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list") do %>
 <%= hidden_field_tag("id", params[:id]) %>
 <ul class="list-with-floats">
-<li class="head"><%= check_box_tag("select_all") %>
-<%= label_tag("select_all", "Select all reserves") %> <span class="delete" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", {:class => "btn btn-submit chks_submit", :id => "delete_btn", :disabled => "disabled"}) %></span> 
+<li class="head"><%= check_box_tag("select_all_del") %>
+<%= label_tag("select_all_del", "Select all reserves") %> <span class="delete" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", {:class => "btn btn-submit chks_submit_del", :id => "delete_btn"}) %></span> 
 <span class="reorder" title="Commit reordering"><input name="reorder"
 value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder_btn" type="button"></span>
 <span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
 </li>
 </ul>
-<ul class="list-with-floats chk_grp">
+<ul class="list-with-floats chk_grp" id="ids_del">
 <% @reserves.each do |reserve| %>
 <li id="<%= reserve.citation_request_id %>"><%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve, chk_class: 'chk_del'} %>
 <%= render partial: 'reserves/reserve_status', locals: {reserve: reserve} %></li>
 <% end %>
 </ul>
 <% end %>
-<script>checkBoxSetup()</script>
+<script>checkBoxSetup("del")</script>
 <% end %>

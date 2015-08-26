@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :reserves
 
   post 'courses/reorder' => 'courses#reorder'
+  post 'courses/reuse' => 'courses#reuse'
   get 'presto/:type/' => 'reserves#fetch_cite', :defaults => {:format => :json}
 
   # Example resource route (maps HTTP verbs to controller actions automatically):

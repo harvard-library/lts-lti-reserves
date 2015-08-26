@@ -2,6 +2,7 @@ class CoursesController < ApplicationController
   def show
     begin
       @reserves = Course.new(params[:id]).list
+      @others = fetch_others(params[:id])
     end
   rescue Exception => bang
     flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
@@ -9,9 +10,16 @@ class CoursesController < ApplicationController
   def previous
     begin
       # do all the good grabbing of reserves
+      prev_reserves = Course.new(params[:id]).list
+      respond_to do |format|
+        format.html do
+          render :partial => 'courses/previous',
+          :locals => {:prev_reserves => prev_reserves, :id => params[:id] }
+        end
+      end
     end
-  rescue Exception => bang
-    flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
+#  rescue Exception => bang
+#    flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
 
   end
   def previous_select
@@ -26,6 +34,9 @@ class CoursesController < ApplicationController
     end
 #  rescue Exception => bang
 #    flash[:error] = "Unable to retrieve information from iCommons on Course Instance #{params[:id]}: #{bang}"
+  end
+  def reuse
+# here's where all the re-usability magic happens!
   end
   def delete_one(id, res_id)
     begin

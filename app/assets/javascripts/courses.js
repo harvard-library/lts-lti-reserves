@@ -7,33 +7,36 @@
  */
 
 
-function checkBoxSetup() {
-    $("ul.chk_grp li > input[type='checkbox']").not("#select_all").on("click", checkBoxChecked);
-    $("#select_all").on("click", allSelected);
+function checkBoxSetup(type) {
+    $("ul#ids_" + type + " li > input[type='checkbox']")
+	.not("#select_all_" + type)
+	.on("click",{name: type}, function(event) {
+	    checkBoxChecked($(this),event.data.name);});
+    $("#select_all_" + type).on("click", {name: type}, function(event) {
+	allSelected( $(this), event.data.name); });
 }
 
-function allSelected() {
-    if ($(this).prop('checked')) {
-	 $("ul.chk_grp li > input[type='checkbox']").not("#select_all").prop("checked", true);
-	$(".chks_submit").prop("disabled", false);
+function allSelected($this, type) {
+    if ($this.prop('checked')) {
+	 $("ul#ids_" + type + " li > input[type='checkbox']").not("#select_all_" + type).prop("checked", true);
+/*	$(".chks_submit_" + type ).prop("disabled", false); */
     }
 }
-function checkBoxChecked() {
-    var $this = $(this);
+function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
-	$(".chks_submit").prop("disabled", false);
+/*	$(".chks_submit_" + type).prop("disabled", false); */
     }
     else {
-	$("#select_all").prop("checked", false);
-	if (!anyChecked()) {
-	     $(".chks_submit").prop("disabled", true);
-	}
+	$("#select_all_" + type).prop("checked", false);
+/*	if (!anyChecked(type)) {
+	     $(".chks_submit_" + type).prop("disabled", true);
+	} */
     }
 }
-function anyChecked() {
+function anyChecked(type) {
     var retVal = false;
-    $("ul.chk_grp li > input[type='checkbox']")
-	.not("#select_all")
+    $("ul#ids_" + type + " li > input[type='checkbox']")
+	.not("#select_all_" + type)
 	.each(function() {
 	    if ($(this).prop("checked")) {
 		retVal = true;
@@ -45,7 +48,7 @@ function anyChecked() {
 
 /* javascripting supporting re-ordering of reserves */
 function saveOrder() {
-    var data = $(".chk_grp li").map(function() { 
+    var data = $("#ids_del li").map(function() { 
 	return $(this).attr('id'); })
 	.get();
     $("#sort_order").val(data.join("|"));
