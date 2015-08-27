@@ -1,9 +1,11 @@
-<%# LOCALS: prev_reserves, id %>
+<%# LOCALS: prev_reserves, id, lib_code %>
 <%= form_tag({controller: "courses", action: "reuse"}, method: "post", class: "previous_list") do %>
 <%= hidden_field_tag("id", id) %>
+<%= hidden_field_tag("lib_code", lib_code) %>
 <ul class="list-with-floats">
 <li class="head"><%= check_box_tag("select_all_reuse") %>
-<%= label_tag("select_all_reuse", "Select all previous reserves") %>
+
+<%= label_tag("select_all_reuse", "Select all previous #{prev_reserves.length} reserves") %>
  <span class="update" title="Re-use selected reserve(s)"><%=submit_tag(value="Re-use selected reserve(s)", {:class => "btn btn-submit chks_reuse", :id => "reuse_btn"}) %></span>
 </li>
 </ul>
@@ -15,4 +17,4 @@
   <% end %>
 </ul>
 <% end %>
-<script>checkBoxSetup("del")</script>
+<script>checkBoxSetup("reuse")</script>

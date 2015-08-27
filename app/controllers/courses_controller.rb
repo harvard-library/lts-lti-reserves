@@ -11,10 +11,12 @@ class CoursesController < ApplicationController
     begin
       # do all the good grabbing of reserves
       prev_reserves = Course.new(params[:id]).list
+      json = Rlist.new.course_library(params[:id])
+      lib_code = json['libraryCode']
       respond_to do |format|
         format.html do
           render :partial => 'courses/previous',
-          :locals => {:prev_reserves => prev_reserves, :id => params[:id] }
+          :locals => {:prev_reserves => prev_reserves, :id => params[:id], :lib_code => lib_code }
         end
       end
     end
