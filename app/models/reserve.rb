@@ -101,7 +101,7 @@ class Reserve
   
 # validation methods
   def has_citation_type
-    if self.input_citation_type.nil? || %w(JOURNAL NON_JOURNAL).find_index(self.input_citation_type).nil?
+    if self.citation_id.blank? && (self.input_citation_type.nil? || %w(JOURNAL NON_JOURNAL).find_index(self.input_citation_type).nil?)
       message = "Please specify a material type"
       errors.add(:base, message)
     end

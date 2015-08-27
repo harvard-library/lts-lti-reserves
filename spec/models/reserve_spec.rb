@@ -204,6 +204,16 @@ describe Reserve do
       expect(res.title).to eq("Chaos and integrability in nonlinear dynamics: an introduction")
       expect(res.author).to eq("Tabor, Michael.")
     end
+    it "is a reuse case" do
+      opts = {"contactInstructorId" => "70663473",
+        "status" => "REUSE",
+        "citationId" =>  "75646",
+        "libraryCode" => "CAB",
+        "instanceId" => "78419"
+      }
+      res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
+    end
     it "comes in with a citation" do
       opts = {"contactInstructorId" => "70663473",
         "inputAlephUrl" => "005117959",
