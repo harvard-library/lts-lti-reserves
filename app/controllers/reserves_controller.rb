@@ -1,5 +1,9 @@
 class ReservesController < ApplicationController
   def show
+    resp = Rlist.new.reserve(params[:res_id])
+    @reserve = Reserve.new(JSON.parse(resp))
+    @reserve.fill_in
+
   end
   
   def new

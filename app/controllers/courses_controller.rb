@@ -2,79 +2,100 @@ class CoursesController < ApplicationController
   def show
     begin
       @reserves = Course.new(params[:id]).list
-      @others = fetch_others(params[:id])
+    rescue Exception => bang
+      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
     end
-  rescue Exception => bang
-    flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
+    begin
+      @others = fetch_others(params[:id])
+    rescue StandardError => bang
+      flash[:notice] = "Unable to retrieve information on previous Instances: #{bang}"
+    end
   end
   def previous
     begin
       # do all the good grabbing of reserves
-      prev_reserves = Course.new(params[:id]).list
+      prev_reserves = Course.new(params[:prev_id]).list
       json = Rlist.new.course_library(params[:id])
       lib_code = json['libraryCode']
-      respond_to do |format|
-        format.html do
-          render :partial => 'courses/previous',
-          :locals => {:prev_reserves => prev_reserves, :id => params[:id], :lib_code => lib_code }
-        end
+      if lib_code.blank? && prev_reserves.length > 0 
+        lib_code = prev_reserves[0].library_code
+      end
+    rescue StandardError => bang
+      flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
+      redirect_to  :action => :show, id: params[:id] and return
+    end
+    respond_to do |format|
+      format.html do
+        render :partial => 'courses/previous',
+        :locals => {:prev_reserves => prev_reserves, :id => params[:id], :lib_code => lib_code, :course_title => params[:course_title] }
       end
     end
-#  rescue Exception => bang
-#    flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
-
   end
   def previous_select
     begin
-      others = fetch_others(params[:id])
-      respond_to do |format|
-        format.html do
-          render :partial => 'courses/select_previous',
-          :locals => { :others => others}
-        end
+      others = fetch_others(params[:prev_id])
+    rescue Exception => bang
+      flash[:error] = "Unable to retrieve information from iCommons on Course Instance #{params[:id]}: #{bang}"
+       redirect_to  :action => :show, id: params[:id]
+    end
+    respond_to do |format|
+      format.html do
+        render :partial => 'courses/select_previous',
+        :locals => { :others => others, :id => params[:id]}
       end
     end
-#  rescue Exception => bang
-#    flash[:error] = "Unable to retrieve information from iCommons on Course Instance #{params[:id]}: #{bang}"
   end
   def reuse
     # here's where all the re-usability magic happens!
     count = 0
-    err_str = ""
+    errs = []
     opts = {}
     opts["submittingSystem"] = "CANVAS"
     opts["estimatedEnrollment"] ="0"
-    opts["libraryCode"] = params[:library_code]
     opts["contactInstructorId"] = params[:contact_instructor_id] || ENV['HUID'] # we'll get this when we hook up with LTI
+    opts["contactInstructorIdType"] = "HUID"
     opts["instanceId"] = params[:id]
-    if params[:cit_ids]
-      params[:cit_ids].each do |cit_id|
-        ret_str = reuse_one(opts, cit_id)
+    opts["visibility"] = "P"
+    opts["status"]= "REUSE"
+    if params[:reuse_ids]
+      params[:reuse_ids].each do |reuse_id|
+        ret_str = reuse_one(opts, reuse_id)
         if ret_str.empty?
           count = count + 1
         else
-          err_str = "#{err_str}; #{ret_str}"
+          errs.push(ret_str)
         end
       end
     end
-    @reserves = Course.new(params[:id]).list
+#    @reserves = Course.new(params[:id]).list
     flash[:notice] = "#{count} reserve#{'s' if count != 1} re-used"
-    flash[:error] = err_str if !err_str.empty?
-    redirect_to :action => :show, id: params[:id]
+    flash[:error] = errs if !errs.blank?
+    redirect_to :action => :show, id: params[:id] and return
   end
-  def reuse_one(opts, cit_id) 
+  def reuse_one(opts, reuse_id) 
     begin
-      opts["citationId"] = cit_id
+      resp = Rlist.new.reserve(reuse_id)
+      reuse_reserve = JSON.parse(resp.body)
+      reuse_reserve.each do |k, v|
+        if k.is_a?(String) && k.starts_with?("input")
+          if !v.blank?
+            opts[k] = v
+          end
+        end
+      end
+      opts["libraryCode"]  = reuse_reserve["libraryCode"]
+      opts["citationId"] = reuse_reserve["citationId"]
+      opts["required"] = reuse_reserve["required"]
       @reserve = Reserve.new(opts)
       if !@reserve.valid?
-        @reserve.errors[:base] if @reserve.errors[:base]
+        errors = "Unable to create new Reserve from previous_reserve_id #{reuse_id}: #{errmessage(@reserve.errors.messages)}" if !@reserve.errors.messages.blank?
       else
-       resp = Rlist.new.create(opts["instanceId"],options)
-       ""
+        resp = Rlist.new.create(opts["instanceId"],opts)
+        ""
       end
     end
   rescue StandardError  => bang
-    "Unable to create new Reserve from citation id #{cit_id} : #{bang}"
+    "Unable to create new Reserve from  previous_reserve_id #{reuse_id}: #{bang}"
   end
   def delete_one(id, res_id)
     begin
@@ -106,15 +127,25 @@ class CoursesController < ApplicationController
     begin
       resp = Rlist.new.reorder( params[:id], params[:sort_order])
       flash[:notice] = "Reserves reordered"
-    rescue Exception => bang
+    rescue StandardError => bang
       flash[:error] = bang
     end
-    redirect_to :action => :show, id: params[:id]
+    redirect_to :action => :show, id: params[:id] 
   end
 # sometime I'll make this private, or a concern, or something!
   def fetch_others(id)
     ii =  InstanceInfo.new(id)
     ii.fill_others
     ii.others
+  end
+# another thing for concerns, eventually
+  def errmessage(messages)
+    errs = ""
+    messages.each do |k,v|
+      if !v.blank?
+        errs = "#{errs} #{v.join}"
+      end
+    end
+    errs
   end
 end

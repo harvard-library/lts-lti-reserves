@@ -79,7 +79,7 @@ function displayPrev() {
     var val = this.value;
     if (val !== "") {
 	$.get("/courses/previous",
-	      { id: val})
+	      { id: $("#id").val(), prev_id: val, course_title: $("#"+this.id + " option:selected").text()})
 	.done(function(data,status,jqXHR) {
 	    $("#reuse_list").append(data);
 	});

@@ -1,7 +1,13 @@
-<%# LOCALS: prev_reserves, id, lib_code %>
+<%# LOCALS: prev_reserves, id, lib_code, course_title %>
+
+<% if prev_reserves.blank? %>
+<strong>No reserves for this <%= course_title %> instance</strong>
+<% else %>
+<h4><%= course_title %></h4>
 <%= form_tag({controller: "courses", action: "reuse"}, method: "post", class: "previous_list") do %>
 <%= hidden_field_tag("id", id) %>
 <%= hidden_field_tag("lib_code", lib_code) %>
+<% if prev_reserves.length > 1 %>
 <ul class="list-with-floats">
 <li class="head"><%= check_box_tag("select_all_reuse") %>
 
@@ -9,12 +15,16 @@
  <span class="update" title="Re-use selected reserve(s)"><%=submit_tag(value="Re-use selected reserve(s)", {:class => "btn btn-submit chks_reuse", :id => "reuse_btn"}) %></span>
 </li>
 </ul>
+<% end %>
 <ul class="list-with-floats chk_grp" id="ids_reuse">
   <% prev_reserves.each do |reserve| %>
-  <li id="<%= reserve.citation_id %>"><%= check_box_tag("cit_ids[]", reserve.citation_request_id, false, {:id => "cit_ids__#{reserve.citation_id}", :class => "chk_reuse", :title => "Select #{reserve.tip_title}"}) %>
+     <% if !reserve.citation_id.blank? %>
+  <li id="<%= reserve.citation_id %>"><%= check_box_tag("reuse_ids[]", "#{reserve.citation_request_id}", false, {:id => "reuse_ids__#{reserve.citation_request_id}", :class => "chk_reuse", :title => "Select #{reserve.tip_title}"}) %>
 
 <%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %></li>
+     <% end %>
   <% end %>
 </ul>
 <% end %>
 <script>checkBoxSetup("reuse")</script>
+<% end %>
