@@ -1,9 +1,14 @@
 class ReservesController < ApplicationController
   def show
-    resp = Rlist.new.reserve(params[:res_id])
-    @reserve = Reserve.new(JSON.parse(resp))
+    resp = Rlist.new.reserve(params[:id])
+    @input = Reserve.new(JSON.parse(resp.body))
+    @reserve = @input.dup
     @reserve.fill_in
-
+    layout = false;
+    if params[:layout]
+      layout = true
+    end
+    render :action => "show", :layout => layout
   end
   
   def new

@@ -179,11 +179,14 @@ class Reserve
 #    puts "fill_in #{self.citation}"
     if self.citation 
       members = self.methods
-      self.citation.each_pair { |name, value|
-        if value && name.to_s != 'citation_type'
-          k = 'input_' + name.to_s
-          puts "#{(k + '=')} should have #{value} with class #{value.class} in members: #{ members.find_index(k.to_sym)}"
-          self.send (k + '=' ).to_sym value.strip if members.find_index(k.to_sym)
+      self.citation.fields.each { |name|
+        if name.to_s != 'citation_type'
+          value = self.citation.send(name)
+          if value 
+            k = 'input_' + name.to_s
+#            puts "#{(k + '=')} should have #{value} with class #{value.class} in members: #{ members.find_index(k.to_sym)}"
+            self.send (k + '=' ).to_sym, value.strip if members.find_index(k.to_sym)
+          end
         end
       }
     end

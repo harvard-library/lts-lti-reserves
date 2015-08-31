@@ -54,5 +54,8 @@ class Citation
   def to_s
     "Citation ID: #{self.citation_id}, type: #{self.citation_type}, title: #{self.title}"
   end
+  def fields
+    @@fields
+  end
 end
 
