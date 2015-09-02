@@ -3,4 +3,6 @@
 &quot;<%= @reserve.title %>&quot;
 in <span class="title"><%= @reserve.journal_title %></span>.
 <%= @reserve.journal_info %>
+<% if @reserve.issn %>ISSN: <%= @reserve.issn %><% end %>
+
 </div>

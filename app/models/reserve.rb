@@ -243,8 +243,8 @@ class Reserve
       date = "#{date} #{year}" if year
     end
     pp = startp || ""
-    pp = "#{pp} #{endp}" if endp
-    pp = "pp. #{pp}"
+    pp = "#{pp}-#{endp}" if endp
+    pp = "pp. #{pp}" if pp.strip!
     "#{vol_str} (#{date.strip}) #{pp}".strip
   end
   def title
@@ -352,6 +352,13 @@ class Reserve
   def journal?
     type = self.citation ? self.citation.citation_type : self.input_citation_type
     !type.nil? && type == 'JOURNAL'
+  end
+  def issn
+    if self.citation
+      self.citation.issn
+    else
+      self.input_issn
+    end
   end
   def display_status
     if self.course_status.nil?
