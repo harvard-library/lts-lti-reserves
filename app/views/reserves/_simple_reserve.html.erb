@@ -2,8 +2,13 @@
 <% if reserve.chapter? %>
 <%= render 'reserves/chapter_auth_title', :reserve => reserve %>
 <% else %>
-<span class="author"><%= reserve.author %></span> 
+<% if reserve.author %>
+   <span class="author"><%= reserve.author %></span> 
+<% end %>
 <span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
+<% if reserve.editor %>
+<span class="editor">Edited by <%= reserve.editor %></span>
+<% end %>
 <% if reserve.journal_title %>
 in <span class="journal"><%= reserve.journal_title %></span>
 <% end %>

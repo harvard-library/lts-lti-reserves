@@ -5,11 +5,11 @@ class Reserve
   extend ActiveModel::Callbacks
   define_model_callbacks :create, :update
   MATERIAL_TYPES = ["Book","Journal Article", "Video", "Audio", "Image", "Map", "Score", "Other"]
-  EDIT_FIELDS = [  {"estimated_enrollment" => "Estimated Number of Enrolled Students"},
-                   {"lecture_date" => "Lecture/Class Date", "type" => "date"},
-                   {"visibility" => "Display to Students", "type" => "boolean"},
-                   {"required" => "Required Reading", "type" => "boolean"},
-                   {"student_annotation" => "Note to Student", "type" => "text"}
+  EDIT_FIELDS = [  { "name" => "estimated_enrollment", "label" => "Estimated Number of Enrolled Students"},
+                   { "name" => "lecture_date", "label" => "Lecture/Class Date", "type" => "date"},
+                   { "name" => "visibility", "label" => "Display to Students", "type" => "boolean"},
+                   { "name" => "required", "label" => "Required Reading", "type" => "boolean"},
+                   { "name" => "student_annotation", "label" => "Note to Student", "type" => "text"}
                 ]
   NEW_FIELDS = [   # also EDIT_FIELDS, ABOVE AND     {"instructor_note" => {"label" => "Note to Reserves Staff", "type" => "text" }},
                 { "name" => "hollis_system_number", "label" =>"HOLLIS number", "journal" => false},
@@ -179,7 +179,7 @@ class Reserve
 #    puts "fill_in #{self.citation}"
     if self.citation 
       members = self.methods
-      self.citation.fields.each { |name|
+      self.citation.fields.each do |name|
         if name.to_s != 'citation_type'
           value = self.citation.send(name)
           if value 
@@ -188,13 +188,12 @@ class Reserve
             self.send (k + '=' ).to_sym, value.strip if members.find_index(k.to_sym)
           end
         end
-      }
+      end
     end
   end
   def author
-    lastn = ""
     if self.citation
-      lastn = self.citation.author_last_name 
+      lastn = self.citation.author_last_name
       first = self.citation.author_first_name
     else
       lastn = self.input_author_last_name
@@ -203,9 +202,8 @@ class Reserve
     normalize_name(lastn, first)
   end
   def editor
-    lastn = ""
     if self.citation
-      lastn = self.citation.editor_last_name
+      lastn = self.citation.editor_last_name 
       first = self.citation.editor_first_name
     else
       lastn = self.input_editor_last_name
@@ -342,10 +340,10 @@ class Reserve
     end
   end
   def normalize_name(lastn, first)
-    if first
-      lastn = lastn + ", " + first
-    end
     if lastn
+      if first
+        lastn = lastn + ", " + first
+      end
       lastn = lastn + "." if !lastn.ends_with?(".")
     end
     lastn
