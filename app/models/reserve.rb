@@ -212,6 +212,41 @@ class Reserve
     normalize_name(lastn, first)
 
   end
+  # volume, number, date, etc.
+  def journal_info
+    if self.citation
+      vol = self.citation.volume
+      issue = self.citation.issue
+      season = self.citation.season
+      day = self.citation.day
+      month = self.citation.month
+      yr = self.citation.year
+      startp = self.citation.start_page
+      endp = self.citation.end_page
+  else
+     vol = self.input_volume
+      issue = self.input_issue
+      season = self.input_season
+      day = self.input_day
+      month = self.input_month
+      yr = self.input_year
+      startp = self.input_start_page
+      endp = self.input_end_page
+    end
+    vol_str = ""
+    vol_str = "vol. #{vol}" if vol
+    vol_str = "#{vol_str} no.#{issue}" if issue
+    date = season || ""
+    if date = ""
+      date = "#{date} #{day}" if day
+      date = "#{date} #{month}" if month
+      date = "#{date} #{year}" if year
+    end
+    pp = startp || ""
+    pp = "#{pp} #{endp}" if endp
+    pp = "pp. #{pp}"
+    "#{vol_str} (#{date.strip}) #{pp}".strip
+  end
   def title
     if self.citation && self.citation.title
       self.citation.title
