@@ -12,11 +12,9 @@
 </span>
 
 </div>
-      <% if !reserve.journal? %>
-      <%= render partial: 'display_non_journal', locals: {:reserve => reserve} %>
-      <% else %>
-     <%= render partial: 'display_journal', locals: {:reserve => reserve} %>
-      <% end %>
+<div class="res_display">
+     <%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve} %>
+</div>
 </div>
     <div class="panel-body">
       <%= yield %>

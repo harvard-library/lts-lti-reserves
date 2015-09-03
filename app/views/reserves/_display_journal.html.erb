@@ -1,8 +1,10 @@
 <%# display information we have about a reserve, modulo the editable stuff %>
-<div class="res_display">
-&quot;<%= reserve.title %>&quot;
-in <span class="title"><%= reserve.journal_title %></span>.
+<% if reserve.author %>
+   <span class="author"><%= reserve.author %></span>
+<% end %>
+
+<span class="title">&quot;<%= reserve.title.strip %>&quot;</span>
+in <%= reserve.journal_title %>
 <%= reserve.journal_info %>
 <% if reserve.issn %>ISSN: <%= reserve.issn %><% end %>
 
-</div>

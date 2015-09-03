@@ -1,19 +1,9 @@
 <%# simple presentation of a single reserve request  %>
-<% if reserve.chapter? %>
-<%= render 'reserves/chapter_auth_title', :reserve => reserve %>
+<% if reserve.journal? %>
+  <%= render partial: 'reserves/display_journal', locals: {:reserve => reserve} %>
 <% else %>
-<% if reserve.author %>
-   <span class="author"><%= reserve.author %></span> 
+  <%= render partial: 'reserves/display_non_journal', locals: {:reserve => reserve} %>
 <% end %>
-<span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
-<% if reserve.editor %>
-<span class="editor">Edited by <%= reserve.editor %></span>
-<% end %>
-<% if reserve.journal_title %>
-in <span class="journal"><%= reserve.journal_title %></span>
-<% end %>
-<% end %>
-
 
 <% if reserve.dig_url %>
  <span class="urlLink btn-link">

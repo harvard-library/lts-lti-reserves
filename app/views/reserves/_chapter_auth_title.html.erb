@@ -2,15 +2,16 @@
 <span class="author"><%= reserve.chapter_author %></span>
 <span class="title"><%= reserve.chapter_title %></span>
 <% if reserve.title %>
-in <span class="book"><%= reserve.title %><% if reserve.author || reserve.editor %>, <% end %>
-</span>
-<span class="bk_creator">
-<% if reserve.author %>
-by <%= reserve.author %>
-<%  elsif reserve.editor %>
-<%= reserve.editor %> [ed.]
-<% end %>
-</span>
+  in <span class="book"><%= reserve.title %><% if reserve.author || reserve.editor %>, <% end %></span>
+  <span class="bk_creator">
+  <% if reserve.author %>
+    by <%= reserve.author %>
+  <%  elsif reserve.editor %>
+   <%= reserve.editor %> [ed.]
+  <% end %>
+<%= reserve.non_journal_info %>
+ 
+ </span>
 <% else %>
-(chapter)
+ (chapter)
 <% end %>

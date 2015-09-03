@@ -212,6 +212,28 @@ class Reserve
     normalize_name(lastn, first)
 
   end
+
+  def non_journal_info
+    if self.citation
+      ed = self.citation.edition || ""
+      vol = self.citation.volume 
+      pub = self.citation.publisher || ""
+      year = self.citation.year 
+      pps = self.citation.page_numbers 
+    else
+      ed = self.input_edition || ""
+      vol = self.input_volume 
+      pub = self.input_publisher || ""
+      year = self.input_year
+      pps = self.input_page_numbers
+    end
+    disp = "#{ed.strip}" || ""
+    disp = "#{disp.strip} Vol. #{vol.strip}" if vol
+    disp = "#{disp} #{pub.strip}" 
+    disp = "#{disp} (#{year})" if year
+    disp = "#{disp} #{pp}"
+    disp.strip
+  end
   # volume, number, date, etc.
   def journal_info
     if self.citation

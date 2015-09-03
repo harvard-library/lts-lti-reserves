@@ -39,8 +39,8 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 <li id="<%= reserve.citation_request_id %>">
 <%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
 
-<%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %>
-<%= render partial: 'reserves/reserve_status', locals: {reserve: reserve} %></li>
+<%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve} %>
+<%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %></li>
 <% end %>
 </ul>
 <% end %>

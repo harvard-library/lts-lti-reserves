@@ -1,13 +1,16 @@
 <%# display information we have about a reserve, modulo the editable stuff %>
-<div class="res_display">
+
 <% if reserve.chapter? %>
-&quot;<%= reserve.chapter_title %>&quot;
-<% if reserve.chapter_author %>
-by <%= reserve.chapter_author %>
+   <%= render partial: 'reserves/chapter_auth_title', locals: {:reserve => reserve} %>
+<% else %>
+   <% if reserve.author %>
+    <span class="author"><%= reserve.author %></span>
+   <% end %>
+   <span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
+   <% if reserve.editor %>
+    <span class="editor"><%= reserve.editor %> [ed.]</span>
+   <% end %>
+   <%= reserve.non_journal_info %>
 
 <% end %>
-<% else %>
-<span class="author"><%= reserve.author %></span>
-<span class="title"><%= reserve.title %><% if !reserve.title.end_with?('.') %>.<% end %></span>
-<% end %>
-</div>
+

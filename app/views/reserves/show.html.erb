@@ -1,4 +1,5 @@
 <h1>Reserve Request</h1>
 <%= render  'reserves/simple_reserve', :reserve => @reserve %>
-
+<% if @reserve.journal? 
+<h2></h2>
 
