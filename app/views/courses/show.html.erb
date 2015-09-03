@@ -2,7 +2,7 @@
 <% if @reserves %>
 <h3>Number of reserves: <%= @reserves.count %></h3>
 <% if !@others.blank? %>
-<%# = render partial: 'courses/select_previous', locals: {@others => @others} %>
+<%# = render partial: 'courses/select_previous', locals: {:others => @others} %>
 <div id="previous_list" class="float-right">
   <form name="prev_select_form" id="prev_select_form">
     <label for="prev_select">Re-use reserves from: </label>

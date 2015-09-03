@@ -4,7 +4,7 @@
   <form name="prev_select_form" id="prev_select_form">
      <label for="prev_select">Re-use reserves from: </label>
      <select id="prev_select">
-      <% @others.each do |ci| %>
+      <% others.each do |ci| %>
     <option value="<%=ci.id %>"><%= ci.term %></option>
     <% end %>
     </select>

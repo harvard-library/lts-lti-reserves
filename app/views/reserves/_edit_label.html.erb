@@ -1,8 +1,8 @@
   <div class="panel panel-info">
-    <div class="panel-heading"><div class="display_lib_info">Library: <% if @reserve.library %>
-<%= @reserve.library.name %> 
-<% if @reserve.library.contact_email %>
-( contact: <a href="mailto:<%= @reserve.library.contact_email %>" title="email for questions or problems"><%= @reserve.library.contact_email %></a> )
+    <div class="panel-heading"><div class="display_lib_info">Library: <% if reserve.library %>
+<%= reserve.library.name %> 
+<% if reserve.library.contact_email %>
+( contact: <a href="mailto:<%= reserve.library.contact_email %>" title="email for questions or problems"><%= reserve.library.contact_email %></a> )
 <% end %>
 <% else %>
 <span class="text-error">NO LIBRARY ASSIGNED!! </span>
@@ -12,10 +12,10 @@
 </span>
 
 </div>
-      <% if !@reserve.journal? %>
-      <%= render partial: 'display_non_journal', locals: {reserve: @reserve} %>
+      <% if !reserve.journal? %>
+      <%= render partial: 'display_non_journal', locals: {:reserve => reserve} %>
       <% else %>
-     <%= render partial: 'display_journal', locals: {reserve: @reserve} %>
+     <%= render partial: 'display_journal', locals: {:reserve => reserve} %>
       <% end %>
 </div>
     <div class="panel-body">
