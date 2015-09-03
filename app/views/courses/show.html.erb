@@ -37,6 +37,9 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 <ul class="list-with-floats chk_grp" id="ids_del">
 <% @reserves.each do |reserve| %>
 <li id="<%= reserve.citation_request_id %>">
+
+<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left">&#128083;</span>
+
 <%= render partial: 'reserves/edit_icon', locals: {:reserve => reserve} %>
 <div><%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
 

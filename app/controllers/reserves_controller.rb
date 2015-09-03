@@ -1,9 +1,8 @@
 class ReservesController < ApplicationController
   def show
     resp = Rlist.new.reserve(params[:id])
-    @input = Reserve.new(JSON.parse(resp.body))
-    @reserve = @input.dup
-    @reserve.fill_in
+    @reserve = Reserve.new(JSON.parse(resp.body))
+    @course_id = params[:course_id] || @reserve.instance_id
     layout = false;
     if params[:layout]
       layout = true

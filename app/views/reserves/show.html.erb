@@ -1,5 +1,31 @@
-<h1>Reserve Request</h1>
-<%= render  'reserves/simple_reserve', :reserve => @reserve %>
-<% if @reserve.journal? 
-<h2></h2>
+<h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
+<div>
 
+<%= render  'reserves/simple_reserve', :reserve => @reserve %>
+<% if @reserve.student_annotation %><br/><span class="note"><%= @reserve.student_annotation %></span><% end %>
+<%= render partial: 'reserves/reserve_status', locals: {:reserve => @reserve} %>
+</div>
+<div class="library">
+<% if @reserve.library.support_url %>
+ <span class="urlLink btn-link">
+<a href="<%=  @reserve.library.support_url %>" target="library_link" title="Library support page"><%= @reserve.library.name %></a><%= icon('external-link')%></span>
+<% else %>
+<%= @reserve.library.name %>
+<% end %>
+</div>
+<hr/>
+<p><big>Original request</big></p>
+
+<dl class="dl-horizontal">
+<% Reserve::NEW_FIELDS.each do |f| %>
+<% inp = "input_#{f['name']}".to_sym
+   value = @reserve.send(inp)
+   if (value) %>
+<dt><%= f["label"] %>:</dt> <dd><%= value %></dd>
+  <% end %>
+<% end %>
+<dt>Note to Reserves</dt>
+<dd>
+<%= @reserve.instructor_note || "(none)" %> 
+</dd>
+</dl>
