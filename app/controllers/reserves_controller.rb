@@ -7,6 +7,11 @@ class ReservesController < ApplicationController
     if params[:layout]
       layout = true
     end
+    if !params[:student]
+      @history = fetch_history(params[:id])
+    else
+      @history = {}
+    end
     render :action => "show", :layout => layout
   end
   
@@ -111,6 +116,8 @@ class ReservesController < ApplicationController
 
   def index
   end
+
+
  # AJAX
   def fetch_cite
     cite = {}
@@ -136,6 +143,11 @@ class ReservesController < ApplicationController
   rescue RuntimeError => bang
     cite["status"] = bang
     render :json => cite.as_json(:except => "mods_date")
+  end
+
+  def fetch_history(id) 
+      resp = Rlist.new.history(id)
+      hist = JSON.parse(resp.body)
   end
 
 end

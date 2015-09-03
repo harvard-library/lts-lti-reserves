@@ -29,3 +29,17 @@
 <%= @reserve.instructor_note || "(none)" %> 
 </dd>
 </dl>
+
+<% if !@history.blank? %>
+<hr/>
+<p><big>Request history</big></p>
+<table>
+<tr><th>Date</th><th>Status</th><th>Note</th></tr>
+<% @history.each do |h| %>
+<tr><th><%= Time.parse(h["date"]).strftime "%d %B %Y %H:%M" %></th>
+<th><%= h["status"] %></th>
+<th><%= h["note"] %></th>
+</tr>
+<% end %>
+</table>
+<% end %>

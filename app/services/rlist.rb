@@ -65,9 +65,18 @@ class Rlist
  #  raise ApiError.new(response.code, response.message), "Unable to get list for course (#{course_id})" if response.code != 200
     response
   end
+# REQUEST HISTORY STUFF
+  def history(reserve_id)
+    response = self.class.get("/citationrequests/" + reserve_id.to_s + "/history",
+                              :headers => {"User-Agent" => "lts-lti-reserves"} )
+    handle_bad_response(response,"Unsuccessful  call for history for reserve (#{reserv_id}). ") if response.code != 200
+    response
+  end
 
 
 end
+
+
 
 #rlist = Rlist.new
 
