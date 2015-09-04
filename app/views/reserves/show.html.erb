@@ -32,14 +32,20 @@
 
 <% if !@history.blank? %>
 <hr/>
-<p><big>Request history</big></p>
-<table>
+<div class="table-responsive">
+<table class="table table-hover table-condensed">
+<caption><big><bold>Request History</bold></big></caption>
+<thead>
 <tr><th>Date</th><th>Status</th><th>Note</th></tr>
+</thead>
+<tbody>
 <% @history.each do |h| %>
 <tr><th><%= Time.parse(h["date"]).strftime "%d %B %Y %H:%M" %></th>
 <th><%= h["status"] %></th>
 <th><%= h["note"] %></th>
 </tr>
 <% end %>
+</tbody>
 </table>
+</div>
 <% end %>
