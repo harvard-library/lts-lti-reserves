@@ -34,7 +34,7 @@ class Citation
 
   # non-persistent view of a Citation.  Type = journal, non-journal
   def initialize(attributes = {})
-    puts attributes
+#    puts attributes
     attributes = attributes.reduce({}){ |hash, (k, v)|
       key = k.to_s.underscore
       hash = hash.merge( key => v )  if @@fields.find_index(key.to_sym)
