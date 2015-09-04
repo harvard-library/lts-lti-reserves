@@ -14,11 +14,16 @@
 <% end %>
 </div>
 <hr/>
-<p><big>Original request</big></p>
+<p><big>Original <%= @reserve.input_citation_type %> request</big></p>
+
 
 <dl class="dl-horizontal">
+
+
 <% Reserve::NEW_FIELDS.each do |f| %>
 <% inp = "input_#{f['name']}".to_sym
+   next if @reserve.input_citation_type == "NON_JOURNAL" && !f["journal"].blank? && f["journal"]
+   next if @reserve.input_citation_type == "JOURNAL" && (f["journal"].blank? || !f["journal"])
    value = @reserve.send(inp)
    if (value) %>
 <dt><%= f["label"] %>:</dt> <dd><%= value %></dd>
