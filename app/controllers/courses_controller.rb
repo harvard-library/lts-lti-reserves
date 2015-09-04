@@ -1,14 +1,26 @@
 class CoursesController < ApplicationController
   def show
     begin
-      @reserves = Course.new(params[:id]).list
+      c  = Course.new(params[:id])
+      if !params[:student]
+        @reserves = c.list
+      else
+        @reserves = c.student_list
+      end
     rescue Exception => bang
       flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
     end
     begin
-      @others = fetch_others(params[:id])
+      @instance = fetch_info(params[:id])
+      if !params[:student]
+        begin
+          @others = fetch_others(@instance)
+        rescue StandardError => bang
+          flash[:notice] = "Unable to retrieve information on previous Instances: #{bang}"
+        end
+      end
     rescue StandardError => bang
-      flash[:notice] = "Unable to retrieve information on previous Instances: #{bang}"
+      flash[:notice] = "Unable to retrieve Course details: #{bang}"
     end
   end
   def previous
@@ -133,8 +145,10 @@ class CoursesController < ApplicationController
     redirect_to :action => :show, id: params[:id] 
   end
 # sometime I'll make this private, or a concern, or something!
-  def fetch_others(id)
-    ii =  InstanceInfo.new(id)
+  def fetch_info(id)
+    ii = InstanceInfo.new(id)
+  end
+  def fetch_others(ii)
     ii.fill_others
     ii.others
   end
