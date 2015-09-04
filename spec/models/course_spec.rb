@@ -7,28 +7,30 @@ describe Course do
       WebMock.allow_net_connect!
       c = Course.new(id)
       WebMock.disable_net_connect!
-      expect(c.reserves.count).to eq(1)
+      expect(c.reserves.count).to eq(2)
     end
     it "creates a list of reserves without deletes" do
       id = 345486
       WebMock.allow_net_connect!
       c = Course.new(id)
       WebMock.disable_net_connect!
+      c.no_deletes
       expect(c.reserves.count).to eq(12)
     end
     it "creates the same list WITH deletes" do
       id = 345486
       WebMock.allow_net_connect!
-      c = Course.new(id, true)
+      c = Course.new(id)
       WebMock.disable_net_connect!
       expect(c.reserves.count).to eq(13)
     end
-    it "creates a list sorted by instructor_sort_order" do
-      id = 336909     
+    it "creates a student list" do
+      id = 356403     
       WebMock.allow_net_connect!
-      c = Course.new(id, true)
+      c = Course.new(id)
       WebMock.disable_net_connect!
-      expect(c.list[0].instructor_sort_order).to eq("0")
+      expect(c.student_list.count).to eq(5)
     end
+
   end
 end
