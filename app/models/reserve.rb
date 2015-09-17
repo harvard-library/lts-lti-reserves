@@ -4,6 +4,7 @@ class Reserve
   include ActiveModel::Validations
   extend ActiveModel::Callbacks
   define_model_callbacks :create, :update
+  STOP_WORDS = ["a ", "an ", "the "] # really stop Strings!
   MATERIAL_TYPES = ["Book","Journal Article", "Video", "Audio", "Image", "Map", "Score", "Other"]
   EDIT_FIELDS = [  { "name" => "estimated_enrollment", "label" => "Estimated Number of Enrolled Students"},
                    { "name" => "lecture_date", "label" => "Lecture/Class Date", "type" => "date"},
@@ -259,7 +260,7 @@ class Reserve
     vol_str = "vol. #{vol}" if vol
     vol_str = "#{vol_str} no.#{issue}" if issue
     date = season || ""
-    if date = ""
+    if date == ""
       date = "#{date} #{day}" if day
       date = "#{date} #{month}" if month
       date = "#{date} #{year}" if year
@@ -275,6 +276,16 @@ class Reserve
     else
       self.input_title
     end
+  end
+  def sort_title
+    st = self.chapter_title || self.title || ""
+    st = st.downcase.gsub(' ', '_').gsub(/\W/,'').gsub('_', ' ')
+    STOP_WORDS.each do |w|
+      if st.length > 5 && st.start_with?(w)
+        st = st.sub(w,'')
+      end
+    end
+    st.strip
   end
   def journal_title
     if self.citation

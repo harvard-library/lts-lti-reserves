@@ -42,7 +42,7 @@ describe Reserve do
       expect(res.chapter_author).to eq("Ntzani, Evangelia E.")
       expect(res.tip_title).to eq("Combining molecular and genetic data from different sources")
       expect(res.persisted?).to eq(false)
-
+      expect(res.sort_title).to eq("combining molecular and genetic data from different sources")
     end
     it "creates reserve *with* a citation: a chapter in a book with all chapter info in input only" do
       opts = {
@@ -83,10 +83,10 @@ describe Reserve do
       expect(res.id).to eq("298659")
       expect(res.to_param).to eq("298659")
     end
-    it "creates a non-citationed reserve with material type, no type" do
+    it "begins its title with a stop word" do
       opts = {"contactInstructorId" => "70663473",
         "inputMaterialType" => "Book",
-        "inputTitle" => "Everything you wanted to know about TLT",
+        "inputTitle" => "An Issue to Be Considered: TLT",
         "instanceId" =>   "355238",
         "libraryCode" => "LAM",
         "required" => "Y",
@@ -95,6 +95,35 @@ describe Reserve do
       expect(TestHelper::valid(res)).to eq(true)
       expect(res.input_citation_type).to eq("NON_JOURNAL")
       expect(res.display_status).to eq("Unknown")
+      expect(res.sort_title).to eq("issue to be considered tlt")
+    end
+    it "begins its title with a stop word" do
+      opts = {"contactInstructorId" => "70663473",
+        "inputMaterialType" => "Book",
+        "inputTitle" => "The ultimate guide to TLT's direction",
+        "instanceId" =>   "355238",
+        "libraryCode" => "LAM",
+        "required" => "Y",
+        "visibility" => "true"}
+      res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
+      expect(res.input_citation_type).to eq("NON_JOURNAL")
+      expect(res.display_status).to eq("Unknown")
+      expect(res.sort_title).to eq("ultimate guide to tlts direction")
+    end
+    it "creates a non-citationed reserve with material type, no type" do
+      opts = {"contactInstructorId" => "70663473",
+        "inputMaterialType" => "Book",
+        "inputTitle" => "Everything You Wanted to Know About TLT: A Guide",
+        "instanceId" =>   "355238",
+        "libraryCode" => "LAM",
+        "required" => "Y",
+        "visibility" => "true"}
+      res = Reserve.new(opts)
+      expect(TestHelper::valid(res)).to eq(true)
+      expect(res.input_citation_type).to eq("NON_JOURNAL")
+      expect(res.display_status).to eq("Unknown")
+      expect(res.sort_title).to eq("everything you wanted to know about tlt a guide")
     end
     it "comes in with a citation author and url" do
       opts =  {
