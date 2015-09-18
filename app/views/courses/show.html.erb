@@ -1,50 +1,14 @@
 
 <% if @reserves %>
 <h3>Number of reserves: <%= @reserves.count %></h3>
-<% if !@others.blank? %>
-<%# = render partial: 'courses/select_previous', locals: {:others => @others} %>
-<div id="previous_list" class="float-right">
-  <form name="prev_select_form" id="prev_select_form">
-    <label for="prev_select">Re-use reserves from: </label>
-    <select id="prev_select"><option value="">Select a previous term</option>
-      <% @others.each do |ci| %>
-    <option value="<%=ci.id %>"><%= ci.term %></option>
-    <% end %>
-    </select>
-  </form>
-</div>
 
-<script>reuseSetup()</script>
-
-<% end %>
-<%= form_tag({controller: "courses", action: "reorder"}, method: "post", class: "reserves-list reorder", id: "form_reorder") do %>
-<%= hidden_field_tag("id", params[:id]) %>
-<input type="hidden" name="sort_order" id="sort_order" />
-</span>
-
-<% end %>
-
-<%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list") do %>
-<%= hidden_field_tag("id", params[:id]) %>
-<ul class="list-with-floats">
-<li class="head"><%= check_box_tag("select_all_del") %>
-<%= label_tag("select_all_del", "Select all reserves") %> <span class="delete" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", {:class => "btn btn-submit chks_submit_del", :id => "delete_btn"}) %></span> 
-<span class="reorder" title="Commit reordering"><input name="reorder"
-value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder_btn" type="button"></span>
-<span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
-</li>
-</ul>
-<ul class="list-with-floats chk_grp" id="ids_del">
+<ul class="list-with-floats" id="reserves_ids">
 <% @reserves.each do |reserve| %>
 <li id="<%= reserve.citation_request_id %>">
 
-<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left">&#128083;</span>
+<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true&viewonly=true" class="view_link float-left">&#128083;</span>
 
-<%= render partial: 'reserves/edit_icon', locals: {:reserve => reserve} %>
-<div><% if !reserve.display_status.starts_with?("Delet") %>
-<%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
-<% end %>
-
+<div>
 <%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve} %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %>
 </div> 
@@ -53,6 +17,5 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 <% end %>
 </ul>
 <% end %>
-<script>checkBoxSetup("del")</script>
-<% end %>
-<div id="reuse_list" class="previous"></div>
+
+

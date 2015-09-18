@@ -1,18 +1,28 @@
-<h3><a href="/courses/<%= @course_id %>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
+<h3><a href="/courses/<%= @course_id %>/edit" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
 <div>
 
 <%= render  'reserves/simple_reserve', :reserve => @reserve %>
 <% if @reserve.student_annotation %><br/><span class="note"><%= @reserve.student_annotation %></span><% end %>
-<%= render partial: 'reserves/reserve_status', locals: {:reserve => @reserve} %>
+<%= render partial: 'reserves/reserve_status', locals: {:reserve => @reserve } %>
+
 </div>
 <div class="library">
+
+<% if params[:viewonly].to_s == "true" %>
+ <span class="urlLink btn-link">
+ <a href="http://library.harvard.edu/<%= @reserve.library.library_code.downcase %>" target="library_link" title="Library page">  <%= @reserve.library.name %></a><%= icon('external-link')%>
+</span>
+<% else %>
 <% if @reserve.library.support_url %>
  <span class="urlLink btn-link">
-<a href="<%=  @reserve.library.support_url %>" target="library_link" title="Library support page"><%= @reserve.library.name %></a><%= icon('external-link')%></span>
+<a href="<%=  @reserve.library.support_url %>" target="library_link" title="Library support page"><%= @reserve.library.name %></a><%= icon('external-link')%>
+</span>
 <% else %>
 <%= @reserve.library.name %>
 <% end %>
+<% end %>
 </div>
+<% if params[:viewonly].to_s != "true" %>
 <hr/>
 <p><big>Original <%= @reserve.input_citation_type %> request</big></p>
 
@@ -53,4 +63,5 @@
 </tbody>
 </table>
 </div>
+<% end %>
 <% end %>

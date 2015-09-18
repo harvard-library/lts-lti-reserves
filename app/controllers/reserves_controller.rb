@@ -62,7 +62,7 @@ class ReservesController < ApplicationController
         return
       else
         flash[:success] = "Created new Reserve #{params["title"]} "
-        redirect_to '/courses/' +  params[:reserve]["instance_id"]
+        redirect_to '/courses/' +  params[:reserve]["instance_id"] + '/edit'
       end
     end
   end
@@ -94,7 +94,7 @@ class ReservesController < ApplicationController
           redir = '/reserves/' + params[:id] + '/edit?course_id=' + params[:reserve]["instance_id"]
         else
           flash[:success] = "Updated Reserve #{params["title"]} (#{params[:reserve]["citation_request_id"]})"
-          redir = '/courses/' +  params[:reserve]["instance_id"]
+          redir = '/courses/' +  params[:reserve]["instance_id"] + '/edit'
         end
       end        
       redirect_to redir
@@ -108,7 +108,7 @@ class ReservesController < ApplicationController
       @reserve  = Reserve.new(JSON.parse(resp.body))
     rescue StandardError => bang
       flash[:error] = "Unable to retrieve information on this Reserve (ID #{params[:id]}): #{bang}"
-      redirect_to  '/courses/' + params[:course_id] 
+      redirect_to  '/courses/' + params[:course_id] + '/edit'
     else
       @reserve
     end

@@ -1,27 +1,34 @@
 class CoursesController < ApplicationController
   def show
     begin
+      params[:viewonly] = "true"
       c  = Course.new(params[:id])
-      if !params[:student]
-        @reserves = c.list
-      else
-        @reserves = c.student_list
-      end
+      @reserves = c.student_list
     rescue Exception => bang
       flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
     end
     begin
       @instance = fetch_info(params[:id])
-      if !params[:student]
-        begin
-          @others = fetch_others(@instance)
-        rescue StandardError => bang
-          flash[:notice] = "Unable to retrieve information on previous Instances: #{bang}"
-        end
-      end
     rescue StandardError => bang
       flash[:notice] = "Unable to retrieve Course details: #{bang}"
     end
+  end
+
+  def edit
+    begin
+      c  = Course.new(params[:id])
+      @reserves = c.list
+    rescue Exception => bang
+      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
+    end
+    begin
+      @instance = fetch_info(params[:id])
+      @others = fetch_others(@instance)
+    rescue StandardError => bang
+      flash[:notice] = "Unable to retrieve information on previous Instances: #{bang}"
+    end
+    rescue StandardError => bang
+      flash[:notice] = "Unable to retrieve Course details: #{bang}"
   end
   def previous
     begin
@@ -34,7 +41,7 @@ class CoursesController < ApplicationController
       end
     rescue StandardError => bang
       flash[:error] = "Unable to retrieve information on the previous course #{params[:id]}: #{bang}"
-      redirect_to  :action => :show, id: params[:id] and return
+      redirect_to  :action => :edit, id: params[:id] and return
     end
     respond_to do |format|
       format.html do
@@ -48,7 +55,7 @@ class CoursesController < ApplicationController
       others = fetch_others(params[:prev_id])
     rescue Exception => bang
       flash[:error] = "Unable to retrieve information from iCommons on Course Instance #{params[:id]}: #{bang}"
-       redirect_to  :action => :show, id: params[:id]
+       redirect_to  :action => :edit, id: params[:id]
     end
     respond_to do |format|
       format.html do
@@ -82,7 +89,7 @@ class CoursesController < ApplicationController
 #    @reserves = Course.new(params[:id]).list
     flash[:notice] = "#{count} reserve#{'s' if count != 1} re-used"
     flash[:error] = errs if !errs.blank?
-    redirect_to :action => :show, id: params[:id] and return
+    redirect_to :action => :edit, id: params[:id] and return
   end
   def reuse_one(opts, reuse_id) 
     begin
@@ -133,7 +140,7 @@ class CoursesController < ApplicationController
     @reserves = Course.new(params[:id]).list
     flash[:notice] = "#{count} reserve#{'s' if count != 1} deleted"
     flash[:error] = err_str if !err_str.empty?
-    redirect_to :action => :show, id: params[:id]
+    redirect_to :action => :edit, id: params[:id]
   end
   def reorder
     begin
@@ -142,7 +149,7 @@ class CoursesController < ApplicationController
     rescue StandardError => bang
       flash[:error] = bang
     end
-    redirect_to :action => :show, id: params[:id] 
+    redirect_to :action => :edit, id: params[:id] 
   end
 # sometime I'll make this private, or a concern, or something!
   def fetch_info(id)

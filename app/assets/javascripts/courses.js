@@ -61,7 +61,7 @@ function submit_reorder() {
 
  $(document).on("ready page:load", function(e) {
      if ($("body").hasClass("c_courses") && 
-	 $("body").hasClass("a_show")) {
+	 $("body").hasClass("a_edit")) {
 	 $("#reorder_btn").on("click", submit_reorder);
 	 $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
 				   dragEnd: saveOrder,

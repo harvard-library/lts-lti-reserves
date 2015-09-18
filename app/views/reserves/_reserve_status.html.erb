@@ -1,6 +1,7 @@
 <%# simple presentation of a single reserve  statuses, editability  %>
-
+<% if params[:viewonly].to_s != "true" %>
 <span class="visibility"><%= reserve.visibility == "R" ? "Not Visibile" : "Visible" %></span>
+<% end %>
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
 <%= icon('check') if reserve.display_status=='Available'%> 
 </span>
