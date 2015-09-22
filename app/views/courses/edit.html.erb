@@ -1,6 +1,7 @@
 
 <% if @reserves %>
-<h3>Number of reserves: <%= @reserves.count %></h3>
+<h4>Number of reserves: <%= @reserves.count %></h4>
+<div class="switchLink"><a href="/courses/<%= params[:id] %>/?viewonly=true">Student View</a></div>
 <% if !@others.blank? %>
 <%# = render partial: 'courses/select_previous', locals: {:others => @others} %>
 <div id="previous_list" class="float-right">
