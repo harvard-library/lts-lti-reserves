@@ -91,7 +91,10 @@ function displayPrev() {
 	}
 };
 
-/* handle sorting */
+/* handle sorting. I might have figured this out myself eventually, but
+h/t Reto Aebersold
+http://stackoverflow.com/users/286432/reto-aebersold 
+*/
 
 var sortType = ""
 
