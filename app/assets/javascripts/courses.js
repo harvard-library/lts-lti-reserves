@@ -60,15 +60,20 @@ function submit_reorder() {
 }
 
  $(document).on("ready page:load", function(e) {
-     if ($("body").hasClass("c_courses") && 
-	 $("body").hasClass("a_edit")) {
-	 $("#reorder_btn").on("click", submit_reorder);
-	 $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
+     /* edit stuff */
+     if ($("body").hasClass("c_courses")) {  
+	 if ( $("body").hasClass("a_edit")) {
+	     $("#reorder_btn").on("click", submit_reorder);
+	     $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
 				   dragEnd: saveOrder,
 				   placeHolderTemplate: "<li class='placeHolder'></li>"
 				  });
-		     }
- });
+	 }
+	 else if ($("body").hasClass("a_show")) {
+	     $("button.sort").on("click", function(e) {sortByType($(this))});
+	 }
+     }
+});
 
 /* handle reuse */
 function reuseSetup() {
@@ -86,3 +91,20 @@ function displayPrev() {
 	}
 };
 
+/* handle sorting */
+
+var sortType = ""
+
+function sortByType($this) {
+    sortType = $this.attr("data-sort");
+    $("ul#reserves_ids li").sort(sortEm).prependTo("ul#reserves_ids");
+    sortType = ""; /* clear the sortType out for next time */
+}
+
+function sortEm(a,b){
+    if (sortType !== "") {
+	var span = "span." + sortType;
+	return $(span, a).text() > $(span, b).text() ? 1 : -1;
+    }
+  return -1; 
+}
