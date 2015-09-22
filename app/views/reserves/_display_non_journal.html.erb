@@ -5,6 +5,8 @@
 <% else %>
    <% if reserve.author %>
     <span class="author"><%= reserve.author %></span>
+    <% else %>
+    <span class="author"></span>
    <% end %>
    <span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
    <% if reserve.editor %>

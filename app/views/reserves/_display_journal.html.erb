@@ -1,6 +1,8 @@
 <%# display information we have about a reserve, modulo the editable stuff %>
 <% if reserve.author %>
    <span class="author"><%= reserve.author %></span>
+ <% else %>
+    <span class="author"></span>
 <% end %>
 
 <span class="title">&quot;<%= reserve.title.strip %>&quot;</span>
