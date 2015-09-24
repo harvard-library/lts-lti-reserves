@@ -9,4 +9,6 @@
  <span class="urlLink btn-link">
 <a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link" title="Read <%= reserve.title %> online">digital link</a> <%= icon('external-link')%></span> 
 <% end %>
+<-- <%= reserve.student_annotation %> -->
+<% if reserve.student_annotation %><br/><span class="note"><%= reserve.student_annotation %></span><% end %>
 

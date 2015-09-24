@@ -40,7 +40,7 @@ InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term,
     self.title = title
     self.title = "#{self.title}: #{sub}" if !sub.blank? && title != sub
     short = json["short_title"]
-    self.title = "[#{short}] #{self.title}" if short != title
+    self.title = "[#{short}] #{self.title}" if !short.blank? && short != title
   end
 
 end

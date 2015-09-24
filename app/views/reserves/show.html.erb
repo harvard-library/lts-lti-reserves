@@ -2,7 +2,6 @@
 <div>
 
 <%= render  'reserves/simple_reserve', :reserve => @reserve %>
-<% if @reserve.student_annotation %><br/><span class="note"><%= @reserve.student_annotation %></span><% end %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => @reserve } %>
 
 </div>
