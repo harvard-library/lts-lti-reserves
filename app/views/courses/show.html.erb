@@ -1,8 +1,11 @@
 
 <% if @reserves %>
+
 <h3>Number of readings: <%= @reserves.count %></h3>
+<div id="reserves-list">
+<% if @reserves.count > 2 %>
 <div class="btn-group float-right">
-        <button class="sort btn btn-default" data-sort="title">
+        <button class="sort btn btn-default" data-sort="sort_title">
               Sort by title
             </button>
             <button class="sort btn btn-default" data-sort="author">
@@ -12,9 +15,10 @@
               Sort by instructor order
             </button>
 </div>
+<% end %>
 <ul class="list-with-floats" id="reserves_ids">
 <% @reserves.each do |reserve| %>
-<li id="<%= reserve.citation_request_id %>">
+<li id="r_<%= reserve.citation_request_id %>">
 
 <span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true&viewonly=true" class="view_link float-left">&#128083;</span>
 
@@ -27,6 +31,17 @@
 </li>
 <% end %>
 </ul>
+</div>
 <% end %>
+<!-- script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script -->
+<script type="text/javascript">
+
+    var options = {
+     valueNames: [ 'sort_title' ,'order','author'],
+     listClass: 'list-with-floats'
+    };
+
+    var rList = new List('reserves-list', options);
+  </script>
 
 

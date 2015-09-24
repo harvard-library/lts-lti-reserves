@@ -8,6 +8,7 @@
     <% else %>
     <span class="author"></span>
    <% end %>
+   <span class="sort_title"><%= reserve.sort_title %> </span>
    <span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
    <% if reserve.editor %>
     <span class="editor"><%= reserve.editor %> [ed.]</span>
