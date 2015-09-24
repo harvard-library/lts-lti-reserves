@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   post 'courses/reuse' => 'courses#reuse'
   get 'presto/:type/' => 'reserves#fetch_cite', :defaults => {:format => :json}
 
+
+  mount DceLti::Engine => "/lti"
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
