@@ -1,4 +1,4 @@
-<h3><a href="/courses/<%= @course_id %>/<%= (params[:viewonly].to_s == "true")?"" : edit%>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
+<h3><a href="/courses/<%= @course_id %>/<%= (params[:viewonly].to_s == "true")?"" : "edit" %>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
 <div>
 
 <%= render  'reserves/simple_reserve', :reserve => @reserve %>

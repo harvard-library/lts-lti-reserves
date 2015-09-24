@@ -1,4 +1,7 @@
 <%# simple presentation of a single reserve request  %>
+<% if reserve.required == "Y" %>
+<span class="required" title="Required Reading"><%= icon('star')%></span>
+<% end %>
 <% if reserve.journal? %>
   <%= render partial: 'reserves/display_journal', locals: {:reserve => reserve} %>
 <% else %>
@@ -9,6 +12,5 @@
  <span class="urlLink btn-link">
 <a href="<%= reserve.dig_url %>" target="dig_link" class="dig_link" title="Read <%= reserve.title %> online">digital link</a> <%= icon('external-link')%></span> 
 <% end %>
-<-- <%= reserve.student_annotation %> -->
-<% if reserve.student_annotation %><br/><span class="note"><%= reserve.student_annotation %></span><% end %>
+
 

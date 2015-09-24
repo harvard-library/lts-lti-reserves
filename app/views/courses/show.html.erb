@@ -4,6 +4,7 @@
 <h3>Number of readings: <%= @reserves.count %></h3>
 <div id="reserves-list">
 <% if @reserves.count > 2 %>
+<input class="search" placeholder="Search" />
 <div class="btn-group float-right">
         <button class="sort btn btn-default" data-sort="sort_title">
               Sort by title
@@ -14,6 +15,10 @@
 	     <button class="sort btn btn-default" data-sort="order">
               Sort by instructor order
             </button>
+<!--	    <button class="sort btn btn-default" data-sort="sortdate">
+              Sort by lecture date
+            </button>
+-->
 </div>
 <% end %>
 <ul class="list-with-floats" id="reserves_ids">

@@ -46,6 +46,18 @@ function anyChecked(type) {
     return retVal;
 }
 
+/* javascripting supporting re-ordering of reserves */
+function saveOrder() {
+    var data = $("#ids_del li").map(function() { 
+	return $(this).attr('id'); })
+    .get();
+    $("#sort_order").val(data.join("|"));
+}
+
+function submit_reorder() { 
+/*    console.log($("#form_reorder")); */
+   $("#form_reorder").submit();
+}
 
  $(document).on("ready page:load", function(e) {
      /* edit stuff */
