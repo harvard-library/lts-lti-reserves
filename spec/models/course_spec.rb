@@ -29,8 +29,18 @@ describe Course do
       WebMock.allow_net_connect!
       c = Course.new(id)
       WebMock.disable_net_connect!
-      expect(c.student_list.count).to eq(5)
+      expect(c.student_list.count).to eq(4)
     end
-
+    it "handles ordering correctly" do
+      id = 371158
+      WebMock.allow_net_connect!
+      c = Course.new(id)
+      WebMock.disable_net_connect!
+      list = c.student_list
+      expect(c.sortable?).to eq(true)
+      expect(list.count).to eq(6)
+      expect(Integer(list[0].instructor_sort_order || "0")).to eq(8)
+      expect(Integer(list[1].instructor_sort_order || "0")).to eq(9)
+    end
   end
 end

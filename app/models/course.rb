@@ -8,8 +8,8 @@ Course = Struct.new( :reserves, :id) do
     self.reserves  = input_list.collect {|request|  Reserve.new(request)}
   end
   def list
-    if self.reserves.any?{ |res| !res.instructor_sort_order.nil? }
-      self.reserves.sort_by! {|res| res.instructor_sort_order.to_i || 0 }
+    if self.sortable?
+      self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
     self.reserves
   end
@@ -17,6 +17,9 @@ Course = Struct.new( :reserves, :id) do
     no_deletes
     visible_only
     no_new
+    if self.sortable?
+      self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
+    end
     self.reserves
   end
   def no_deletes
@@ -27,5 +30,8 @@ Course = Struct.new( :reserves, :id) do
   end
   def no_new
     self.reserves = self.reserves.reject {|request| request.display_status == "New" }
+  end
+  def sortable?
+    return self.reserves.any?{ |res| !res.instructor_sort_order.nil? && res.instructor_sort_order.to_s != "-1"}
   end
 end
