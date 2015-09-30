@@ -36,7 +36,7 @@ value="Save new Reserve order" class="btn btn-submit reorder_submit" id="reorder
 </ul>
 <ul class="list-with-floats chk_grp" id="ids_del">
 <% @reserves.each do |reserve| %>
-<li id="<%= reserve.citation_request_id %>">
+<li id="<%= reserve.citation_request_id %>" title="click on this reserve to re-order">
 
 <span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left">&#128083;</span>
 
