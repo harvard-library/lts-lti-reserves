@@ -13,7 +13,8 @@
    <% if reserve.editor %>
     <span class="editor"><%= reserve.editor %> [ed.]</span>
    <% end %>
+<% if params[:brief].to_s != "true" %>
    <%= reserve.non_journal_info %>
-
+<% end %>
 <% end %>
 
