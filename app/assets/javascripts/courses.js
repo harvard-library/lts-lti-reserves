@@ -56,15 +56,21 @@ function saveOrder() {
 
 function submit_reorder() { 
 /*    console.log($("#form_reorder")); */
-   $("#form_reorder").submit();
+    if (reordered()) {
+	$("#form_reorder").submit();
+    }
+    else {return false; } /* no ordering to be had! */
 }
-
+function reordered() {
+    return ($("#sort_order").val() !== "");
+}
  $(document).on("ready page:load", function(e) {
      /* edit stuff */
      if ($("body").hasClass("c_courses")) {  
 	 if ( $("body").hasClass("a_edit")) {
 	     $("#reorder_btn").on("click", submit_reorder);
 	     $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
+				       dragSelectorExclude: "span.view, span.edit, span.required, input",
 				   dragEnd: saveOrder,
 				   placeHolderTemplate: "<li class='placeHolder'></li>"
 				  });
