@@ -6,9 +6,14 @@
  *
  */
 
+function enableDisable(name, enable) {
+    $this = $("#"+name);
+    $this.toggleClass("btn-disabled", !enable);
+    $this.toggleClass("btn-submit", enable);
+}
 
 function checkBoxSetup(type) {
-    $("ul#ids_" + type + " li > input[type='checkbox']")
+    $("ul#ids_" + type + " li  input[type='checkbox']")
 	.not("#select_all_" + type)
 	.on("click",{name: type}, function(event) {
 	    checkBoxChecked($(this),event.data.name);});
@@ -18,24 +23,27 @@ function checkBoxSetup(type) {
 
 function allSelected($this, type) {
     if ($this.prop('checked')) {
-	 $("ul#ids_" + type + " li > input[type='checkbox']").not("#select_all_" + type).prop("checked", true);
+	 $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", true);
+	enableDisable(type + "_btn", true);
 /*	$(".chks_submit_" + type ).prop("disabled", false); */
     }
 }
 function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
 /*	$(".chks_submit_" + type).prop("disabled", false); */
+	enableDisable(type + "_btn", true);
     }
     else {
 	$("#select_all_" + type).prop("checked", false);
-/*	if (!anyChecked(type)) {
-	     $(".chks_submit_" + type).prop("disabled", true);
-	} */
+	if (!anyChecked(type)) {
+/*	     $(".chks_submit_" + type).prop("disabled", true); */
+	    enableDisable(type + "_btn", false);
+	} 
     }
 }
 function anyChecked(type) {
     var retVal = false;
-    $("ul#ids_" + type + " li > input[type='checkbox']")
+    $("ul#ids_" + type + " li  input[type='checkbox']")
 	.not("#select_all_" + type)
 	.each(function() {
 	    if ($(this).prop("checked")) {
@@ -52,6 +60,7 @@ function saveOrder() {
 	return $(this).attr('id'); })
     .get();
     $("#sort_order").val(data.join("|"));
+    enableDisable("reorder_btn", true);
 }
 
 function submit_reorder() { 
