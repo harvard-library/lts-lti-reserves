@@ -1,6 +1,6 @@
 
 <%# these fields are editable, so used by both New and Edit %>
-<input type="hidden" id="iso_date" name="iso_date" value=""/>
+<input type="hidden" id="iso_date" name="iso_date" value="<%=reserve.lecture_date %>"/>
 <%= f.input :estimated_enrollment, placeholder: 'Estimated enrollment', required: false %>
 
 <%= f.input :student_annotation, as: :text, placeholder: 'This is displayed to students when they look at the Reading List', label: 'Note to students', required: false  %>
