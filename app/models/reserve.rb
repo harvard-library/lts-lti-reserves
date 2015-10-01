@@ -1,4 +1,5 @@
 class Reserve
+  require 'cgi'
   include ActiveModel::Model
   include ActiveModel::Serialization
   include ActiveModel::Validations
@@ -303,9 +304,11 @@ class Reserve
   end
   def chapter_title
     if self.citation && self.citation.chapter_title
-      self.citation.chapter_title
+      CGI.unescapeHTML(self.citation.chapter_title)
+    elsif self.input_chapter_title
+      CGI.unescapeHTML(self.input_chapter_title)
     else
-      self.input_chapter_title
+      nil
     end
   end
   def chapter_author
