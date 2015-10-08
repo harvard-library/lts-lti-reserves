@@ -22,15 +22,20 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 			$("#reserve_input_material_type").on("change", function(e) {
 			    material_type_change($(this));
 			});
-			$("div.reserve_input_hollis_system_number .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax nonjournal' value='Autofill' name='hollis_fill' id='hollis_fill'/>");
+			$("div.reserve_input_hollis_system_number .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax nonjournal' value='Autofill' name='hollis_fill' id='hollis_fill'/>")
+			   .append("<input type='button' class='btn btn-default btn-ajax nonjournal reset_fill' value='Reset Autofill' name='reset_hollis_fill' id='reset_hollis_fill'/>");
 			$("#hollis_fill").on("click", function(e){
 			    fill_hollis(e, $("#reserve_input_hollis_system_number").val());
 			    });
-			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>");
+
+			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>")
+			 .append("<input type='button' class='btn btn-default btn-ajax nonjournal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
 		        $("#article_fill").on("click", function(e){
                             fill_article(e, $("#reserve_input_doi").val());
                             });
-
+			$(".reset_fill").on("click", function(e){
+			    switchable_reset();
+			   });
 		    }
 		 }
 });
@@ -54,7 +59,7 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
   }
 
 /*
- **  CREATION FUNCTION(S) 
+ **  CREATION/RESET FUNCTION(S) 
 */
 
 function fill_hollis(e, id) {
@@ -83,15 +88,13 @@ function auto_fill(type,id) {
 		if (data.status === 200) {
 		   var list = $('#switchable :input')
 			.not(':button, :submit, :reset, :hidden, :radio, :checkbox');
-		    $('#switchable :input')
-			.not(':button, :submit, :reset, :hidden, :radio, :checkbox')
-			.val('');  /* clear the inputs */
+		    switchable_reset();
 		    $.each($.keys(data), function(i, v) {
 			if (v !== "status") {
 			    $("#"+v).val(data[v]);
 			}
 		    });
-		    if ($("#reserve_input_doi").val() == '') {
+		    if (type === "journal" && $("#reserve_input_doi").val() == '') {
 			$("#reserve_input_doi").val(id);
 		    }
 		}
@@ -104,6 +107,11 @@ function auto_fill(type,id) {
 	});
 }
 
+function switchable_reset() { /* clear the inputs */
+    $('#switchable :input')
+        .not(':button, :submit, :reset, :radio, :checkbox')
+        .val('');  
+}
 function material_type_change($this) {
     var val = $this.val();
     if (val === "") {
@@ -121,11 +129,17 @@ function material_type_change($this) {
      $("#switchable").hide();
      if (type === "JOURNAL") {
 	 $(".nonjournal").hide();
+	  if ($("#reserve_input_hollis_system_number").val() !== "") {
+                    switchable_reset();
+          }
 	 $(".journal").show();
      }
      else if (type === "NON_JOURNAL") {
-	 $(".nonjournal").show();
 	 $(".journal").hide();
+         if ($("#reserve_input_doi").val() !== "") {
+             switchable_reset();
+         }
+	 $(".nonjournal").show();
      }
      else { return; }
      $(".both").show();
