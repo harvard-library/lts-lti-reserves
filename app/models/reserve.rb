@@ -110,10 +110,15 @@ class Reserve
   end
   def has_minimal_input
     if self.citation_id.blank?
-      if self.input_citation_type == "JOURNAL" && self.input_url.blank? && (self.input_title.blank?  || self.input_journal_title.blank? )
-        msg = "Journal Reserve minimum: Article Title AND Journal Title OR URL"
-        errors.add(:base,msg)
-        [:input_url, :input_title, :input_journal_title].each { |f| errors.add(f,msg) if self.send(f).blank? }
+      isGood = false
+      if self.input_citation_type == "JOURNAL"
+        if  !self.input_url.blank? || !(self.input_title.blank? &&  self.input_journal_title.blank? )
+          isGood = true
+        else                                           
+          msg = "Journal Reserve minimum: Article Title AND Journal Title OR URL"
+          errors.add(:base,msg)
+          [:input_url, :input_title, :input_journal_title].each { |f| errors.add(f,msg) if self.send(f).blank? }
+        end
       elsif self.input_citation_type == "NON_JOURNAL" && self.input_hollis_system_number.blank? && self.input_title.blank? && self.input_url.blank?
         msg = "Non-journal Reserve minimum: HOLLIS number OR Title OR URL"
         errors.add(:base, msg)
