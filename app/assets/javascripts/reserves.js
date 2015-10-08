@@ -29,7 +29,7 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 			    });
 
 			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>")
-			 .append("<input type='button' class='btn btn-default btn-ajax nonjournal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
+			 .append("<input type='button' class='btn btn-default btn-ajax journal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
 		        $("#article_fill").on("click", function(e){
                             fill_article(e, $("#reserve_input_doi").val());
                             });
@@ -94,9 +94,13 @@ function auto_fill(type,id) {
 			    $("#"+v).val(data[v]);
 			}
 		    });
-		    if (type === "journal" && $("#reserve_input_doi").val() == '') {
-			$("#reserve_input_doi").val(id);
+		    if (type === "journal") {
+			if ($("#reserve_input_doi").val() == '') {
+			    $("#reserve_input_doi").val(id);
+			}
+			$("#reserve_input_article_title").focus();
 		    }
+		    
 		}
 	    }
 	    else {
