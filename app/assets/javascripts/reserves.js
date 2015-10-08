@@ -35,6 +35,12 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
                             });
 			$(".reset_fill").on("click", function(e){
 			    switchable_reset();
+			    if ($(this).hasClass("journal")) {
+				$("#reserve_input_article_title").focus();
+			    }
+			    else {
+				$("#reserve_input_title").focus();
+			    }
 			   });
 		    }
 		 }
@@ -100,6 +106,10 @@ function auto_fill(type,id) {
 			}
 			$("#reserve_input_article_title").focus();
 		    }
+		    else {
+			$("#reserve_input_title").focus();
+                    }
+
 		    
 		}
 	    }
