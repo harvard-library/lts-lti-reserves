@@ -91,6 +91,9 @@ function auto_fill(type,id) {
 			    $("#"+v).val(data[v]);
 			}
 		    });
+		    if ($("#reserve_input_doi").val() == '') {
+			$("#reserve_input_doi").val(id);
+		    }
 		}
 	    }
 	    else {
