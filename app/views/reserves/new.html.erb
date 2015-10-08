@@ -63,7 +63,7 @@ Note to Students:
 </div>
 <%# end of Library Code %>
 
-<%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Material Type" %>
+<%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Material Type", required: true %>
 
 <%= render partial: 'common_inputs',  locals: { reserve: @reserve, f: f} %>
 
