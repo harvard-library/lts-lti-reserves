@@ -16,6 +16,7 @@ class Citation
                             :editor_first_name,#non-journal
                             :editor_last_name,#non-journal
                             :end_page,# journal
+                            :hollis_system_number,
                             :isbn,#non-journal
                             :issn,# journal
                             :issue,# journal

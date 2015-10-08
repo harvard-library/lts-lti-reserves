@@ -47,11 +47,12 @@ describe Reserve do
     it "creates reserve *with* a citation: a chapter in a book with all chapter info in input only" do
       opts = {
         "citation" => {
-          "alephUrl" => "013520485",
+          "alephUrl" =>  "http://lms01.harvard.edu/F/?func=item-global&doc_library=HVD01&doc_number=013520485",
           "citationId" => "490161",
           "citationType" => "NON_JOURNAL",
           "editorFirstName" => "Nathaniel",
           "editorLastName" => "Rothman",
+          "hollisSystemNumber" => "013520485",
           "isbn" => "978-92-832-2163-0",
           "materialType" => "BOOK",
           "year" => "2011",
@@ -82,6 +83,7 @@ describe Reserve do
       expect(res.persisted?).to eq(true)
       expect(res.id).to eq("298659")
       expect(res.to_param).to eq("298659")
+      expect(res.aleph_url).to eq("http://lms01.harvard.edu/F/?func=item-global&doc_library=HVD01&doc_number=013520485")
     end
     it "begins its title with a stop word" do
       opts = {"contactInstructorId" => "70663473",
@@ -245,10 +247,10 @@ describe Reserve do
     end
     it "comes in with a citation" do
       opts = {"contactInstructorId" => "70663473",
-        "inputAlephUrl" => "005117959",
         "inputCitationId"=>"349098",
         "instanceId" => "78419",
         "inputCitationType" => "NON_JOURNAL",
+        "inputHollisSystemNumber" => "005117959",
         "citationId" => "349098",
         "citation" => {"alephUrl"=>"005117959",
           "citationId"=>"349098",

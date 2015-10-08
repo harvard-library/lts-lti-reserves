@@ -371,6 +371,13 @@ class Reserve
       self.input_hollis_system_number
     end
   end
+  def aleph_url
+    if self.citation
+      self.citation.aleph_url
+    else
+      nil
+    end
+  end
   def chapter?
     self.chapter_title || self.chapter_author
   end
