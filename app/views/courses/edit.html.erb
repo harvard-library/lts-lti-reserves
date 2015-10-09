@@ -38,7 +38,7 @@ value="Save new Reserve order" class="btn btn-disabled reorder_submit" id="reord
 <% @reserves.each do |reserve| %>
 <li id="<%= reserve.citation_request_id %>" title="'click and drag' on this reserve to re-order">
 
-<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left">&#128083;</span>
+<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left"><%= icon('info-circle') %></span>
 
 <%= render partial: 'reserves/edit_icon', locals: {:reserve => reserve} %>
 <div><% if !reserve.display_status.starts_with?("Delet") %>
