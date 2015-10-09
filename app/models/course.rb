@@ -8,6 +8,7 @@ Course = Struct.new( :reserves, :id) do
     self.reserves  = input_list.collect {|request|  Reserve.new(request)}
   end
   def list
+    no_deletes
     if self.sortable?
       self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
