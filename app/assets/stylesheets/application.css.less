@@ -41,6 +41,24 @@
 @import "font-awesome";
 @import "bootstrap-datepicker3.css";
 
+/* color block info */
+
+
+.clr-crimson { color: @color-crimson;}
+.clr-ink { color: @color-ink;}
+.clr-mortar { color: @color-mortar;}
+.clr-parchment { color: @color-parchment;}
+.clr-slate { color: @color-slate;}
+.clr-shade { color: @color-shade;}
+.clr-indigo { color: @color-indigo;}
+.clr-bluebonnet { color: @color-bluebonnet;}
+.clr-ivy { color: @color-ivy;}
+.clr-pear { color: @color-pear;}
+.clr-saffron { color: @color-saffron;}
+.clr-creme { color: @color-creme;}
+.clr-gold { color: @color-gold;}
+.clr-lemon { color: @color-lemon;}
+
 /*  form control corrections */
 .form-control {
   display: block;
@@ -80,18 +98,20 @@ input.form-control, select.form-control {
   margin-left: 0.3em;
 }
 
-.author { color: @color-indigo; font-weight: bold; }
-.title {color: @color-ivy; font-weight: bold;}
-.book { color: @color-mortar; font-style: italic;}
-.bk_creator { color: @color-mortar;}
-.journal { color: @color-mortar; font-style: italic;}
+.author { color: @color-indigo; font-weight: normal; }
+.title {color: @color-indigo; font-weight: bold;}
+.book { color: @color-ink; font-style: italic;}
+.bk_creator { color: @color-ink;}
+.journal { color: @color-ink; font-style: italic;}
 .order { display: none;}
 .sort_title {display: none;}
-.status-complete { color: @color-gold; }
+.status-complete { color: @color-ivy; }
+.status-available { color: @color-ivy; }
+.status-soon {color: @color-gold; }
 .visibility { font-style: italic; }
 .lec_date { background-color: @color-creme; font-weight: bolder;}
 .sortdate {display: none; }
-.note {  background-color: @color-lemon; margin-left: 1em; font-weight: bolder; }
+.note {  margin-left: 1em; font-weight: bold; font-style: italic; }
 .required { color: @color-crimson;}
 .view_link { font-weight: bold; margin-right: .3em; background-color: @color-parchment; font-size: 1em; margin-top: 2px; padding-bottom: 2px;}
 
