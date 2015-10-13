@@ -1,7 +1,7 @@
 <%# display information we have about a reserve, modulo the editable stuff %>
 
 <% if reserve.chapter? %>
-   <%= render partial: 'reserves/chapter_auth_title', locals: {:reserve => reserve} %>
+   <%= render partial: 'reserves/chapter_auth_title', locals: {:reserve => reserve, :full => full} %>
 <% else %>
     <span class="author">
    <% if reserve.author %>
@@ -15,8 +15,7 @@
    <% if reserve.editor && !reserve.author.blank? %>
     <span class="editor"><%= reserve.editor %> [ed.]</span>
    <% end %>
-<% if params[:brief].to_s != "true" %>
+<% if full %>
    <%= reserve.non_journal_info %>
 <% end %>
 <% end %>
-

@@ -29,7 +29,7 @@
 
 <div>
 <span class="order"><%= (reserve.instructor_sort_order || '') %></span>
-<%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve} %>
+<%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve, :full => false} %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %>
 </div> 
 
