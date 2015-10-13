@@ -25,7 +25,7 @@
 <% @reserves.each do |reserve| %>
 <li id="r_<%= reserve.citation_request_id %>">
 
-<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true&viewonly=true" class="view_link float-left">&#128083;</span>
+<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true&viewonly=true" class="view_link float-left"><%= icon('info-circle') %></span>
 
 <div>
 <span class="order"><%= (reserve.instructor_sort_order || '') %></span>
