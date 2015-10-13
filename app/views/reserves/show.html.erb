@@ -1,7 +1,7 @@
 <h3><a href="/courses/<%= @course_id %>/<%= (params[:viewonly].to_s == "true")?"" : "edit" %>" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Reserve Request</h3>
 <div>
 
-<%= render  'reserves/simple_reserve', :reserve => @reserve %>
+<%= render  'reserves/simple_reserve', :reserve => @reserve, :full => true %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => @reserve } %>
 <% if !@reserve.aleph_url.blank? %>
  <span class="urlLink btn-link"><a href="<%= @reserve.aleph_url %>" target="aleph_link" title="Link to HOLLIS Classic record">Hollis Link</a><%= icon('external-link')%>
