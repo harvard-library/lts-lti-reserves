@@ -7,7 +7,12 @@ FIELDS THAT CAN BE MODIFIED:
 Note to Students:
 
 %>
-<h3><a href="/courses/<%= @reserve.instance_id %>/edit" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Edit Reserve</h3>
+<ol class="breadcrumb">
+<li><a href="https://canvas.harvard.edu"><%= icon('home') %></a></li>
+<li> <a href="/courses/<%= @reserve.instance_id %>/edit" class="link-icon" title="back to Course">Reserves List</a></li>
+<li class="active">Reserve Request</li>
+</ol>
+
 
 <div class="row row-lti  reserves-edit">
 

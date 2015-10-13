@@ -97,6 +97,7 @@ input.form-control, select.form-control {
   margin-top: 0.5em;
   margin-left: 0.3em;
 }
+/* other stylings */
 .urlLink { color: @color-bluebonnet; }
 .author { color: @color-indigo; font-weight: normal; }
 .title {color: @color-indigo; font-weight: bold;}
@@ -139,4 +140,8 @@ div.previous { background-color: @color-mortar; border-width: 2px;  border-color
   background-image: -ms-linear-gradient(bottom, #86a4ba 0%, #86acba 100%);
   background-image: linear-gradient(to bottom, #86a4ba 0%, #86acba 100%);
   border: solid 1px #5e7180;
+}
+
+.breadcrumb > li + li:before {
+	    content: "> "
 }
