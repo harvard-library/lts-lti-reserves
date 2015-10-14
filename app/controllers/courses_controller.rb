@@ -33,7 +33,10 @@ class CoursesController < ApplicationController
   def previous
     begin
       # do all the good grabbing of reserves
-      prev_reserves = Course.new(params[:prev_id]).list
+      c =  Course.new(params[:prev_id])
+      c.list
+      c.author_sort
+      prev_reserves = c.reserves
       json = Rlist.new.course_library(params[:id])
       lib_code = json['libraryCode']
       if lib_code.blank? && prev_reserves.length > 0 

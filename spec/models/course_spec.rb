@@ -2,12 +2,20 @@ require 'rails_helper'
 
 describe Course do
   describe "create" do
+    it "creates a list of reserves, and orders it by instructor_sort_order" do
+      id = 214959
+      WebMock.allow_net_connect!
+      c = Course.new(id)
+      WebMock.disable_net_connect!
+      list = c.list
+      list2 = c.author_sort
+    end
     it "successfully creates a list of reserves" do
       id = 355726
       WebMock.allow_net_connect!
       c = Course.new(id)
       WebMock.disable_net_connect!
-      expect(c.reserves.count).to eq(2)
+      expect(c.reserves.count).to eq(3)
     end
     it "creates a list of reserves without deletes" do
       id = 345486
