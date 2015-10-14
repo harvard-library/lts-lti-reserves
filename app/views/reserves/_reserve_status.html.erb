@@ -2,14 +2,18 @@
 <% if params[:viewonly].to_s != "true" %>
 <span class="visibility"><%= reserve.visibility == "R" ? "Not Visible" : "Visible" %></span>
 <% end %>
-<% cl = "status" 
-   if reserve.display_status == "Available" 
+<% cl = "status"
+   stat = reserve.display_status
+   if params[:viewonly].to_s == "true" && stat == "Reuse"
+      stat = "Available Soon"
+   end
+   if stat == "Available" 
       cl = cl + "-available"
-   elsif reserve.display_status == "Available Soon"
+   elsif stat == "Available Soon"
       cl = cl + "-soon"
    end
 %>
-<span class="<%= cl %>"><%= reserve.display_status %></span>
+<span class="<%= cl %>"><%= stat %></span>
 <% if reserve.required == "Y" %>
 <span class="required" >required</span>
 <% end %>
