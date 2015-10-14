@@ -79,7 +79,7 @@ function reordered() {
 	 if ( $("body").hasClass("a_edit")) {
 	     $("#reorder_btn").on("click", submit_reorder);
 	     $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
-				       dragSelectorExclude: "span.view, span.edit, span.required, input",
+				       dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
 				   dragEnd: saveOrder,
 				   placeHolderTemplate: "<li class='placeHolder'></li>"
 				  });

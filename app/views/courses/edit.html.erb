@@ -36,18 +36,17 @@ value="Save new Reserve order" class="btn btn-disabled reorder_submit" id="reord
 </ul>
 <ul class="list-with-floats chk_grp" id="ids_del">
 <% @reserves.each do |reserve| %>
-<li id="<%= reserve.citation_request_id %>" title="'click and drag' on this reserve to re-order">
-
-<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link float-left"><%= icon('info-circle') %></span>
-
-<%= render partial: 'reserves/edit_icon', locals: {:reserve => reserve} %>
-<div><% if !reserve.display_status.starts_with?("Delet") %>
+<li id="<%= reserve.citation_request_id %>">
+<% if !reserve.display_status.starts_with?("Delet") %>
 <%= check_box_tag("res_ids[]", reserve.citation_request_id, false, {:id => "res_ids__#{reserve.citation_request_id}", :class => "chk_del", :title => "Select #{reserve.tip_title}"}) %>
 <% end %>
+<%= render partial: 'reserves/edit_icon', locals: {:reserve => reserve} %>
+<span class="view " title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true" class="view_link"><%= icon('info-circle') %></span>
 
+<span class="nomove">
 <%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve, :full => false} %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %>
-</div> 
+</span> 
 
 </li>
 <% end %>
