@@ -15,7 +15,7 @@
 %>
 <span class="<%= cl %>"><%= stat %></span>
 <% if reserve.required == "Y" %>
-<span class="required" >required</span>
+<span class="status-required" >required</span>
 <% end %>
 <% if !reserve.lecture_date.blank? || reserve.student_annotation %>
 <br/>
