@@ -21,7 +21,7 @@
      <% if !reserve.citation_id.blank? %>
   <li id="<%= reserve.citation_id %>"><%= check_box_tag("reuse_ids[]", "#{reserve.citation_request_id}", false, {:id => "reuse_ids__#{reserve.citation_request_id}", :class => "chk_reuse", :title => "Select #{reserve.tip_title}"}) %>
 
-<%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve} %></li>
+<%= render partial: 'reserves/simple_reserve', locals: {reserve: reserve, full: false} %></li>
      <% end %>
   <% end %>
 </ul>
