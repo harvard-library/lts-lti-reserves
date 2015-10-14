@@ -238,7 +238,7 @@ class Reserve
     disp = "#{disp.strip} Vol. #{vol.strip}" if vol
     disp = "#{disp} #{pub.strip}" 
     disp = "#{disp} (#{year})" if year
-    disp = "#{disp} #{pp}"
+    disp = "#{disp} #{pps}"
     disp.strip
   end
   # volume, number, date, etc.

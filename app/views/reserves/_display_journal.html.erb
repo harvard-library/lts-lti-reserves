@@ -7,7 +7,5 @@
 <span class="sort_title"><%= reserve.sort_title %></span>
 <span class="title">&quot;<%= reserve.title.strip %>&quot;</span>
 <% if full %>
-in <%= reserve.journal_title %>
-<%= reserve.journal_info %>
-<% if reserve.issn %>ISSN: <%= reserve.issn %><% end %>
+<%= render partial: 'reserves/journal_collapse', locals: {:reserve => reserve} %>
 <% end %>

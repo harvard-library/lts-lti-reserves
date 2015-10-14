@@ -3,18 +3,5 @@
 <span class="title"><%= reserve.chapter_title %></span>
    <span class="sort_title"><%= reserve.sort_title %> </span>
 <% if full %> 
-<% if reserve.title %>
-  in <span class="book"><%= reserve.title %><% if reserve.author || reserve.editor %>, <% end %></span>
-  <span class="bk_creator">
-  <% if reserve.author %>
-    by <%= reserve.author %>
-  <%  elsif reserve.editor %>
-   <%= reserve.editor %> [ed.]
-  <% end %>
-<%= reserve.non_journal_info %>
- 
- </span>
-<% else %>
- (chapter)
-<% end %>
+<%= render partial: 'reserves/chapter_collapse',  locals: {:reserve => reserve}  %>
 <% end %>

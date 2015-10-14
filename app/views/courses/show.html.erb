@@ -29,12 +29,24 @@
 <% @reserves.each do |reserve| %>
 <li id="r_<%= reserve.citation_request_id %>">
 
-<span class="view float-left" title="View  <%= reserve.tip_title %>"><a href="<%= reserve_path reserve%>?layout=true&viewonly=true" class="view_link float-left"><%= icon('info-circle') %></span>
+<span class="view float-left" title="View full details"><a href="#cllps_<%= reserve.citation_request_id %>" class="view_link float-left" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="#cllps_<%= reserve.citation_request_id %>"><%= icon('info-circle') %></span>
 
 <div>
 <span class="order"><%= (reserve.instructor_sort_order || '') %></span>
 <%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve, :full => false} %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %>
+<div class="collapse" id="cllps_<%= reserve.citation_request_id %>">
+  <div class="well">
+    <% if reserve.journal? %>
+      <%= render partial: 'reserves/journal_collapse', locals: {:reserve => reserve} %>
+   <% elsif  reserve.chapter? %>
+   <%= render partial: 'reserves/chapter_collapse', locals: {:reserve => reserve} %>
+   <% else %>
+   <%= reserve.non_journal_info %>
+<% end %>
+
+  </div>
+</div>
 </div> 
 
 </li>
