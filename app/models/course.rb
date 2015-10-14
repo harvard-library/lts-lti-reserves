@@ -12,7 +12,7 @@ Course = Struct.new( :reserves, :id) do
     if self.ins_sortable?
       self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
-    self.reserves
+    self.author_sort
   end
   def student_list
     no_deletes
@@ -22,6 +22,9 @@ Course = Struct.new( :reserves, :id) do
       self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
     self.reserves
+  end
+  def author_sort
+    self.reserves.sort_by! {|res| (res.author || "") }
   end
   def no_deletes
        self.reserves = self.reserves.reject {|request| request.status.start_with?("DR_") }
