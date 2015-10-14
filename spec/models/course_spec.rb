@@ -37,10 +37,12 @@ describe Course do
       c = Course.new(id)
       WebMock.disable_net_connect!
       list = c.student_list
-      expect(c.sortable?).to eq(true)
+      expect(c.ins_sortable?).to eq(true)
       expect(list.count).to eq(7)
-      expect(Integer(list[0].instructor_sort_order || "0")).to eq(2)
-      expect(Integer(list[1].instructor_sort_order || "0")).to eq(9)
+      expect(Integer(list[0].instructor_sort_order || "0")).to eq(0)
+      expect(Integer(list[1].instructor_sort_order || "0")).to eq(8)
+      expect(Course.list_has_dates?(list)).to eq(true)
+      expect(Course.list_has_ins_order?(list)).to eq(true)
     end
   end
 end

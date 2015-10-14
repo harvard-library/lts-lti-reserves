@@ -9,7 +9,7 @@ Course = Struct.new( :reserves, :id) do
   end
   def list
     no_deletes
-    if self.sortable?
+    if self.ins_sortable?
       self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
     self.reserves
@@ -18,7 +18,7 @@ Course = Struct.new( :reserves, :id) do
     no_deletes
     visible_only
     no_new
-    if self.sortable?
+    if self.ins_sortable?
       self.reserves.sort_by! {|res| Integer(res.instructor_sort_order || "0") }
     end
     self.reserves
@@ -32,7 +32,14 @@ Course = Struct.new( :reserves, :id) do
   def no_new
     self.reserves = self.reserves.reject {|request| request.display_status == "New" }
   end
-  def sortable?
+  def ins_sortable?
     return self.reserves.any?{ |res| !res.instructor_sort_order.nil? && res.instructor_sort_order.to_s != "-1"}
+  end
+# CLASS METHODS
+  def self.list_has_ins_order?(list)
+        return list.any?{ |res| !res.instructor_sort_order.nil? && res.instructor_sort_order.to_s != "-1"}
+  end
+  def self.list_has_dates?(list)
+    return list.any?{ |res| !res.lecture_date.nil? }
   end
 end

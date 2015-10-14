@@ -12,13 +12,16 @@
             <button class="sort btn btn-default" data-sort="author">
               Sort by author
             </button>
+	 <% if Course.list_has_ins_order?(@reserves) %>
 	     <button class="sort btn btn-default" data-sort="order">
               Sort by instructor order
             </button>
+         <% end %>
+	 <% if Course.list_has_dates?(@reserves) %>
 	    <button class="sort btn btn-default" data-sort="sortdate">
               Sort by lecture date
             </button>
-
+	 <% end %>
 
 </div>
 <% end %>
