@@ -27,12 +27,14 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 			$("#hollis_fill").on("click", function(e){
 			    fill_hollis(e, $("#reserve_input_hollis_system_number").val());
 			    });
+			inhibit_submit("reserve_input_hollis_system_number","hollis_fill");
 
 			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>")
 			 .append("<input type='button' class='btn btn-default btn-ajax journal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
 		        $("#article_fill").on("click", function(e){
                             fill_article(e, $("#reserve_input_doi").val());
                             });
+			inhibit_submit("reserve_input_doi", "article_fill");
 			$(".reset_fill").on("click", function(e){
 			    switchable_reset();
 			    if ($(this).hasClass("journal")) {
@@ -159,6 +161,17 @@ function material_type_change($this) {
      $(".both").show();
      $("#switchable").show();
  }
+
+/*  treats the Enter key as if it's a click of the associated button */
+function inhibit_submit(input_id, clicker_id) {
+    $("#"+input_id).keypress(function(e) {
+	var key = e.which;
+	if (key == 13) {
+	    $("#" + clicker_id).click();
+	    return false;
+	}
+    });
+}
 
 
 /*
