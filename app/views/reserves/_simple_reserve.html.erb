@@ -1,7 +1,4 @@
 <%# simple presentation of a single reserve request  %>
-<% if reserve.required == "Y" %>
-<span class="required" title="Required Reading"><%= icon('star')%></span>
-<% end %>
 <% if reserve.journal? %>
   <%= render partial: 'reserves/display_journal', locals: {:reserve => reserve, :full => full} %>
 <% else %>
@@ -16,5 +13,6 @@
 <a href="<%= reserve.aleph_url %> target="dig_link" class="dig_link" 
 title="Find out availability of this reserve">HOLLIS link</a> <%= icon('external-link')%></span>
 <% end %>
+
 
 

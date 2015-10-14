@@ -5,6 +5,9 @@
 <span class="status<%='-complete' if reserve.status=='COMPLETE'%> ">(<%= reserve.display_status %>)
 <%= icon('check') if reserve.display_status=='Available'%> 
 </span>
+<% if reserve.required == "Y" %>
+<span class="required" >required</span>
+<% end %>
 <% if !reserve.lecture_date.blank? || reserve.student_annotation %>
 <br/>
 <% if !reserve.lecture_date.blank? %>
