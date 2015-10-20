@@ -12,9 +12,12 @@
             <button class="sort btn btn-default" data-sort="author">
               Sort by author
             </button>
+           <button class="sort btn btn-default" data-sort="status-required">
+              Sort by  <span class="crimson-caps">required</span> status
+            </button>
 	 <% if Course.list_has_ins_order?(@reserves) %>
 	     <button class="sort btn btn-default" data-sort="order">
-              Sort by instructor order
+	       Sort by instructor order
             </button>
          <% end %>
 	 <% if Course.list_has_dates?(@reserves) %>
@@ -62,7 +65,7 @@ target="library_link" title="Get information about <%= reserve.library.name %>">
 <script type="text/javascript">
 
     var options = {
-     valueNames: [ 'sort_title' ,'order','author', 'sortdate'],
+     valueNames: [ 'sort_title' ,'order','author', 'sortdate', 'status-required'],
      listClass: 'list-with-floats'
     };
 

@@ -6,12 +6,7 @@
  *
  */
 
-function enableDisable(name, enable) {
-    $this = $("#"+name);
-    $this.toggleClass("btn-disabled", !enable);
-    $this.toggleClass("btn-submit", enable);
-}
-
+/* this function is invoked from a <script> element in various erbs */
 function checkBoxSetup(type) {
     $("ul#ids_" + type + " li  input[type='checkbox']")
 	.not("#select_all_" + type)
@@ -19,6 +14,12 @@ function checkBoxSetup(type) {
 	    checkBoxChecked($(this),event.data.name);});
     $("#select_all_" + type).on("click", {name: type}, function(event) {
 	allSelected( $(this), event.data.name); });
+}
+
+function enableDisable(name, enable) {
+    $this = $("#"+name);
+    $this.toggleClass("btn-disabled", !enable);
+    $this.toggleClass("btn-submit", enable);
 }
 
 function allSelected($this, type) {
@@ -70,25 +71,35 @@ function submit_reorder() {
     }
     else {return false; } /* no ordering to be had! */
 }
-function reordered() {
+function reordered() {     /* has any reordering occurred? */
     return ($("#sort_order").val() !== "");
 }
+
+/* set up events */
  $(document).on("ready page:load", function(e) {
      /* edit stuff */
      if ($("body").hasClass("c_courses")) {  
 	 if ( $("body").hasClass("a_edit")) {
-	     $("#reorder_btn").on("click", submit_reorder);
-	     $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
-				       dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
-				   dragEnd: saveOrder,
-				   placeHolderTemplate: "<li class='placeHolder'></li>"
-				  });
+	     setupEditEvents();
 	 }
 	 else if ($("body").hasClass("a_show")) {
 /*	     $("button.sort").on("click", function(e) {sortByType($(this))}); */
 	 }
      }
 });
+
+/* setup edit events; I separated this out for clarity */
+function setupEditEvents() {
+    $("#reorder_btn").on("click", submit_reorder);
+    $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
+			      dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
+                              dragEnd: saveOrder,
+                               placeHolderTemplate: "<li class='placeHolder'></li>"
+			     });
+        $("#conf_del").modal("show"); 
+
+}
+
 
 /* handle reuse */
 function reuseSetup() {
