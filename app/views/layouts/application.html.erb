@@ -12,8 +12,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="lti-tool <%= "c_#{controller.controller_name} a_#{controller.action_name}" %> ">
+  <% if controller.controller_name == "courses" && controller.action_name == "edit" %>
+    <%= render :partial => 'shared/confirm_box', locals: {:m_id => "conf_del", :m_title_id => "confirm_del", :m_title => "Remove Reserves", :m_body => "Do you want to remove the selected Reserves from this list?", :m_action_id => "confirmed_del", :m_action_label => "Remove", :m_noaction => "Cancel"} %>
+  <% end %>
+
   <div class="container">
+
     <div class="row lti-header">
+
+
       <h1>Reserves List</h1>
 	 <% if  !(@instance ||= nil).nil? %>
 
