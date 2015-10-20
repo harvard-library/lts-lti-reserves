@@ -35,6 +35,10 @@
 <span class="order"><%= (reserve.instructor_sort_order || '') %></span>
 <%= render partial: 'reserves/simple_reserve', locals: {:reserve => reserve, :full => false} %>
 <%= render partial: 'reserves/reserve_status', locals: {:reserve => reserve} %>
+<span class="library float-right"><a href="http://library.harvard.edu/<%= reserve.library.library_code.downcase %>" 
+target="library_link" title="Get information about <%= reserve.library.name %>"><%= reserve.library.name %></a>
+<%= icon('external-link')%>
+</span>
 <div class="collapse" id="cllps_<%= reserve.citation_request_id %>">
   <div class="well">
     <% if reserve.journal? %>
