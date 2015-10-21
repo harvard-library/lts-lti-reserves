@@ -30,6 +30,12 @@ function allSelected($this, type) {
     }
 }
 
+function enableDisableDelBoxes(status) {
+    $("ul#ids_del li input[type='checkbox']").prop('disabled', status); 
+    $("#select_all_del").prop('disabled',status);
+    $("label[for='select_all_del']").css("opacity", (status?".5":"1"));
+}
+
 function allBoxes(type, check_status) {
     $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", check_status);
 }
@@ -66,6 +72,8 @@ function saveOrder() {
     .get();
     $("#sort_order").val(data.join("|"));
     enableDisable("reorder_btn", true);
+    enableDisable("restore_btn", true);
+    enableDisableDelBoxes(true);
 }
 
 function submit_reorder() { 
@@ -102,11 +110,15 @@ function reordered() {     /* has any reordering occurred? */
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
     allBoxes("del", false);
+    enableDisableDelBoxes(false);
     $("#reorder_btn").on("click", function(e){
 	$("#conf_reord").modal("show");
     });
     $("#del_btn").on("click", function(e) {
 	$("#conf_del").modal("show");
+    });
+    $("#restore_btn").on("click", function(e) {
+	location.reload();
     });
     $("#confirmed_del").on("click", submit_delete);
     $("#confirmed_reord").on("click", submit_reorder);

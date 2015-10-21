@@ -34,7 +34,11 @@
 value="Remove selected reserve(s)" class="btn btn-disabled chks_submit_del_submit" id="del_btn" type="button"></span>
 
 <span class="reorder" title="Commit reordering"><input name="reorder"
-value="Save new Reserve order" class="btn btn-disabled reorder_submit" id="reorder_btn" type="button"></span>
+value="Save new Reserves order" class="btn btn-disabled reorder_submit" id="reorder_btn" type="button"></span>
+<span class="refresh" title="Restore original order"><input name="restore"
+value="Restore original Reserves order" class="btn btn-disabled restore_submit" id="restore_btn"
+type="button"></span>
+
 <span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
 </li>
 </ul>
