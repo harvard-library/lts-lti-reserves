@@ -24,11 +24,15 @@
 
 <% end %>
 
-<%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list") do %>
+<%= form_tag({controller: "courses", action: "delete"}, method: "post", class: "reserves-list", id: "form_del") do %>
 <%= hidden_field_tag("id", params[:id]) %>
 <ul class="list-with-floats">
 <li class="head"><%= check_box_tag("select_all_del") %>
-<%= label_tag("select_all_del", "Select all reserves") %> <span class="delete" title="Remove selected reserve(s)"><%=submit_tag(value="Remove selected reserve(s)", {:class => "btn btn-disabled chks_submit_del", :id => "del_btn"}) %></span> 
+<%= label_tag("select_all_del", "Select all reserves") %> 
+
+<span class="delete" title="Remove selected reserve(s)"><input name="reorder"
+value="Remove selected reserve(s)" class="btn btn-disabled chks_submit_del_submit" id="del_btn" type="button"></span>
+
 <span class="reorder" title="Commit reordering"><input name="reorder"
 value="Save new Reserve order" class="btn btn-disabled reorder_submit" id="reorder_btn" type="button"></span>
 <span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
@@ -55,3 +59,5 @@ value="Save new Reserve order" class="btn btn-disabled reorder_submit" id="reord
 <script>checkBoxSetup("del")</script>
 <% end %>
 <div id="reuse_list" class="previous"></div>
+
+

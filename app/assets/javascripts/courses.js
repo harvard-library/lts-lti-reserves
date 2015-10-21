@@ -71,6 +71,13 @@ function submit_reorder() {
     }
     else {return false; } /* no ordering to be had! */
 }
+
+function submit_delete() {
+    if (anyChecked("del")) {
+	$("#form_del").submit();
+    }
+    else {return false; } /* nothing to be deleted! */
+}
 function reordered() {     /* has any reordering occurred? */
     return ($("#sort_order").val() !== "");
 }
@@ -90,13 +97,20 @@ function reordered() {     /* has any reordering occurred? */
 
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
-    $("#reorder_btn").on("click", submit_reorder);
+    $("#reorder_btn").on("click", function(e){
+	$("#conf_reord").modal("show");
+    });
+    $("#del_btn").on("click", function(e) {
+	$("#conf_del").modal("show");
+    });
+    $("#confirmed_del").on("click", submit_delete);
+    $("#confirmed_reord").on("click", submit_reorder);
     $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
 			      dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
                               dragEnd: saveOrder,
                                placeHolderTemplate: "<li class='placeHolder'></li>"
 			     });
-        $("#conf_del").modal("show"); 
+/*        $("#conf_del").modal("show");  */
 
 }
 
