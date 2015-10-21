@@ -24,10 +24,14 @@ function enableDisable(name, enable) {
 
 function allSelected($this, type) {
     if ($this.prop('checked')) {
-	 $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", true);
+	allBoxes(type, true);
 	enableDisable(type + "_btn", true);
 /*	$(".chks_submit_" + type ).prop("disabled", false); */
     }
+}
+
+function allBoxes(type, check_status) {
+    $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", check_status);
 }
 function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
@@ -97,6 +101,7 @@ function reordered() {     /* has any reordering occurred? */
 
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
+    allBoxes("del", false);
     $("#reorder_btn").on("click", function(e){
 	$("#conf_reord").modal("show");
     });
