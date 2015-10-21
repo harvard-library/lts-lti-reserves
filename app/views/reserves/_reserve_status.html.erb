@@ -23,7 +23,7 @@
 <% if !reserve.lecture_date.blank? || reserve.student_annotation %>
 <br/>
 <% if !reserve.lecture_date.blank? %>
-Lecture Date: <span class="lec_date"><%= reserve.lecture_date %></span>
+Lecture Date: <span class="lec_date"><%= Time.parse(reserve.lecture_date).strftime("%b %d, %Y") %></span>
 <span class="sortdate"><%= (Time.parse(reserve.lecture_date).to_i/86401) %></span>
 <% else %>
 <span class="sortdate"></span>
