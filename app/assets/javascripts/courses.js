@@ -26,7 +26,7 @@ function allSelected($this, type) {
     if ($this.prop('checked')) {
 	allBoxes(type, true);
 	enableDisable(type + "_btn", true);
-/*	$(".chks_submit_" + type ).prop("disabled", false); */
+	dragsort(false);
     }
 }
 
@@ -41,14 +41,16 @@ function allBoxes(type, check_status) {
 }
 function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
-/*	$(".chks_submit_" + type).prop("disabled", false); */
 	enableDisable(type + "_btn", true);
+	dragsort(false);
     }
     else {
 	$("#select_all_" + type).prop("checked", false);
 	if (!anyChecked(type)) {
-/*	     $(".chks_submit_" + type).prop("disabled", true); */
 	    enableDisable(type + "_btn", false);
+	    if (type === "del") {
+		dragsort(true);
+	    }
 	} 
     }
 }
@@ -122,15 +124,26 @@ function setupEditEvents() {
     });
     $("#confirmed_del").on("click", submit_delete);
     $("#confirmed_reord").on("click", submit_reorder);
-    $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
-			      dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
-                              dragEnd: saveOrder,
-                               placeHolderTemplate: "<li class='placeHolder'></li>"
-			     });
+    dragsort(true);
 /*        $("#conf_del").modal("show");  */
 
 }
 
+/* dragsort setup */
+function dragsort(enable) {
+    if (enable) {
+	 $("ul.chk_grp").dragsort({dragSelector: "li", dragBetween: true,
+                              dragSelectorExclude: "span.view, span.edit, span.required, span.nomove, input",
+                              dragEnd: saveOrder,
+                               placeHolderTemplate: "<li class='placeHolder'></li>"
+				  });
+	 $(".fa-arrows").css("opacity", "1");
+    }
+    else {
+	 $("ul.chk_grp").dragsort("destroy");
+	 $(".fa-arrows").css("opacity", ".5");
+    }
+}
 
 /* handle reuse */
 function reuseSetup() {
