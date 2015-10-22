@@ -154,6 +154,11 @@ class CoursesController < ApplicationController
     end
     redirect_to :action => :edit, id: params[:id] 
   end
+  def slash
+    flash[:error] = "We got to slash!"
+    redirect_to :action => :show, id: "1"
+  end
+
 # sometime I'll make this private, or a concern, or something!
   def fetch_info(id)
     ii = InstanceInfo.new(id)

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   mount DceLti::Engine => "/lti" 
+
+  root :to => 'courses#slash'   # for catching the original post
  
 #  get 'courses/show'
   get 'courses/previous_select' => 'courses#previous_select' # just creates the select/options
