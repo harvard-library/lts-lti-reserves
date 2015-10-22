@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
- 
+  mount DceLti::Engine => "/lti" 
  
 #  get 'courses/show'
   get 'courses/previous_select' => 'courses#previous_select' # just creates the select/options
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get 'presto/:type/' => 'reserves#fetch_cite', :defaults => {:format => :json}
 
 
-  mount DceLti::Engine => "/lti"
+
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
