@@ -54,6 +54,7 @@ group :development do
   gem 'binding_of_caller' # for better_errors
   gem 'quiet_assets'  # turns off Rails asset pipeline log
   gem 'better_errors'
+  gem 'thin'
 end
 
 group :development, :test do

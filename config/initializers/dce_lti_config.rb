@@ -1,4 +1,4 @@
-menu_item = (ENV['COURSE_NAV_TITLE'] || 'Reserves Tool')
+menu_item = (ENV['COURSE_NAV_TITLE'] || 'Course Reserves')
 
 DceLti::Engine.setup do |lti|
   # "provider_*" attributes are used to describe this tool to the consumer,
