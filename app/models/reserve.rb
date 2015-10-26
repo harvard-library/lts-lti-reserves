@@ -31,6 +31,7 @@ class Reserve
                 { "name" => "chapter_title", "label" => "Chapter Title", "journal" => false},
                 { "name" => "page_numbers", "label" => "Page Numbers", "journal" => false},
                 { "name" => "edition", "label" => "Edition", "journal" => false},
+                { "name" => "isbn", "label" => "ISBN", "journal" => false},
                 { "name" => "year", "label" => "Year",  "journal" => true},
                 { "name" => "season", "label" => "Season",  "journal" => true},
                 { "name" => "month", "label" => "Month",  "journal" => true},
