@@ -1,0 +1,18 @@
+<div class="modal " id="<%= m_id %>" tabindex="-1" role="dialog"
+aria-labelledby="<%= m_title_id %>" >
+  <div class="modal-dialog modal-sm " role="document" style= "z-index:5000;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="<%= m_title_id %>"><%= m_title %></h4>
+      </div>
+      <div class="modal-body">
+        <p><%= m_body %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default close_it" data-dismiss="modal" ><%= m_noaction %></button>
+        <button type="button" class="btn btn-primary" id="<%=m_action_id %>"><%= m_action_label %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
