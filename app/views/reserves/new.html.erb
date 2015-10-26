@@ -37,8 +37,13 @@ Chapter Title:
 Note to Reserves Staff:
 Note to Students:
 %>
+<ol class="breadcrumb">
+<li><a href="https://canvas.harvard.edu"><%= icon('home') %></a></li>
+<li> <a href="/courses/<%= @reserve.instance_id %>/edit" class="link-icon" title="back to Course">Reserves List</a></li>
+<li class="active">New Reserve Request</li>
+</ol>
 
-<h3><a href="/courses/<%= @course_id %>/edit" class="link-icon" title="back to Course">Reserves List</a> <span><%= icon('chevron-right') %></span> Create Reserve</h3>
+
 <div class="row row-lti lti-section">
 <%= simple_form_for @reserve, url: reserves_path, as: 'reserve',  html: { class: 'form-horizontal' },
   wrapper: :horizontal_form,
