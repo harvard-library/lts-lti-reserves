@@ -74,7 +74,7 @@ class CoursesController < ApplicationController
     opts = {}
     opts["submittingSystem"] = "CANVAS"
     opts["estimatedEnrollment"] ="0"
-    opts["contactInstructorId"] = params[:contact_instructor_id] || ENV['HUID'] # we'll get this when we hook up with LTI
+    opts["contactInstructorId"] = current_user.lis_person_sourcedid || ENV['HUID'] # we'll get this when we hook up with LTI
     opts["contactInstructorIdType"] = "HUID"
     opts["instanceId"] = params[:id]
     opts["visibility"] = "P"
@@ -155,8 +155,8 @@ class CoursesController < ApplicationController
     redirect_to :action => :edit, id: params[:id] 
   end
   def slash
-    flash[:error] = "We got to slash!"
-    redirect_to :action => :show, id: "1"
+#    flash[:error] = "We got to slash!"
+    redirect_to :action => :show, id: session[:lis_course_offering_sourcedid]
   end
 
 # sometime I'll make this private, or a concern, or something!

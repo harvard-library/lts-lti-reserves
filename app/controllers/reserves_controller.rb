@@ -20,7 +20,7 @@ class ReservesController < ApplicationController
 # get library list (libs), default library (lib_def) here
     @libs = Library::library_options
     @material_types = Reserve.material_types
-    instructor = params[:contact_instructor_id] || ENV['HUID'] # we'll get this when we hook up with LTI
+    instructor = current_user.lis_person_sourcedid || ENV['HUID'] # we'll get this when we hook up with LTI
     course_lib = Rlist.new.course_library(@course_id)
     lib = course_lib.empty? ? "" : course_lib['libraryCode']
     @reserve = Reserve.new({:instance_id => @course_id, :contact_instructor_id => instructor, :library_code => lib})
