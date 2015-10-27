@@ -27,7 +27,8 @@ DceLti::Engine.setup do |lti|
   # http://www.imsglobal.org/LTI/v1p1p1/ltiIMGv1p1p1.html#_Toc330273026
   #
   lti.copy_launch_attributes_to_session.push(:roles)
-
+  lti.copy_launch_attributes_to_session.push(:lis_course_offering_sourcedid)
+  lti.copy_launch_attributes_to_session.push(:lis_person_sourcedid)
   # The consumer_secret and consumer_key should be a lambda that will be
   # evaluated in the context of your application. You might use a service
   # object or model proper to find key and secret pairs. Example:
