@@ -1,7 +1,10 @@
 
 <% if @reserves %>
 
-<h3>Number of readings: <%= @reserves.count %></h3>
+<h3>Number of readings: <%= @reserves.count %> <% if current_user.has_role?("instructor") %>
+<div class="float-right"><a class="link-icon" href="/courses/<%= params[:id] %>/edit">Manage Reserves List</a></div>
+<% end %>
+</h3>
 <div id="reserves-list">
 <% if @reserves.count > 2 %>
 <input class="search" placeholder="Search" />
