@@ -1,11 +1,10 @@
 
 <% if @reserves %>
 <h4>Number of reserves: <%= @reserves.count %></h4>
-<div class="switchLink"><a href="/courses/<%= params[:id] %>/?viewonly=true">Student View</a></div>
+<div class="switchLink"><a class="link-icon"  href="/courses/<%= params[:id] %>/?viewonly=true">Student View</a></div>
+<div id="newOrReuse" class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a>
 <% if !@others.blank? %>
-<%# = render partial: 'courses/select_previous', locals: {:others => @others} %>
-<div id="previous_list" class="float-right">
-  <form name="prev_select_form" id="prev_select_form">
+  <form name="prev_select_form" id="prev_select_form" >
     <label for="prev_select">Re-use reserves from: </label>
     <select id="prev_select"><option value="">Select a previous term</option>
       <% @others.each do |ci| %>
@@ -13,10 +12,10 @@
     <% end %>
     </select>
   </form>
-</div>
+
 <script>reuseSetup()</script>
 <% end %><%# END OF PREVIOUS TERMS %>
-
+</div>
 <%= form_tag({controller: "courses", action: "reorder"}, method: "post", class: "reserves-list reorder", id: "form_reorder") do %>
 <%= hidden_field_tag("id", params[:id]) %>
 <input type="hidden" name="sort_order" id="sort_order" />
@@ -39,7 +38,7 @@ value="Save new Reserves order" class="btn btn-disabled reorder_submit" id="reor
 value="Restore original order" class="btn btn-disabled restore_submit" id="restore_btn"
 type="button"></span>
 
-<span class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a></span>
+
 </li>
 </ul>
 <ul class="list-with-floats chk_grp" id="ids_del">
