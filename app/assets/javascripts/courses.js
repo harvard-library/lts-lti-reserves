@@ -6,54 +6,31 @@
  *
  */
 
-/* this function is invoked from a <script> element in various erbs */
-function checkBoxSetup(type) {
-    $("ul#ids_" + type + " li  input[type='checkbox']")
-	.not("#select_all_" + type)
-	.on("click",{name: type}, function(event) {
-	    checkBoxChecked($(this),event.data.name);});
-    $("#select_all_" + type).on("click", {name: type}, function(event) {
-	allSelected( $(this), event.data.name); });
-}
+/*
+ *
+ *     SELECT FUNCTIONALITY
+ *
+*/
 
-function enableDisable(name, enable) {
-    $this = $("#"+name);
-    $this.toggleClass("btn-disabled", !enable);
-    $this.toggleClass("btn-submit", enable);
-}
 
 function allSelected($this, type) {
     if ($this.prop('checked')) {
-	allBoxes(type, true);
-	enableDisable(type + "_btn", true);
-	dragsort(false);
+	globalSelect(true, type);
+	$("#deselect_all_" + type).prop("checked", false);
     }
 }
 
-function enableDisableDelBoxes(status) {
-    $("ul#ids_del li input[type='checkbox']").prop('disabled', status); 
-    $("#select_all_del").prop('disabled',status);
-    $("label[for='select_all_del']").css("opacity", (status?".5":"1"));
-}
+function allDeSelected($this, type) {
+    if ($this.prop('checked')) {
+        globalSelect(false, type);
+	$("#select_all_" + type).prop("checked", false);
+    }
+} 
 
-function allBoxes(type, check_status) {
+function allIndividBoxes(type, check_status) {
     $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", check_status);
 }
-function checkBoxChecked($this, type) {
-    if ($this.prop('checked')) {
-	enableDisable(type + "_btn", true);
-	dragsort(false);
-    }
-    else {
-	$("#select_all_" + type).prop("checked", false);
-	if (!anyChecked(type)) {
-	    enableDisable(type + "_btn", false);
-	    if (type === "del") {
-		dragsort(true);
-	    }
-	} 
-    }
-}
+
 function anyChecked(type) {
     var retVal = false;
     $("ul#ids_" + type + " li  input[type='checkbox']")
@@ -66,8 +43,67 @@ function anyChecked(type) {
 	});
     return retVal;
 }
+function checkBoxChecked($this, type) {
+    if ($this.prop('checked')) {
+	enableDisable(type + "_btn", true);
+	dragsort(false);
+	$("#deselect_all_"  + type).prop("checked", false);
+    }
+    else {
+	$("#select_all_" + type).prop("checked", false);
+	if (!anyChecked(type)) {
+	    enableDisable(type + "_btn", false);
+	    if (type === "del") {
+		dragsort(true);
+	    }
+	} 
+    }
+}
+function enableDisable(name, enable) {
+    $this = $("#"+name);
+    $this.toggleClass("btn-disabled", !enable);
+    $this.toggleClass("btn-submit", enable);
+}
+/* this is for disabling deletion when there's re-ordering going on */
 
-/* javascripting supporting re-ordering of reserves */
+function enableDisableDelBoxes(status) {
+    $("ul#ids_del li input[type='checkbox']").prop('disabled', status); 
+    $("#select_all_del").prop('disabled',status);
+    $("#deselect_all_del").prop('disabled',status);
+    $("label[for='select_all_del']").css("opacity", (status?".5":"1"));
+    $("label[for='deselect_all_del']").css("opacity", (status?".5":"1"));
+}
+
+/* this is called by both 'select all' and 'deselect all' */
+function globalSelect(selected, type) { /* selected is boolean */
+    allIndividBoxes(type, selected);
+    enableDisable(type + "_btn", selected);
+    dragsort(!selected);
+}
+
+
+/* this function is invoked from a <script> element in various erbs */
+function checkBoxSetup(type) {
+    $("input[type='checkbox']").each(function() { $(this).prop('checked', false);});
+    $("ul#ids_" + type + " li  input[type='checkbox']")
+	.not("#select_all_" + type)
+        .not("#deselect_all_" + type)
+	.on("click",{name: type}, function(event) {
+	    checkBoxChecked($(this),event.data.name);});
+    $("#select_all_" + type).on("click", {name: type}, function(event) {
+	allSelected( $(this), event.data.name); });
+    $("#deselect_all_" + type).on("click", {name: type}, function(event) {
+	allDeSelected( $(this), event.data.name); });
+}
+
+
+
+/* 
+ *
+ *  javascripting supporting re-ordering of reserves 
+ *
+*/
+   
 function saveOrder() {
     var data = $("#ids_del li").map(function() { 
 	return $(this).attr('id'); })
@@ -78,6 +114,10 @@ function saveOrder() {
     enableDisableDelBoxes(true);
 }
 
+function reordered() {     /* has any reordering occurred? */
+    return ($("#sort_order").val() !== "");
+}
+
 function submit_reorder() { 
 /*    console.log($("#form_reorder")); */
     if (reordered()) {
@@ -86,15 +126,14 @@ function submit_reorder() {
     else {return false; } /* no ordering to be had! */
 }
 
+
 function submit_delete() {
     if (anyChecked("del")) {
 	$("#form_del").submit();
     }
     else {return false; } /* nothing to be deleted! */
 }
-function reordered() {     /* has any reordering occurred? */
-    return ($("#sort_order").val() !== "");
-}
+
 
 /* set up events */
  $(document).on("ready page:load", function(e) {
@@ -111,7 +150,6 @@ function reordered() {     /* has any reordering occurred? */
 
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
-    allBoxes("del", false);
     enableDisableDelBoxes(false);
     $("#reorder_btn").on("click", function(e){
 	$("#conf_reord").modal("show");
@@ -157,6 +195,7 @@ function displayPrev() {
 	      { id: $("#id").val(), prev_id: val, course_title: $("#"+this.id + " option:selected").text()})
 	.done(function(data,status,jqXHR) {
 	    $("#reuse_list").append(data);
+	    $("#select_all_reuse").focus();
 	});
 	}
 };

@@ -12,7 +12,13 @@
 <li class="head"><%= check_box_tag("select_all_reuse") %>
 
 <%= label_tag("select_all_reuse", "Select all previous #{prev_reserves.length} reserves") %>
+<%= check_box_tag("deselect_all_reuse") %>
+
+<%= label_tag("deselect_all_reuse", "DE-Select all") %>
+
  <span class="update" title="Re-use selected reserve(s)"><%=submit_tag(value="Re-use selected reserve(s)", {:class => "btn btn-disabled chks_reuse", :id => "reuse_btn"}) %></span>
+
+
 </li>
 </ul>
 <% end %>
