@@ -41,20 +41,24 @@ function anyChecked(type) {
 }
 function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
-	enableDisable(type + "_btn", true);
+	enableDisableBtns(type + "_btn", true);
 	dragsort(false);
-	$("#deselect_all_"  + type).removeClass("diabled");
+	$("#deselect_all_"  + type).removeClass("disabled");
+	if (type === "del") {
+	    enableDisablePrev(false);
+	}
     }
     else {
 	if (!anyChecked(type)) {
-	    enableDisable(type + "_btn", false);
+	    enableDisableBtns(type + "_btn", false);
 	    if (type === "del") {
 		dragsort(true);
+		enableDisablePrev(true);
 	    }
 	} 
     }
 }
-function enableDisable(name, enable) {
+function enableDisableBtns(name, enable) {
     $this = $("#"+name);
     $this.toggleClass("btn-disabled", !enable);
     $this.toggleClass("btn-submit", enable);
@@ -72,11 +76,19 @@ function enableDisableDelBoxes(status) {
     }
 }
 
+function enableDisablePrev(enable) {
+     $("#prev_select").val($("#prev_select option:first").val()).trigger("change");
+     $("#prev_select").prop("disabled", !enable);
+}
+
 /* this is called by both 'select all' and 'deselect all' */
 function globalSelect(selected, type) { /* selected is boolean */
     allIndividBoxes(type, selected);
-    enableDisable(type + "_btn", selected);
+    enableDisableBtns(type + "_btn", selected);
     dragsort(!selected);
+    if (type === "del") {
+	enableDisablePrev(!selected);
+    }
 }
 
 
@@ -106,8 +118,8 @@ function saveOrder() {
 	return $(this).attr('id'); })
     .get();
     $("#sort_order").val(data.join("|"));
-    enableDisable("reorder_btn", true);
-    enableDisable("restore_btn", true);
+    enableDisableBtns("reorder_btn", true);
+    enableDisableBtns("restore_btn", true);
     enableDisableDelBoxes(true);
 }
 
@@ -148,6 +160,7 @@ function submit_delete() {
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
     enableDisableDelBoxes(false);
+    enableDisablePrev(true);
     $("#reorder_btn").on("click", function(e){
 	$("#conf_reord").modal("show");
     });
