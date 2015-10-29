@@ -13,28 +13,24 @@
 */
 
 
-function allSelected($this, type) {
-    if ($this.prop('checked')) {
-	globalSelect(true, type);
-	$("#deselect_all_" + type).prop("checked", false);
-    }
+function allSelected( type) {
+    globalSelect(true, type);
+    $("#deselect_all_" + type).removeClass("disabled")
+
 }
 
-function allDeSelected($this, type) {
-    if ($this.prop('checked')) {
-        globalSelect(false, type);
-	$("#select_all_" + type).prop("checked", false);
-    }
+function allDeSelected(type) {
+    globalSelect(false, type);
+    $("#deselect_all_" + type).addClass("disabled");
 } 
 
 function allIndividBoxes(type, check_status) {
-    $("ul#ids_" + type + " li  input[type='checkbox']").not("#select_all_" + type).prop("checked", check_status);
+    $("ul#ids_" + type + " li  input[type='checkbox']").prop("checked", check_status);
 }
 
 function anyChecked(type) {
     var retVal = false;
     $("ul#ids_" + type + " li  input[type='checkbox']")
-	.not("#select_all_" + type)
 	.each(function() {
 	    if ($(this).prop("checked")) {
 		retVal = true;
@@ -47,10 +43,9 @@ function checkBoxChecked($this, type) {
     if ($this.prop('checked')) {
 	enableDisable(type + "_btn", true);
 	dragsort(false);
-	$("#deselect_all_"  + type).prop("checked", false);
+	$("#deselect_all_"  + type).removeClass("diabled");
     }
     else {
-	$("#select_all_" + type).prop("checked", false);
 	if (!anyChecked(type)) {
 	    enableDisable(type + "_btn", false);
 	    if (type === "del") {
@@ -68,10 +63,13 @@ function enableDisable(name, enable) {
 
 function enableDisableDelBoxes(status) {
     $("ul#ids_del li input[type='checkbox']").prop('disabled', status); 
-    $("#select_all_del").prop('disabled',status);
-    $("#deselect_all_del").prop('disabled',status);
-    $("label[for='select_all_del']").css("opacity", (status?".5":"1"));
-    $("label[for='deselect_all_del']").css("opacity", (status?".5":"1"));
+    if (status) {
+	$("#select_all_del").addClass("disabled");
+	$("#deselect_all_del").addClass("disabled");
+    }
+    else {
+	$("#select_all_del").removeClass("disabled");
+    }
 }
 
 /* this is called by both 'select all' and 'deselect all' */
@@ -86,14 +84,13 @@ function globalSelect(selected, type) { /* selected is boolean */
 function checkBoxSetup(type) {
     $("input[type='checkbox']").each(function() { $(this).prop('checked', false);});
     $("ul#ids_" + type + " li  input[type='checkbox']")
-	.not("#select_all_" + type)
-        .not("#deselect_all_" + type)
 	.on("click",{name: type}, function(event) {
 	    checkBoxChecked($(this),event.data.name);});
+    $("#deselect_all_" + type).addClass("disabled");
     $("#select_all_" + type).on("click", {name: type}, function(event) {
-	allSelected( $(this), event.data.name); });
+	allSelected(  event.data.name); });
     $("#deselect_all_" + type).on("click", {name: type}, function(event) {
-	allDeSelected( $(this), event.data.name); });
+	allDeSelected(  event.data.name); });
 }
 
 
