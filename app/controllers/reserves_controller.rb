@@ -49,6 +49,9 @@ class ReservesController < ApplicationController
             options[k.to_s.camelize(first_letter =:lower)] = v
           end
         end
+        if !options["inputHollisSystemNumber"].blank?
+          options["inputHollisSystemNumber"] = options["inputHollisSystemNumber"].split("-")[0]
+        end
         options["lectureDate"] = params[:iso_date]  if !params[:iso_date].blank?
         options["submittingSystem"] = "CANVAS"
         options["estimatedEnrollment"] ="0" if @reserve.estimated_enrollment.blank?
