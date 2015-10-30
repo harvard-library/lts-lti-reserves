@@ -17,6 +17,7 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 		    }
 		    else if ( $("body").hasClass("a_new") ||
 			       $("body").hasClass("a_create") ) {
+			$("#submit_create").on("click", submitting_create);
 			setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
 			material_type_change($("#reserve_input_material_type")); /* when we come back with an error */
 			$("#reserve_input_material_type").on("change", function(e) {
@@ -69,6 +70,25 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 /*
  **  CREATION/RESET FUNCTION(S) 
 */
+
+/* this is called to address my being too clever with input_year */
+function submitting_create() {
+    var years = $("input[name='reserve[input_year]']");
+    if (years.length > 1) {
+	var y = "";
+	years.each(function(i) {
+	    if ($(this).val() != "") {
+		y = $(this).val();
+	    }
+	});
+	if (y !== "") {
+	    years.each(function(i) {
+		$(this).val(y);
+	    });
+	}
+    }
+    $("#new_reserve").submit();
+}
 
 function fill_hollis(e, id) {
     e.preventDefault();
