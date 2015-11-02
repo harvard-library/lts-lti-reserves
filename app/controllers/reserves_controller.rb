@@ -17,6 +17,10 @@ class ReservesController < ApplicationController
   
   def new
     @course_id = params[:course_id] ||  params[:reserve]["instance_id"]
+    if !can_edit?(current_user, @course_id)
+      flash[:error]="At this time, you are not authorized to add a Reserve to this course"
+      redirect_to '/courses/' +  @course_id and return 
+    end
 # get library list (libs), default library (lib_def) here
     @libs = Library::library_options
     @material_types = Reserve.material_types
@@ -29,6 +33,10 @@ class ReservesController < ApplicationController
   def create
     if params[:reserve][:instance_id].blank?
       params[:reserve][:instance_id] = params[:course_id]
+    end
+     if !can_edit?(current_user,  params[:reserve][:instance_id])
+      flash[:error]="At this time, you are not authorized to add a Reserve to this course"
+      redirect_to '/courses/' +  params[:reserve]["instance_id"] and return
     end
     params[:reserve][:lecture_date] =  params[:iso_date] if !params[:iso_date].blank?
     @reserve = Reserve.new(params[:reserve])
@@ -71,6 +79,10 @@ class ReservesController < ApplicationController
   end
 
   def update
+    if !can_edit?(current_user,  params[:reserve]["instance_id"])
+      flash[:error]="At this time, you are not authorized to update  a Reserve to this course"
+      redirect_to '/courses/' +  params[:reserve]["instance_id"] and return
+    end
     begin
       err_str = ""
       changed = false
@@ -105,6 +117,10 @@ class ReservesController < ApplicationController
   end
 
   def edit
+    if !can_edit?(current_user, params[:course_id])
+      flash[:error]="At this time, you are not authorized to update a Reserve to this course"
+      redirect_to '/courses/' +  params[:course_id] and return
+    end
     # error handling coming soon: check for id, course_id match, etc.
     begin
       resp = Rlist.new.reserve(params[:id])

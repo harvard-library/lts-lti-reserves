@@ -1,7 +1,7 @@
 
 <% if @reserves %>
 
-<h3>Number of readings: <%= @reserves.count %> <% if can_edit?(current_user) %>
+<h3>Number of readings: <%= @reserves.count %> <% if can_edit?(current_user, params[:id]) %>
 <div class="float-right"><a class="link-icon" href="/courses/<%= params[:id] %>/edit">Manage Reserves List</a></div>
 <% end %>
 </h3>

@@ -15,6 +15,7 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       c  = Course.new(params[:id])
       @reserves = c.list
@@ -68,6 +69,7 @@ class CoursesController < ApplicationController
     end
   end
   def reuse
+    redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     # here's where all the re-usability magic happens!
     count = 0
     errs = []
@@ -120,14 +122,16 @@ class CoursesController < ApplicationController
     "Unable to create new Reserve from  previous_reserve_id #{reuse_id}: #{bang}"
   end
   def delete_one(id, res_id)
+    redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       Rlist.new.delete(params[:id], res_id)
       ""
     end
-    rescue StandardError => bang
+  rescue StandardError => bang
     "#Reserve ID #{res_id} failed: #{bang}; "
   end
   def delete
+    redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     count = 0
     err_str = ""
     if params[:res_ids]
@@ -146,6 +150,7 @@ class CoursesController < ApplicationController
     redirect_to :action => :edit, id: params[:id]
   end
   def reorder
+    redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       resp = Rlist.new.reorder( params[:id], params[:sort_order])
       flash[:notice] = "Reserves reordered"
