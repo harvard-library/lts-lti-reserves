@@ -15,13 +15,15 @@
 
 function allSelected( type) {
     globalSelect(true, type);
-    $("#deselect_all_" + type).removeClass("disabled")
-
+    $("#deselect_all_" + type).removeClass("disabled");
+    $("#select_all_" + type).addClass("disabled");
 }
 
 function allDeSelected(type) {
     globalSelect(false, type);
     $("#deselect_all_" + type).addClass("disabled");
+    $("#select_all_" + type).removeClass("disabled");
+
 } 
 
 function allIndividBoxes(type, check_status) {
@@ -49,7 +51,10 @@ function checkBoxChecked($this, type) {
 	}
     }
     else {
-	if (!anyChecked(type)) {
+	if (anyChecked(type)) {
+	     $("#select_all_" + type).removeClass("disabled");
+	}
+	else {
 	    enableDisableBtns(type + "_btn", false);
 	    if (type === "del") {
 		dragsort(true);
