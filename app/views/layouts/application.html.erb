@@ -2,7 +2,7 @@
 <html>
 <head>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LTI Reserves Tool <% if  !(@instance ||= nil).nil? %>
+  <title>LTI Course Reserves Tool <% if  !(@instance ||= nil).nil? %>
     : <%= @instance.title %>
     <% end %>
 </title>
@@ -24,7 +24,7 @@
   <% end %>
   <div class="container">
     <div class="row lti-header">
-      <h1>Reserves List</h1>
+      <h1>Course Reserves </h1>
 	 <% if  !(@instance ||= nil).nil? %>
 
     <h2>       <%= @instance.title %> (<%= @instance.term %>)</h2>
