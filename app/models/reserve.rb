@@ -425,13 +425,13 @@ class Reserve
         when "COMPLETE_PARTIAL" then "Partially Available"
         when "NEW" then "New"
         when "DRL_LIB_REQUEST" then "Librarian Requested Deletion"
-        else "Available Soon"
+        else "Coming Soon"
         end
       end
     else
     # we have course_status
       if self.course_status.upcase.start_with?("COMPLETE") then "Available"
-      elsif self.course_status.upcase == "IN PROCESS" then "Available Soon"
+      elsif self.course_status.upcase == "IN PROCESS" then "Coming Soon"
       else self.course_status
       end
     end

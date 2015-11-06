@@ -2,24 +2,25 @@
 <% if params[:viewonly].to_s != "true" %>
 <span class="visibility"><%= reserve.visibility == "R" ? "Not Visible" : "Visible" %></span>
 <% end %>
-<% cl = "status"
-   stat = reserve.display_status
-   if params[:viewonly].to_s == "true" && stat == "Reuse"
-      stat = "Available Soon"
-   end
-   if stat == "Available" 
-      cl = cl + "-available"
-   elsif stat == "Available Soon"
-      cl = cl + "-soon"
-   end
-%>
-<span class="<%= cl %>"><%= stat %></span>
 
 <% if reserve.required == "Y" %>
 <span class="status-required" >required</span>
 <% else %>
 <span class="status-required" style="display:none">zzz</span>
 <% end %>
+<% cl = "status"
+   stat = reserve.display_status
+   if params[:viewonly].to_s == "true" && stat == "Reuse"
+      stat = "Coming Soon"
+   end
+   if stat == "Available" 
+      cl = cl + "-available"
+   elsif stat == "Coming Soon"
+      cl = cl + "-soon"
+   end
+%>
+<span class="<%= cl %>"><%= stat %></span>
+
 <% if !reserve.lecture_date.blank? || reserve.student_annotation %>
 <br/>
 <% if !reserve.lecture_date.blank? %>
