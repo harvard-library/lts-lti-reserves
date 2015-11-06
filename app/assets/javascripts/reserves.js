@@ -119,7 +119,7 @@ function auto_fill(type,id) {
 		    switchable_reset();
 		    $.each($.keys(data), function(i, v) {
 			if (v !== "status") {
-			    $("#"+v).val(data[v]);
+			    $("#"+v).val(data[v].substr(0, $("#"+v).prop("maxlength")));
 			}
 		    });
 		    if (type === "journal") {
