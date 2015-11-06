@@ -25,22 +25,22 @@ class Reserve
                 { "name" => "editor_last_name", "label" => "Editor's Last Name"},
                 { "name" => "editor_first_name", "label" => "Editor's First Name"},
                 { "name" => "publisher", "label" => "Publisher", "journal" => false},
-                { "name" => "year", "label" => "Year of Publication", "journal" => false},
+                { "name" => "year", "label" => "Year of Publication", "journal" => false, "maxlength" => 30},
                 { "name" => "chapter_author_last_name", "label" =>  "Last Name of Chapter/Excerpt Author", "journal" => false},
                 { "name" => "chapter_author_first_name", "label" => "First Name of Chapter/Excerpt Author", "journal" => false},
                 { "name" => "chapter_title", "label" => "Chapter Title", "journal" => false},
-                { "name" => "page_numbers", "label" => "Page Numbers", "journal" => false},
-                { "name" => "edition", "label" => "Edition", "journal" => false},
-                { "name" => "isbn", "label" => "ISBN", "journal" => false},
-                { "name" => "year", "label" => "Year",  "journal" => true},
-                { "name" => "season", "label" => "Season",  "journal" => true},
-                { "name" => "month", "label" => "Month",  "journal" => true},
-                { "name" => "day", "label" => "Day",  "journal" => true},
-                { "name" => "volume", "label" => "Volume",  "journal" => true},
-                { "name" => "issue", "label" => "Issue/Number",  "journal" => true},
-                { "name" => "start_page", "label" => "Start Page",  "journal" => true},
-                { "name" => "end_page", "label" => "End Page",  "journal" => true},
-                { "name" => "issn", "label" => "ISSN",  "journal" => true}
+                { "name" => "page_numbers", "label" => "Page Numbers", "journal" => false, "maxlength" => 30},
+                { "name" => "edition", "label" => "Edition", "journal" => false, "maxlength" => 30},
+                { "name" => "isbn", "label" => "ISBN", "journal" => false, "maxlength" => 100},
+                { "name" => "year", "label" => "Year",  "journal" => true, "maxlength" => 30},
+                { "name" => "season", "label" => "Season",  "journal" => true, "maxlength" => 30},
+                { "name" => "month", "label" => "Month",  "journal" => true, "maxlength" => 30},
+                { "name" => "day", "label" => "Day",  "journal" => true, "maxlength" => 30},
+                { "name" => "volume", "label" => "Volume",  "journal" => true, "maxlength" => 30},
+                { "name" => "issue", "label" => "Issue/Number",  "journal" => true, "maxlength" => 30},
+                { "name" => "start_page", "label" => "Start Page",  "journal" => true, "maxlength" => 30},
+                { "name" => "end_page", "label" => "End Page",  "journal" => true, "maxlength" => 30},
+                { "name" => "issn", "label" => "ISSN",  "journal" => true, "maxlength" => 100}
               ]
 
   FIELDS  =        [ :citation_request_id, 
@@ -101,7 +101,7 @@ class Reserve
   validates_presence_of :library_code, :message => "Please identify a library"
   
   validate :has_minimal_input
-  
+
 # validation methods
   def has_citation_type
     if self.citation_id.blank? && (self.input_citation_type.nil? || %w(JOURNAL NON_JOURNAL).find_index(self.input_citation_type).nil?)
@@ -109,6 +109,7 @@ class Reserve
       errors.add(:base, message)
     end
   end
+
   def has_minimal_input
     if self.citation_id.blank?
       isGood = false
@@ -159,6 +160,10 @@ class Reserve
       end
     end
     super
+  end
+
+  def check_lengths
+    
   end
   def create
     run_callbacks :create do
