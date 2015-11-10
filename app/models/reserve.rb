@@ -14,7 +14,7 @@ class Reserve
                    { "name" => "student_annotation", "label" => "Note to Student", "type" => "text"}
                 ]
   NEW_FIELDS = [   # also EDIT_FIELDS, ABOVE AND     {"instructor_note" => {"label" => "Note to Reserves Staff", "type" => "text" }},
-                { "name" => "hollis_system_number", "label" =>"HOLLIS number", "journal" => false},
+                { "name" => "hollis_system_number", "label" =>"HOLLIS number", "journal" => false,  "maxlength" => 30},
                 { "name" => "title", "label" => "Title or Description", "journal" => false},
                 { "name" => "author_last_name", "label" => "Author Last"},
                 { "name" => "author_first_name", "label" =>  "Author First"},

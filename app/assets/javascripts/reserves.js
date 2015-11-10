@@ -17,34 +17,8 @@ $.extend({ keys: function(obj){ if (typeof Object.keys == 'function') return Obj
 		    }
 		    else if ( $("body").hasClass("a_new") ||
 			       $("body").hasClass("a_create") ) {
-			$("#submit_create").on("click", submitting_create);
-			setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
-			material_type_change($("#reserve_input_material_type")); /* when we come back with an error */
-			$("#reserve_input_material_type").on("change", function(e) {
-			    material_type_change($(this));
-			});
-			$("div.reserve_input_hollis_system_number .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax nonjournal' value='Autofill' name='hollis_fill' id='hollis_fill'/>")
-			   .append("<input type='button' class='btn btn-default btn-ajax nonjournal reset_fill' value='Reset Autofill' name='reset_hollis_fill' id='reset_hollis_fill'/>");
-			$("#hollis_fill").on("click", function(e){
-			    fill_hollis(e, $("#reserve_input_hollis_system_number").val());
-			    });
-			inhibit_submit("reserve_input_hollis_system_number","hollis_fill");
+			onReadyCreate();
 
-			$("div.reserve_input_doi .col-sm-9").append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill' name='article_fill' id='article_fill'/>")
-			 .append("<input type='button' class='btn btn-default btn-ajax journal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
-		        $("#article_fill").on("click", function(e){
-                            fill_article(e, $("#reserve_input_doi").val());
-                            });
-			inhibit_submit("reserve_input_doi", "article_fill");
-			$(".reset_fill").on("click", function(e){
-			    switchable_reset();
-			    if ($(this).hasClass("journal")) {
-				$("#reserve_input_article_title").focus();
-			    }
-			    else {
-				$("#reserve_input_title").focus();
-			    }
-			   });
 		    }
 		 }
 });
@@ -93,19 +67,21 @@ function submitting_create() {
 function fill_hollis(e, id) {
     e.preventDefault();
     if (typeof id === "undefined") {
-        console.log("No hollis number!");
+	$("#reset_hollis_fill").addClass("disabled");
     }
     else {
 	auto_fill("hollis", id)
+	$("#reset_hollis_fill").removeClass("disabled");
     }
 }
 function fill_article(e, id) {
     e.preventDefault();
     if (typeof id === "undefined") {
-        console.log("No DOI or PUBMED number!");
+	$("#reset_article_fill").addClass("disabled");
     }
     else {
         auto_fill("journal", id)
+	 $("#reset_article_fill").removeClass("disabled");
     }
 }
 
@@ -163,24 +139,39 @@ function material_type_change($this) {
 /* shows and hides elements according to type */ 
  function switch_type(type) {
      $("#switchable").hide();
+     $(".auto").hide();
      if (type === "JOURNAL") {
+	 $(".auto_nj").hide();
 	 $(".nonjournal").hide();
 	  if ($("#reserve_input_hollis_system_number").val() !== "") {
                     switchable_reset();
           }
 	 $(".journal").show();
+	 $(".auto_j").show();
      }
      else if (type === "NON_JOURNAL") {
 	 $(".journal").hide();
+	 $(".auto_j").hide();
          if ($("#reserve_input_doi").val() !== "") {
              switchable_reset();
          }
 	 $(".nonjournal").show();
+	 $(".auto_nj").show();
      }
      else { return; }
      $(".both").show();
      $("#switchable").show();
  }
+
+function disable_auto(clicker_id) {
+    if ($(this).val() !== "") {
+        $("#" + clicker_id).removeClass("disabled");
+    }
+    else {
+	$("#" + clicker_id).addClass("disabled");
+	$("#reset_" + clicker_id).addClass("disabled");
+    }
+}
 
 /*  treats the Enter key as if it's a click of the associated button */
 function inhibit_submit(input_id, clicker_id) {
@@ -191,6 +182,50 @@ function inhibit_submit(input_id, clicker_id) {
 	    return false;
 	}
     });
+}
+
+/*
+ **  ONREADY FUNCTIONS
+*/
+
+function onReadyCreate() {
+    $("#submit_create").on("click", submitting_create);
+    setupDatepicker($("#reserve_lecture_date"), $("#iso_date"));
+    material_type_change($("#reserve_input_material_type")); /* when we come back with an error */
+    $("#reserve_input_material_type").on("change", function(e) {
+	material_type_change($(this));
+    });
+    /* handle non-journal reserve */
+    $("div.reserve_input_hollis_system_number .col-sm-9")
+	.append("<p class='help-block auto auto_nj'>Minimum: HOLLIS number OR Title OR URL; use HOLLIS number to autofill</p>")
+	.append("<input type='button' class='btn btn-default btn-ajax nonjournal' value='Autofill from the HOLLIS number' name='hollis_fill' id='hollis_fill'/>")
+	.append("<input type='button' class='btn btn-default btn-ajax nonjournal reset_fill' value='Reset Autofill' name='reset_hollis_fill' id='reset_hollis_fill'/>");
+    $("#hollis_fill").on("click", function(e){
+	fill_hollis(e, $("#reserve_input_hollis_system_number").val());
+    });
+    inhibit_submit("reserve_input_hollis_system_number","hollis_fill");
+/*			$("#reserve_input_hollis_system_number").change(disable_auto("hollis_fill")); */
+
+    /* journal */
+    $("div.reserve_input_doi .col-sm-9")
+	.append("<p class='help-block auto auto_j'>Minimum: Article Title AND Journal Title OR URL; enter a DOI/PUBMED ID to autofill</p>")
+	.append("<input type='button' class='btn btn-default btn-ajax journal' value='Autofill from DOI or PUBMED ID' name='article_fill' id='article_fill'/>")
+	.append("<input type='button' class='btn btn-default btn-ajax journal reset_fill' value='Reset Autofill' name='article_fill' id='reset_article_fill'/>") ;
+    $("#article_fill").on("click", function(e){
+        fill_article(e, $("#reserve_input_doi").val());
+    });
+    inhibit_submit("reserve_input_doi", "article_fill");
+    $(".reset_fill").on("click", function(e){
+	switchable_reset();
+	if ($(this).hasClass("journal")) {
+	    $("#reserve_input_article_title").focus();
+	}
+	else {
+	    $("#reserve_input_title").focus();
+	}
+    });
+
+
 }
 
 

@@ -64,11 +64,15 @@ Note to Students:
 	<% end %>
 </select>
 <% if !@reserve.errors[:library_code].empty? %><span class="help-block"><%=  @reserve.errors[:library_code][0].to_s %></span><% end %>
+<p class="help-block">Select the Library that supports your course</p>
 </div>
 </div>
 <%# end of Library Code %>
 
 <%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Material Type", required: true, hint: " " %>
+
+<%= f.input :input_hollis_system_number, label: 'HOLLIS Number', wrapper_html: { class: 'auto auto_nj'}, input_html: {maxlength: '30'} %>
+<%= f.input :input_doi, label: 'DOI (Digital Object Identifier)/PUBMED ID', wrapper_html: { class: 'auto auto_j'}, input_html: {maxlength: '1032'} %>
 
 
 <%= render partial: 'common_inputs',  locals: { reserve: @reserve, f: f} %>
@@ -78,22 +82,22 @@ Note to Students:
 
 <div id="switchable">
 <% Reserve::NEW_FIELDS.each do |field|
-   wClass = 'both'
-   if field["journal"]
-     wClass = 'journal'
-   elsif !field["journal"].nil?
-     wClass = 'nonjournal'
-   end
-   if !field["maxlength"].nil?
-     ml = field["maxlength"]
-   else
-     ml = "2048"
-   end
+   if field["name"] != "hollis_system_number" && field["name"] != "doi"
+     wClass = 'both'
+     if field["journal"]
+       wClass = 'journal'
+     elsif !field["journal"].nil?
+      wClass = 'nonjournal'
+     end
+     if !field["maxlength"].nil?
+      ml = field["maxlength"]
+     else
+      ml = "2048"
+     end
  %>
-
 <%= f.input "input_#{field['name']}".to_sym, label: field["label"], wrapper_html: {class: wClass}, required: field["required"], input_html: {maxlength: ml} %>
 <% end %>
-
+<% end %>
 </div>
 <%= f.button :submit, class: "btn btn-submit", id: "submit_create" %>
 <% end %>
