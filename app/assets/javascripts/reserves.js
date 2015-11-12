@@ -164,6 +164,11 @@ function inhibit_submit(input_id, clicker_id) {
 	    $("#" + clicker_id).click();
 	    return false;
 	}
+	else {
+	    if (key !== 0) {
+		$("#" + clicker_id).removeClass("btn-disabled");
+	    }
+	}
     });
 }
 
