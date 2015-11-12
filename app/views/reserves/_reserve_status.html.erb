@@ -10,7 +10,8 @@
 <% end %>
 <% cl = "status"
    stat = reserve.display_status
-   if params[:viewonly].to_s == "true" && stat == "Reuse"
+   if stat == "Reuse" && (params[:layout].to_s != "true" ||  params[:viewonly].to_s == "true")
+#   if params[:viewonly].to_s == "true" && stat == "Reuse"
       stat = "Coming Soon"
    end
    if stat == "Available" 
