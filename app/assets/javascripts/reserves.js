@@ -183,9 +183,9 @@ function onReadyCreate() {
     $("#reserve_input_material_type").on("change", function(e) {
 	material_type_change($(this));
     });
+    $(".reserve_input_material_type .help-block").html("<span class='auto auto_nj'>Minimum: HOLLIS number OR Title OR URL; use HOLLIS number to autofill</span><span class='auto auto_j'>Minimum: Article Title AND Journal Title OR URL; enter a DOI/PUBMED ID to autofill</span>");
     /* handle non-journal reserve */
     $("div.reserve_input_hollis_system_number .col-sm-9")
-	.append("<p class='help-block auto auto_nj'>Minimum: HOLLIS number OR Title OR URL; use HOLLIS number to autofill</p>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled nonjournal' value='Autofill from the HOLLIS number' name='hollis_fill' id='hollis_fill'/>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled nonjournal reset_fill' value='Reset Autofill' name='reset_hollis_fill' id='reset_hollis_fill'/>");
     $("#hollis_fill").on("click", function(e){
@@ -198,7 +198,6 @@ function onReadyCreate() {
 
     /* journal */
     $("div.reserve_input_doi .col-sm-9")
-	.append("<p class='help-block auto auto_j'>Minimum: Article Title AND Journal Title OR URL; enter a DOI/PUBMED ID to autofill</p>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled journal' value='Autofill from DOI or PUBMED ID' name='journal_fill' id='journal_fill'/>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled journal reset_fill' value='Reset Autofill' name='journal_fill' id='reset_journal_fill'/>") ;
     $("#journal_fill").on("click", function(e){
