@@ -18,7 +18,8 @@
 <input type="hidden" id="o_visibility" name="o_visibility" value="<%=reserve.visibility %>" />
 
 <%= render partial: 'common_inputs',  locals: { reserve: @reserve, f: f} %>
+<div class="form-group" style="text-align: center;">
 <%= f.button :submit, class: "btn btn-submit" %>
-
+</div>
 
 <% end %>
