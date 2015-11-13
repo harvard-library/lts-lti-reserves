@@ -64,6 +64,8 @@ class ReservesController < ApplicationController
         options["submittingSystem"] = "CANVAS"
         options["estimatedEnrollment"] ="0" if @reserve.estimated_enrollment.blank?
         resp = Rlist.new.create(params[:course_id], options)
+        log_post(params[:course_id],"","CREATE")
+        ""
       rescue StandardError  => bang
         flash[:error] = "Unable to create new Reserve #{params["title"]} : #{bang}"
         @libs = Library::library_options
@@ -104,6 +106,8 @@ class ReservesController < ApplicationController
             submittingSystem: "CANVAS"
           }
           resp = Rlist.new.update(params[:reserve]["instance_id"],params[:id], options)
+          log_post(params[:reserve]["instance_id"],params[:id],"UPDATE")
+          ""
         rescue StandardError  => bang
           flash[:error] = "Unable to update Reserve #{params["title"]} : #{bang}"
           redir = '/reserves/' + params[:id] + '/edit?course_id=' + params[:reserve]["instance_id"]

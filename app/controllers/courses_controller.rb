@@ -115,6 +115,7 @@ class CoursesController < ApplicationController
         errors = "Unable to create new Reserve from previous_reserve_id #{reuse_id}: #{errmessage(@reserve.errors.messages)}" if !@reserve.errors.messages.blank?
       else
         resp = Rlist.new.create(opts["instanceId"],opts)
+        log_post(opts["instanceId"],reuse_id,"REUSE")
         ""
       end
     end
@@ -125,6 +126,7 @@ class CoursesController < ApplicationController
     redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       Rlist.new.delete(params[:id], res_id)
+      log_post(params[:id], res_id, "DELETE")
       ""
     end
   rescue StandardError => bang
@@ -153,6 +155,7 @@ class CoursesController < ApplicationController
     redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       resp = Rlist.new.reorder( params[:id], params[:sort_order])
+      log_post(params[:id],"","REORDER #{params[:sort_order]}")
       flash[:notice] = "Reserves reordered"
     rescue StandardError => bang
       flash[:error] = bang
