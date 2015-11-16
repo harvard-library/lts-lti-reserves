@@ -19,9 +19,12 @@
      <%= render :partial => 'shared/confirm_box', locals: {:m_id => "conf_reord", :m_title_id => "confirm_reord",
         :m_title => "Reorder Reserves", :m_body => "Do you want to save this new order for this list?",
         :m_action_id => "confirmed_reord", :m_action_label => "Save", :m_noaction => "Cancel"} %>
-
-
   <% end %>
+ <% if controller.action_name = "edit" || (controller.controller_name = "reserves" && controller.action_name = "new") %>
+      <%= render :partial => 'shared/confirm_box', locals: {:m_id => "conf_leave", :m_title_id => "confirm_leave",
+        :m_title => "Unsaved Changes", :m_body => "Your changes have not been saved. Do you want to leave the page with unsaved changes?",
+        :m_action_id => "confirmed_leave", :m_action_label => "Leave the page", :m_noaction => "Stay on Page"} %>
+ <% end %>
   <div class="container">
     <div class="row lti-header">
       <h1>Course Reserves </h1>

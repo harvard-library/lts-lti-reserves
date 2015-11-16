@@ -162,8 +162,36 @@ function submit_delete() {
      }
 });
 
+function leave($this) {
+   if ($this.prop("target") !== "" || (!(has_changes()))) {
+       return true;
+   }
+    $("#conf_leave").prop("data", $this.prop("href"));
+   $("#conf_leave").modal("show");
+}
+
+function leave_ok() {
+    location.assign($("#conf_leave").prop("data"));
+    return true;
+}
+function has_changes(){
+    var retVal = false;
+    $(".submit_btn").each(function() {
+	if (!$(this).hasClass("btn-disabled")) {
+	    retVal = true;
+	}
+    });
+    return retVal;
+}
+
 /* setup edit events; I separated this out for clarity */
 function setupEditEvents() {
+    $("a").on("mousedown", function(e){
+	leave($(this));
+    });
+    $("#confirmed_leave").on("click", function(e) {
+	leave_ok();
+    });
     enableDisableDelBoxes(false);
     enableDisablePrev(true);
     $("#reorder_btn").on("click", function(e){
@@ -173,6 +201,7 @@ function setupEditEvents() {
 	$("#conf_del").modal("show");
     });
     $("#restore_btn").on("click", function(e) {
+	$("#reorder_btn").addClass("btn-disabled");
 	location.reload();
     });
     $("#confirmed_del").on("click", submit_delete);
@@ -181,6 +210,7 @@ function setupEditEvents() {
 /*        $("#conf_del").modal("show");  */
 
 }
+
 
 /* dragsort setup */
 function dragsort(enable) {
