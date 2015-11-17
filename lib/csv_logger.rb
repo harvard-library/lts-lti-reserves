@@ -9,15 +9,15 @@ class CsvLogger < Logger
  # Optional, but good for prefixing timestamps automatically
   def formatter
     Proc.new{|severity, time,progname,  msg|
-      formatted_time = time.strftime("%Y-%m-%d %H:%M:%S")
-      "\"#{formatted_time}\",#{msg.to_s.strip}\n"
+      formatted_time = time.strftime("%Y-%m-%d,%H:%M:%S")
+      "#{formatted_time},#{msg.to_s.strip}\n"
     }
   end
 
 
   class LogDevice < ::Logger::LogDevice
     def add_log_header(file) 
-      file.write("Timestamp, IP Address, Course Instance ID, Reserve ID, Action\n")# if file.size = 0
+      file.write("Date,Time,IP Address, Course Instance ID, Reserve ID, Action\n")# if file.size = 0
     end
     
 
