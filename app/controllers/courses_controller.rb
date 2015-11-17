@@ -155,7 +155,7 @@ class CoursesController < ApplicationController
     redirect_to :action => :show, id: params[:id] and return if !can_edit?(current_user, params[:id])
     begin
       resp = Rlist.new.reorder( params[:id], params[:sort_order])
-      log_post(params[:id],"","REORDER #{params[:sort_order]}")
+      log_post(params[:id],"#{params[:sort_order]}","REORDER")
       flash[:notice] = "Reserves reordered"
     rescue StandardError => bang
       flash[:error] = bang
