@@ -328,7 +328,7 @@ class Reserve
     lastn = ""
     if self.citation && self.citation.chapter_author_last_name
       lastn = self.citation.chapter_author_last_name
-      first = self.citation.chapter_author_first_name || self.input_.chapter_author_first_name
+      first = self.citation.chapter_author_first_name || self.input_chapter_author_first_name
     else
       lastn = self.input_chapter_author_last_name
       first = self.input_chapter_author_first_name
