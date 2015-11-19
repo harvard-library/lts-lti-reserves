@@ -55,21 +55,22 @@ Note to Students:
 <%= f.error_notification %>
 <input type="hidden" value="<%= @course_id %>" name="course_id" id="course_id"/>
 <%= f.input :contact_instructor_id, as: :hidden %>
+<%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Type of Reserve", required: true, hint: " " %>
+
 <%# Library Code needs to be individually coded because Simple_form doesn't handle errors in a select field properly :-( %>
 <div class="form-group string required reserve_library_code<% if !@reserve.errors[:library_code].empty? %> has-error<% end %>">
-<label class="string required col-sm-3 control-label" for="reserve_library_code"><abbr title="required">*</abbr> Library</label><div class="col-sm-9"><select class="select required form-control" name="reserve[library_code]" id="reserve_library_code">
+<label class="string required col-sm-3 control-label" for="reserve_library_code"><abbr title="required">*</abbr> Reserve Location</label><div class="col-sm-9"><select class="select required form-control" name="reserve[library_code]" id="reserve_library_code">
     <option value=""></option>
     <% @libs.each do |k,v|  %>
 <option value="<%= v %>" <% if v == @reserve.library_code %>selected="selected"<% end  %> ><%= k %></option>
 	<% end %>
 </select>
 <% if !@reserve.errors[:library_code].empty? %><span class="help-block"><%=  @reserve.errors[:library_code][0].to_s %></span><% end %>
-<p class="help-block">Select the Library that supports your course</p>
+<p class="help-block">Note: Select the library that supports your course, even for online items.</p>
 </div>
 </div>
 <%# end of Library Code %>
 
-<%= f.input :input_material_type, :collection => Reserve::material_types, :label => "Material Type", required: true, hint: " " %>
 
 <%= f.input :input_hollis_system_number, label: 'HOLLIS Number', wrapper_html: { class: 'auto auto_nj'}, input_html: {maxlength: '30'} %>
 <%= f.input :input_doi, label: 'DOI (Digital Object Identifier)/PUBMED ID', wrapper_html: { class: 'auto auto_j'}, input_html: {maxlength: '1032'} %>
