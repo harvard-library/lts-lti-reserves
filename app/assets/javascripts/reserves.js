@@ -78,7 +78,8 @@ function fill_request(e, type, id) {
 }
 /* this is separated out for clarity, only.  It could have been incorporated in fill_request */
 function auto_fill(type,id) {
-    $.getJSON('/presto/' + type + '?id=' + encodeURIComponent(id))
+    var trim_id = $.trim(id);
+    $.getJSON('/presto/' + type + '?id=' + encodeURIComponent(trim_id))
 	.done(function(data, status, jqXHR) {
             if (data) {
 		if (data.status === 200) {
@@ -92,7 +93,7 @@ function auto_fill(type,id) {
 		    });
 		    if (type === "journal") {
 			if ($("#reserve_input_doi").val() == '') {
-			    $("#reserve_input_doi").val(id);
+			    $("#reserve_input_doi").val(trim_id);
 			}
 			$("#reserve_input_article_title").focus();
 		    }
@@ -105,7 +106,8 @@ function auto_fill(type,id) {
 	    }
 	} )
 	.fail(function(data, status,jqXHR) {
-	    console.log("YOU LOSE!");
+	    alert("Unable to perform autofill");
+	   /* console.log("YOU LOSE!"); */
 	});
 }
 
@@ -170,6 +172,14 @@ function inhibit_submit(input_id, clicker_id) {
 	    }
 	}
     });
+    $("#" + input_id).keyup(function(e) {
+	if ($("#" + input_id).val() !== "") {
+	     $("#" + clicker_id).removeClass("btn-disabled");
+	}
+	else {
+	     $("#" + clicker_id).addClass("btn-disabled");
+	}
+    });
 }
 
 /*
@@ -189,7 +199,7 @@ function onReadyCreate() {
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled nonjournal' value='Autofill from the HOLLIS number' name='hollis_fill' id='hollis_fill'/>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled nonjournal reset_fill' value='Reset Autofill' name='reset_hollis_fill' id='reset_hollis_fill'/>");
     $("#hollis_fill").on("click", function(e){
-	fill_request(e, "hollis", $.trim( $("#reserve_input_hollis_system_number").val()));
+	fill_request(e, "hollis",  $("#reserve_input_hollis_system_number").val());
     });
     inhibit_submit("reserve_input_hollis_system_number","hollis_fill");
     $("#reserve_input_hollis_system_number").on("change", function(e) {
@@ -201,7 +211,7 @@ function onReadyCreate() {
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled journal' value='Autofill from DOI or PUBMED ID' name='journal_fill' id='journal_fill'/>")
 	.append("<input type='button' class='btn btn-default btn-ajax btn-disabled journal reset_fill' value='Reset Autofill' name='journal_fill' id='reset_journal_fill'/>") ;
     $("#journal_fill").on("click", function(e){
-        fill_request(e, "journal",  $.trim($("#reserve_input_doi").val()));
+        fill_request(e, "journal", $("#reserve_input_doi").val());
     });
     inhibit_submit("reserve_input_doi", "journal_fill");
      $("#reserve_input_doi").on("change", function(e) {
@@ -232,6 +242,7 @@ function onReadyCreate() {
       }
       else {
           $("#"+type).removeClass("btn-disabled");
+         $("#reset_"+type).addClass("btn-disabled");
       }
 
   }
