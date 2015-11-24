@@ -51,6 +51,9 @@ gem 'font-awesome-less', '~> 4.2.0'  # fonts that TLT uses
 
 
 group :development do
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
   gem 'binding_of_caller' # for better_errors
   gem 'quiet_assets'  # turns off Rails asset pipeline log
   gem 'better_errors'
