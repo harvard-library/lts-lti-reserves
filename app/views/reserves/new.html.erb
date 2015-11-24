@@ -66,7 +66,7 @@ Note to Students:
 	<% end %>
 </select>
 <% if !@reserve.errors[:library_code].empty? %><span class="help-block"><%=  @reserve.errors[:library_code][0].to_s %></span><% end %>
-<p class="help-block">Note: Select the library that supports your course, even for online items.</p>
+<p class="help-block">Note: Select the library that supports your course, even for online items.  <span class="float-right"><a  href="http://nrs.harvard.edu/urn-3:HUL.OIS:reserves-contacts" target="lib_contacts" title="Get help with your reserves questions">Library Reserves Contacts</a> <%= icon('external-link')%></span></p>
 </div>
 </div>
 <%# end of Library Code %>
