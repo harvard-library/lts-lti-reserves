@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.5"
 gem "rails", "~> 4.2.0" # rails! :-)
-gem "dotenv-rails", :groups => [:development, :test]  # Autoload dotenv in Rails.
+gem "dotenv-rails"  # Autoload dotenv in Rails.
 gem "pg"  # postgres interface
 gem "dce_lti", '~> 0.5.2'  # handles the canvas security handshake
 gem "httparty" # handles http requests
