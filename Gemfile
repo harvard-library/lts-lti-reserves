@@ -50,7 +50,7 @@ gem 'less-rails-bootstrap'
 gem 'font-awesome-less', '~> 4.2.0'  # fonts that TLT uses
 
 
-group :development, :qa do
+group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
