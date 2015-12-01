@@ -5,6 +5,9 @@ gem "rails", "~> 4.2.0" # rails! :-)
 gem "dotenv-rails"  # Autoload dotenv in Rails.
 gem "pg"  # postgres interface
 gem "dce_lti", '~> 0.5.2'  # handles the canvas security handshake
+
+gem "json", '~> 1.8.3' # SHOULDN'T NEED THIS, but can't get to production without it?
+
 gem "httparty" # handles http requests
 
 gem "bourbon", "~> 3.2.1"  #library of pure Sass mixins that are designed to be simple and easy to use. 
