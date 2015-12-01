@@ -6,7 +6,7 @@ gem "dotenv-rails"  # Autoload dotenv in Rails.
 gem "pg"  # postgres interface
 gem "dce_lti", '~> 0.5.2'  # handles the canvas security handshake
 
-gem "json", '1.8.2' # SHOULDN'T NEED THIS, but can't get to production without it?
+#gem "json", '1.8.2' # SHOULDN'T NEED THIS, but can't get to production without it?
 
 gem "httparty" # handles http requests
 
