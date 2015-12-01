@@ -12,6 +12,7 @@ Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
         resp = Rlist.new.library_list
         list = JSON.parse(resp.body)
         $library_list = list.collect {|lib| Library.new(lib)}
+        $library_list.sort_by! {|lib| lib.name}
         puts "Fetched #{$library_list.count} Libraries"
       end
     end
@@ -32,6 +33,9 @@ Library = Struct.new(:library_code, :name, :contact_email, :support_url) do
     members =  self.members
     HashWithIndifferentAccess.new(opts)
     opts.each do |k,v|
+      if k.to_s == "name"
+        v.slice! "Loeb "
+      end
       self.send (k + '=').to_sym, v  if members.find_index(k.to_sym)
     end
   end
