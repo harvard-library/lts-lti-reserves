@@ -4,8 +4,7 @@ require 'httparty'
 class Rlist
   include RestHandler
   include HTTParty
-  base_uri    ENV['RLIST_URL'] || 'http://rlisttest.lib.harvard.edu:9008/rest/v1'
-
+  base_uri  ENV['RLIST_URL']
 #  LIBRARY STUFF
 
   def library_list
