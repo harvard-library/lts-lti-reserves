@@ -1,7 +1,8 @@
 
 <% if @reserves %>
 <h4>Number of reserves: <%= @reserves.count %></h4>
-<h4>Manage Reserves List <div class="float-right">
+<h4>Manage Course Reserves <a href="http://nrs.harvard.edu/urn-3:HUL.OIS:reserves-docs" 
+title="Course Reserves Quick Reference Guide" target="guide_wiki"><%= icon('question-circle') %></a> <div class="float-right">
 <a class="link-icon"  href="/courses/<%= params[:id] %>/?viewonly=true">View as Student</a></div></h4>
 <div id="newOrReuse" class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a>
 <% if !@others.blank? %>
