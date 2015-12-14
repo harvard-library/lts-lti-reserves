@@ -2,7 +2,7 @@
 <html>
 <head>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LTI Course Reserves Tool <% if  !(@instance ||= nil).nil? %>
+  <title><%= ENV['LTI_PROVIDER_TITLE'] %> <% if  !(@instance ||= nil).nil? %>
     : <%= @instance.title %>
     <% end %>
 </title>
@@ -27,7 +27,7 @@
  <% end %>
   <div class="container">
     <div class="row lti-header">
-      <h1>Course Reserves  <% if can_edit?(current_user, params[:id]) %><span class="float-right"><a class="smaller_link"  href="http://nrs.harvard.edu/urn-3:HUL.OIS:reserves-contacts" target="lib_contacts" title="Get help with your reserves questions">Library Reserves Contacts</a> <%= icon('external-link')%></span><% end %></h1>
+      <h1><%= ENV['LTI_PROVIDER_TITLE'] %>  <% if can_edit?(current_user, params[:id]) %><span class="float-right"><a class="smaller_link"  href="http://nrs.harvard.edu/urn-3:HUL.OIS:reserves-contacts" target="lib_contacts" title="Get help with your reserves questions">Library Reserves Contacts</a> <%= icon('external-link')%></span><% end %></h1>
 	 <% if  !(@instance ||= nil).nil? %>
 
     <h2>       <%= @instance.title %> (<%= @instance.term %>)</h2>

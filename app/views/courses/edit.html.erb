@@ -1,8 +1,8 @@
 
 <% if @reserves %>
 <h4>Number of reserves: <%= @reserves.count %></h4>
-<h4>Manage Course Reserves <a href="<%= ENV['DOC_URL'] %>"
-title="Course Reserves Quick Reference Guide" target="guide_wiki"><%= icon('question-circle') %></a> <div class="float-right">
+<h4>Manage <%= ENV['LTI_PROVIDER_TITLE'] %> <a href="<%= ENV['DOC_URL'] %>"
+title="<%= ENV['LTI_PROVIDER_TITLE'] %> Quick Reference Guide" target="guide_wiki"><%= icon('question-circle') %></a> <div class="float-right">
 <a class="link-icon"  href="/courses/<%= params[:id] %>/?viewonly=true">View as Student</a></div></h4>
 <div id="newOrReuse" class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a>
 <% if !@others.blank? %>

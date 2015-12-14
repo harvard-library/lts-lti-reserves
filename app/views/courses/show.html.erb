@@ -2,7 +2,7 @@
 <% if @reserves %>
 
 <h3>Number of reserves: <%= @reserves.count %> <% if can_edit?(current_user, params[:id]) %>
-<div class="float-right"><a class="link-icon" href="/courses/<%= params[:id] %>/edit">Manage Course Reserves</a></div>
+<div class="float-right"><a class="link-icon" href="/courses/<%= params[:id] %>/edit">Manage <%= ENV['LTI_PROVIDER_TITLE'] %></a></div>
 <% end %>
 </h3>
 <div id="reserves-list">
