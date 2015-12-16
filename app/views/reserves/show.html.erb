@@ -1,7 +1,7 @@
 
 <ol class="breadcrumb">
 <li><a href="https://canvas.harvard.edu"><%= icon('home') %></a></li>
-<li> <a href="/courses/<%= @reserve.instance_id %>/edit" class="link-icon" title="back to Course">Manage Course Reserves</a></li>
+<li> <a href="/courses/<%= @reserve.instance_id %>/edit" class="link-icon" title="back to Course">Manage  <%= ENV['LTI_PROVIDER_TITLE'] %></a></li>
 <li class="active">Reserve Request</li>
 </ol>
 
