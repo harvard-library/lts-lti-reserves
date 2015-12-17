@@ -5,7 +5,11 @@ class CoursesController < ApplicationController
       c  = Course.new(params[:id])
       @reserves = c.student_list
     rescue Exception => bang
-      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
+      bangmsg = bang.to_s
+      if bangmsg.include? "404 - Not Found"
+        bangmsg = "Course instance does not exist in the Reserves Tool database"
+      end
+      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bangmsg}"
     end
     begin
       @instance = fetch_info(params[:id])
@@ -20,7 +24,11 @@ class CoursesController < ApplicationController
       c  = Course.new(params[:id])
       @reserves = c.list
     rescue Exception => bang
-      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bang}"
+      bangmsg = bang.to_s
+      if bangmsg.include? "404 - Not Found"
+        bangmsg = "Course instance does not exist in the Reserves Tool database"
+      end
+      flash[:error] = "Unable to retrieve information on Course Instance #{params[:id]}: #{bangmsg}"
     end
     begin
       @instance = fetch_info(params[:id])
