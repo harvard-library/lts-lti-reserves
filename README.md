@@ -48,7 +48,7 @@ It takes advantage of the [dce-lti](https://github.com/harvard-dce/dce_lti) gem 
 
 4. Using dce-lti  (per the [Getting Started] (https://github.com/harvard-dce/dce_lti#getting-started ) )
   1.Create a database to support dce-lti
-  2. modify `config/database.yml` to suit your environment (see the (database.yml.example)  [https://github.com/harvard-library/lts-lti-reserves/blob/master/config/database.yml.example] file )
+  2. modify `config/database.yml` to suit your environment (see the [database.yml.example]  (https://github.com/harvard-library/lts-lti-reserves/blob/master/config/database.yml.example) file )
   3. feel free to modify `config/initializers/session_store.rb` with your own unique app_session_key
   4. Bundle, install and then run migrations
 
