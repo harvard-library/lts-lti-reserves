@@ -55,12 +55,7 @@ It takes advantage of the [dce-lti](https://github.com/harvard-dce/dce_lti) gem 
     bundle
     rake dce_lti:install
     rake db:migrate
-5. Run bootstrap rake tasks:
-
-  ```Shell
-   rake crt:bootstrap:run_all
-  ```
-6. Set up cron jobs to run the rake jobs needed for dce-lti support:
+5. Set up cron jobs to run the rake jobs needed for dce-lti support:
   * dce_lti:clean_sessions (once a day)
   * dce_lti:clean_nonces  (once an hour)
 
