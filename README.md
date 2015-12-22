@@ -1,6 +1,6 @@
 # lts-lti-reserves
 
-The Reserves Tool as seen/used via Canvas
+The Library Reserves Tool as seen/used via Canvas
 
 
 ## Mission
@@ -18,6 +18,8 @@ It's built to work with Harvard's instantiation of the [canvas
 lms](https://github.com/instructure/canvas-lms), Harvard Library's Reserves Tool API, the [iCommons REST API v2] (https://icommons.harvard.edu/api/course/v2/) and Harvard Library's [PRESTO Data Lookup API](https://wiki.harvard.edu/confluence/display/LibraryStaffDoc/PRESTO+Data+Lookup).
 
 It takes advantage of the [dce-lti](https://github.com/harvard-dce/dce_lti) gem for managing the interactions between it and Canvas.
+
+Some implementation details can be found [here] (https://github.com/harvard-library/lts-lti-reserves/blob/master/IMPL_NOTES.md)
 
 ## System Requirements
 
