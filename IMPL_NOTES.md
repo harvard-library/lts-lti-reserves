@@ -5,7 +5,7 @@
 **lts-lti-reserves** serves as the "front end" to LTS's sophisticated library Reserves Tool that supports the  workflow of requesting items to be placed on the Reserves list, from initial request through a possibly complex series of steps to making the item available to students.  
 ## API use
 
-Unlike many conventional Rails applications, **lts-lti-reserves** does not maintain reserves data in a local database, instead communicatingvia a RESTful API with LTS's Reserves Tool, where the data is processed and stored. Two other APIs are used to make composing the Library Reserve list as easy as possible.
+Unlike many conventional Rails applications, **lts-lti-reserves** does not maintain reserves data in a local database, instead communicating via a RESTful API with LTS's Reserves Tool, where the data is processed and stored. Two other APIs are used to make composing the Library Reserve list as easy as possible.
 
 
 Direct communication with the APIs is handled by modules in the **app/services/** subdirectory.  
@@ -17,3 +17,15 @@ Direct communication with the APIs is handled by modules in the **app/services/*
 
 All of the above modules include [rest_handler.rb] (https://github.com/harvard-library/lts-lti-reserves/blob/master/app/services/rest_handler.rb), which correctly handles unsuccessful http transactions.
 
+## Logging
+
+Harvard Library runs its Rails applications under Apache, using Passenger.  However, since the Apache-combined log is not detailed enough to provide meaningful analytics of POST operations, **lts-lti-reserves* creates a special, comma-separator-delimited file,
+`*log/post_log.csv*`.
+
+
+This file is created with the following header line:
+```shell
+Date,Time,IP Address, Course Instance ID, Reserve ID, Action
+```
+
+The intent of this file is to track the creation, update, and deletion of individual reserves, plus any reordering of the Library Reserves List for a particular course. We do not record the canvas user id of the requestor;  the IP address is sufficiently unique for our purposes, since we are not interested in the real identity of **who** is doing **what**.
