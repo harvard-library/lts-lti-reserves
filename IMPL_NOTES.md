@@ -19,7 +19,7 @@ All of the above modules include [rest_handler.rb] (https://github.com/harvard-l
 
 ## Logging
 
-Using [Passenger] (https://www.phusionpassenger.com/), Harvard Library runs its Rails applications under Apache.  However, since the Apache-combined log is not detailed enough to provide meaningful analytics of POST operations, **lts-lti-reserves* creates a special, comma-separator-delimited (CSV) file,
+Using [Passenger] (https://www.phusionpassenger.com/), Harvard Library runs its Rails applications under Apache.  However, since the Apache-combined log is not detailed enough to provide meaningful analytics of POST operations, **lts-lti-reserves** creates a special, comma-separator-delimited (CSV) file,
 `log/post_log.csv`.
 
 
