@@ -41,6 +41,26 @@
 @import "font-awesome";
 @import "bootstrap-datepicker3.css";
 
+/* compensate for twitter/bootstrap (included from lti-less) making the html font-size too small */
+html {
+     font-size: 90%;
+}
+.lti-tool * h1 {
+	  font-size: 1.6em;
+}
+.lti-tool * h2 {
+	  font-size: 1.4em;
+}
+.lti-tool * h3 {
+	  font-size: 1.2em;
+}
+.lti-tool * h4 {
+          font-size: 1.2em;
+}
+/* end of compensation */
+
+
+
 /* color block info */
 
 
@@ -89,10 +109,11 @@ input.form-control, select.form-control {
  width: 75%;
 }
 .boolean .col-sm-offset-3 { margin-left: 15%;}
-.boolean .col-sm-9 { width: 35%;}
+.boolean .col-sm-9 { width: 40%;}
+.boolean .checkbox {padding: 0; }
 
 .form_horizontal .checkbox { padding-left: 10px;}
- .checkbox label { padding-left: 10px;}
+/* .checkbox label { padding-left: 10px;} */
 .form_horizontal .col-sm-9 input {margin-top: 5px; }
 .checkbox label input[type="checkbox"] {margin-left: -25px; margin-top: 2px;}
 .btn-ajax {
