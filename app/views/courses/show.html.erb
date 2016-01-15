@@ -1,7 +1,8 @@
 
 <% if @reserves %>
 
-<h3>Number of reserves: <%= @reserves.count %> <% if can_edit?(current_user, params[:id]) %>
+<h3>Number of reserves: <%= @reserves.count %>
+<% if can_edit?(current_user, params[:id]) %>
 <div class="float-right"><a class="link-icon" href="/courses/<%= params[:id] %>/edit">Manage <%= ENV['LTI_PROVIDER_TITLE'] %></a></div>
 <% end %>
 </h3>
@@ -28,7 +29,6 @@
               Sort by lecture date
             </button>
 	 <% end %>
-
 </div>
 <% end %>
 <ul class="list-with-floats" id="reserves_ids">
