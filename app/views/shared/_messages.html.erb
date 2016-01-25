@@ -1,6 +1,6 @@
 <% flash.each do |name, msg| %>
-  <% if !msg.blank? %>
-    <div class="alert alert-<%= case
+<% if !msg.blank? %>
+<div class="alert alert-<%= case
 		when name == "notice"
 		     "success"
 		when name == "error"
@@ -10,19 +10,18 @@
 		end
 %>">
 
-      <a class="close" data-dismiss="alert">&#215;</a>
-      <div id="<%= "flash_#{name}" %>">
-     <% if msg.is_a?(Array) %>
-	<ul>
-	<% msg.each do |m| %>
-	<li><%= m %></li>
-	<% end%>
-	</ul>
-
-     <% else %>
-      <%= msg %>
+  <a class="close" data-dismiss="alert">&#215;</a>
+  <div id="<%= "flash_#{name}" %>">
+    <% if msg.is_a?(Array) %>
+    <ul>
+      <% msg.each do |m| %>
+      <li><%= m %></li>
+      <% end%>
+    </ul>
+    <% else %>
+    <%= msg %>
     <% end %>
-      </div>
-    </div>
-  <% end %>
+  </div>
+</div>
+<% end %>
 <% end %>
