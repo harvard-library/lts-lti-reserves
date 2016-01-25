@@ -5,7 +5,7 @@
 <% else %>
     <span class="author"><% if reserve.author %><%= reserve.author %><% elsif reserve.editor %><%= reserve.editor %>, [ed.]<% end %></span>
    <span class="sort_title"><%= reserve.sort_title %> </span>
-   <span class="title"><%= reserve.title %><% if !reserve.title.ends_with?('.') %>.<% end %></span>
+   <span class="title"><%= reserve.title %><% if reserve.title && !reserve.title.ends_with?('.') %>.<% end %></span>
    <% if reserve.editor && !reserve.author.blank? %>
     <span class="editor"><%= reserve.editor %> [ed.]</span>
    <% end %>
