@@ -5,12 +5,13 @@
 title="<%= ENV['LTI_PROVIDER_TITLE'] %> Quick Reference Guide" target="guide_wiki"><%= icon('question-circle') %></a> <div class="float-right">
 <a class="link-icon"  href="/courses/<%= params[:id] %>/?viewonly=true">View as Student</a></div></h4>
 <div id="newOrReuse" class="float-right"><a href="<%= new_reserve_path  %>?course_id=<%= params[:id] %>" class="link-icon" title="Add New Reserve"><%= icon('plus-circle') %> Add New Reserve</a>
+
 <% if !@others.blank? %>
   <form name="prev_select_form" id="prev_select_form" >
     <label for="prev_select">Re-use reserves from: </label>
     <select id="prev_select"><option value="">Select a previous term</option>
       <% @others.each do |ci| %>
-    <option value="<%=ci.id %>"><%= ci.term %></option>
+    <option value="<%=ci['instance_id'] %>"><%= ci['term'] %></option>
     <% end %>
     </select>
   </form>

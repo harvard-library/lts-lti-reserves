@@ -1,5 +1,6 @@
 # container for all the auxiliary information about the course instance
 require 'icommons'
+require 'timeout'
 InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term, :primary, :xreg_ids, :others) do
   def initialize(id_or_url)
     json = Icommons.new.course_instance(id_or_url)
@@ -21,14 +22,15 @@ InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term,
   end
   def fill_others
     others = []
-    instances  = Icommons.new.instances_from_course(self.course_id)
-    instances.each do |instance| 
-      if instance.slice(/\d\d+/).to_i < self.id.to_i  # I'm going to assume that > numbers means: afterwards!
-        ii = InstanceInfo.new(instance)
-        others.push(ii) if !ii.non_enroll
-      end
+    begin status = Timeout::timeout(11) {
+        others = Rlist.new.previous(self.id)
+      }
+    rescue Timeout::Error
+      STDERR.puts "TIMEDOUT ON COURSE #{self.id} "
+      raise
+    ensure
+      self.others = others
     end
-    self.others = others
   end
   def compose_desc(json)
     school = json["term"]["school_id"].upcase!
