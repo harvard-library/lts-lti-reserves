@@ -7,18 +7,23 @@
 <%= form_tag({controller: "courses", action: "reuse"}, method: "post", class: "previous_list") do %>
 <%= hidden_field_tag("id", id) %>
 <%= hidden_field_tag("lib_code", lib_code) %>
-<% if prev_reserves.length > 1 %>
+
 <ul class="list-with-floats">
 <li class="head">
-<button type="button" class="btn btn-default btn-xs" id="select_all_reuse"><%= "Select all #{prev_reserves.length} previous Reserves" %></button>
+<button type="button" class="btn btn-default btn-xs" id="select_all_reuse">
+<% if prev_reserves.length > 1 %>
+<%= "Select all #{prev_reserves.length} previous Reserves" %>
+<% else %>
+<%= "Select previous Reserve" %>
+<% end %>
+</button>
 <button type="button" class="btn btn-default btn-xs disabled" id="deselect_all_reuse">Clear selections</button>
 
  <span class="update" title="Re-use selected reserve(s)"><%=submit_tag(value="Re-use selected reserve(s)", {:class => "btn btn-disabled chks_reuse", :id => "reuse_btn"}) %></span>
 
-
 </li>
 </ul>
-<% end %>
+
 <ul class="list-with-floats chk_grp" id="ids_reuse">
   <% prev_reserves.each do |reserve| %>
      <% if !reserve.citation_id.blank? %>
