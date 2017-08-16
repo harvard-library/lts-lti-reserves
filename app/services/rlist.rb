@@ -69,6 +69,7 @@ class Rlist
   # should return an array of {:instance_id, :term} hashes
   def previous(course_id)
     response = self.class.get("/courses/" + course_id.to_s + "/previous",
+                              :timeout => 120,
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
     handle_bad_response(response,"Unsuccessful  call for history for reserve (#{reserv_id}). ") if response.code != 200
     response
