@@ -22,7 +22,7 @@ InstanceInfo = Struct.new(:id, :non_enroll, :course_id, :title, :catalog, :term,
   end
   def fill_others
     others = []
-    begin status = Timeout::timeout(11) {
+    begin status = Timeout::timeout(20) {
         others = Rlist.new.previous(self.id)
       }
     rescue Timeout::Error
