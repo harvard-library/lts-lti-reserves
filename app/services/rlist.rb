@@ -70,7 +70,7 @@ class Rlist
   def previous(course_id)
     response = self.class.get("/courses/" + course_id.to_s + "/previous",
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
-    handle_bad_response(response,"Unsuccessful  call for history for reserve (#{reserv_id}). ") if response.code != 200
+    handle_bad_response(response,"Unsuccessful  call for history for course (#{course_id}). (code #{response.code}) ") if response.code != 200
     response
   end
 
@@ -79,7 +79,7 @@ class Rlist
   def history(reserve_id)
     response = self.class.get("/citationrequests/" + reserve_id.to_s + "/history",
                               :headers => {"User-Agent" => "lts-lti-reserves"} )
-    handle_bad_response(response,"Unsuccessful  call for history for reserve (#{reserv_id}). ") if response.code != 200
+    handle_bad_response(response,"Unsuccessful  call for history for  course (#{course_id}). (code #{response.code})") if response.code != 200
     response
   end
 
