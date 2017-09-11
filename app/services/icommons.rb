@@ -18,6 +18,10 @@ class Icommons
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
+    @@logger.tagged("FOX") {
+      @@logger.warn {"response: #{response.body},\n code:#{response.code}"} 
+    }
+
     json = response.code == 200 ? JSON.parse(response.body) : {}
   end
   def instances_from_course(id)
