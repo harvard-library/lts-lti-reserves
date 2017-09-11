@@ -17,7 +17,7 @@ class Icommons
     json = response.code == 200 ? JSON.parse(response.body) : {}
   end
   def instances_from_course(id)
-    loc = !id.to_s.match(/^\d+$/) ? id : "/courses/#{id}" 
+    loc = !id.to_s.match(/^\d+$/) ? id : "/courses/#{id}/" 
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
