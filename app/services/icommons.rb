@@ -8,6 +8,7 @@ class Icommons
   @@headers = {"User-Agent" => "lts-lti-reserves", 
     "Authorization" => @@auth, 
     "Accept" => "application/json"}
+  logger = ActiveSupport::TaggedLoggin.new(Rails.logger)
 
   def course_instance(cid)
     loc = !cid.to_s.match(/^\d+$/)  ? cid : "/course_instances/#{cid}/" 
