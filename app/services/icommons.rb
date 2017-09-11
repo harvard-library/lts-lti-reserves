@@ -11,6 +11,9 @@ class Icommons
 
   def course_instance(cid)
     loc = !cid.to_s.match(/^\d+$/)  ? cid : "/course_instances/#{cid}/" 
+    logger.tagged("FOX") {
+      logger.warn {"course_instance: #{cid}, loc: #{loc}" }
+    }
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
@@ -18,6 +21,9 @@ class Icommons
   end
   def instances_from_course(id)
     loc = !id.to_s.match(/^\d+$/) ? id : "/courses/#{id}/" 
+    logger.tagged("FOX") {
+      logger.warn {"course: #{id}, loc: #{loc}" }
+    }
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
