@@ -8,27 +8,20 @@ class Icommons
   @@headers = {"User-Agent" => "lts-lti-reserves", 
     "Authorization" => @@auth, 
     "Accept" => "application/json"}
-  @@logger = ActiveSupport::TaggedLogging.new(Rails.logger)
+#  @@logger = ActiveSupport::TaggedLogging.new(Rails.logger)
 
   def course_instance(cid)
     loc = !cid.to_s.match(/^\d+$/)  ? cid : "/course_instances/#{cid}/" 
-    @@logger.tagged("FOX") {
-      @@logger.warn {"course_instance: #{cid}, loc: #{loc}" }
-    }
+ #   @@logger.tagged("FOX") {
+ #     @@logger.warn {"course_instance: #{cid}, loc: #{loc}" }
+ #   }
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
-    @@logger.tagged("FOX") {
-      @@logger.warn {"response: #{response.body},\n code:#{response.code}"} 
-    }
-
     json = response.code == 200 ? JSON.parse(response.body) : {}
   end
   def instances_from_course(id)
     loc = !id.to_s.match(/^\d+$/) ? id : "/courses/#{id}/" 
-    @@logger.tagged("FOX") {
-      @@logger.warn {"course: #{id}, loc: #{loc}" }
-    }
     response = self.class.get(loc,
                               :headers => @@headers)
     # need to log the bad response, but not now!
