@@ -2,6 +2,9 @@
 
 The Library Reserves Tool as seen/used via Canvas
 
+# This repository is deprecated and archived
+
+*This functionality has been replaced at Harvard with the Leganto application from Ex-Libris*
 
 ## Mission
 To enable Faculty, Reserves Librarians, and Students to manage Course Reserves Lists via Harvard's Canvas implementation
